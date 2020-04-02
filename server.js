@@ -3,8 +3,12 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+// Complete but not implemented yet
+// const session = require("express-session");
+// const passport = require("./config/passport");
+
 // Requiring our models for syncing
-var db = require("./models");
+const db = require("./models");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -14,6 +18,11 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
+
+// Complete but not implemented yet
+// app.use(session({ secret: "keyboard user", resave: true, saveUninitialized: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Define API routes here
 require("./routes/api-routes.js")(app);
