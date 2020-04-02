@@ -8,8 +8,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true
     },
     email: {
       type: DataTypes.STRING,
