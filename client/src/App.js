@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Header from "./components/Header";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+import Forum from "./pages/Forum";
+import Mapcomp from "./pages/Mapcomp";
+import Chats from "./pages/Chats";
+import Search from "./pages/Search";
+import Settings from "./pages/Settings";
+import NoMatch from "./pages/NoMatch";
+import Footer from "./components/Footer";
+import "./style.css";
+
+// Making so the navbar does not appear on the login/register page
+const NavRoutes = () => {
+  return (
+    <div className="App Site">
+      <Header />
+      <div className="Site-content">
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/forums" component={Forum} />
+        <Route exact path="/map" component={Mapcomp} /> {/*cannot use Map as the is a constructor word*/}
+        <Route exact path="/chats" component={Chats} />
+        <Route exact path="/search" component={Search} />
+        <Route exact path="/settings" component={Settings} />
+        <Route path="*" component={NoMatch} />
+      </div>
+      <Footer />
+    </div>
+  )
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Route component={NavRoutes} />
+      </Switch>
+    </Router>
   );
 }
 
