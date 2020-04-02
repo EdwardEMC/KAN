@@ -6,59 +6,46 @@ class Login extends Component {
   render() {
     return (
       <Wrapper>
-        <div className="box">
-          <article className="panel is-primary">
-            <p className="panel-heading .has-text-centered">
+        <br></br>
+        <div className="text-center">
+          <img src="" alt="KAN logo"/>
+        </div>
+        <br></br>
+        <div className="container">
+          <div className="card">
+            <h2 className="text-center card-header">
               Login
-            </p>
-            <form className="login">
-              <div id="login" className="box">
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label className="label">Enter user details</label>
+            </h2>
+            <div className="card-body">
+              <form className="login">
+                {/* <div id="login" className="box"> */}
+                  <br></br>
+                  <div className="form-group">
+                    <label htmlFor="email-input">Email</label>
+                    <input id="email-input" className="input form-control" type="text" required placeholder="john.doe@gmail.com"/>
                   </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control is-expanded has-icons-left">
-                        <input id="email-input" className="input" type="text" required placeholder="john.doe@gmail.com"/>
-                        <span className="icon is-small is-left">
-                        <i className="fas fa-envelope"></i>
-                        </span>
-                      </p>
-                    </div>
-                    <div className="field">
-                      <p className="control is-expanded has-icons-left">
-                        <input  id="password-input" className="input" type="password" required placeholder="********"/>
-                        <span className="icon is-small is-left">
-                        <i className="fas fa-lock"></i>
-                        </span>
-                      </p>
-                    </div>
+                  <div className="form-group">
+                  <label htmlFor="password-input">Password</label>
+                    <input id="password-input" className="input form-control" type="password" required placeholder="********"/>
                   </div>
-                </div>
-                <div className="field is-horizontal">
-                  <div className="field-label">
-                    {/*left empty for spacing*/}
+                  <br></br>
+                  <div className="text-center">
+                    <button type="submit" className="btn btn-primary">
+                    Submit
+                    </button>
+                    <p className="help" id="errorMsg"></p>
                   </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <button type="submit" className="button is-primary">
-                        Submit
-                        </button>
-                        <p className="help" id="errorMsg"></p>
-                      </div>
-                    </div>
+                  <div className="text-center">
+                    <p>Don't have a account? Sign up &nbsp; 
+                      <Link to="/register"> 
+                        here
+                      </Link>
+                    </p>
                   </div>
-                </div>
-                <p className="has-text-centered">Or sign up 
-                  <Link to="/register"> 
-                    here
-                  </Link>
-                </p>
-              </div>
-            </form>
-          </article>
+                {/* </div> */}
+              </form>
+            </div>
+          </div>
         </div>
       </Wrapper>
     )

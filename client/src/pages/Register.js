@@ -6,111 +6,81 @@ class Register extends Component {
   render() {
     return (
       <Wrapper>
-        <div className="box">
-          <article className="panel is-primary">
-            <p className="panel-heading .has-text-centered">
-              New Registration
-            </p>
-            <br></br>
-            <br></br>
-            <form className="signup-user">
-              <div id="uRegistration" className="is-hidden">
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label className="label">Enter user details</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control is-expanded has-icons-left">
-                        <input id="userName-input" className="input" type="text" required placeholder="Username"/>
-                        <span className="icon is-small is-left">
-                        <i className="fas fa-user"></i>
-                        </span>
-                      </p>
-                    </div>
-                    <div className="field">
-                      <p className="control is-expanded has-icons-left">
-                        <input  id="name-input" className="input" type="text" required placeholder="Name"/>
-                        <span className="icon is-small is-left">
-                        <i className="fas fa-user"></i>
-                        </span>
-                      </p>
-                    </div>
-                    <div className="field is-expanded">
-                      <div className="field has-addons">
-                        <p className="control">
-                        </p>
-                        <p className="control is-expanded">
-                        <input className="input" id="phoneNumber-input" type="tel" required placeholder="Your phone number"/>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="field is-horizontal">
-                  <div className="field-label"></div>
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control is-expanded has-icons-left has-icons-right">
-                        <input className="input is-success" id="email-input" type="email" required placeholder="alex@smith.com"/>
-                        <span className="icon is-small is-left">
-                        <i className="fas fa-envelope"></i>
-                        </span>
-                        <span className="icon is-small is-right">
-                        <i className="fas fa-check"></i>
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="field">
-                  <p className="control is-expanded has-icons-left">
-                    <textarea  id="information-input" className="input" type="text" required placeholder="General Information"/>
-                    <span className="icon is-small is-left">
-                    <i className="fas fa-user"></i>
-                    </span>
-                  </p>
-                </div>
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label className="label">Enter password</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control has-icons-left">
-                        <input className="input" id="password-input" type="password" required placeholder="Password"/>
-                        <span className="icon is-small is-left">
-                        <i className="fas fa-lock"></i>
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="field is-horizontal">
-                  <div className="field-label">
-                    {/*left empty for spacing*/}
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <button type="submit" className="button is-primary">
-                        Submit
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <br></br>
-                <p className="has-text-centered">Or login 
-                  <Link to="/"> 
-                    here
-                  </Link>
-                </p>
-              </div>
-            </form>
-            <br></br>
-          </article>
+        <br></br>
+        <div className="text-center">
+          <img src="" alt="KAN logo"/>
         </div>
+        <br></br>
+        <div className="container">
+          <div className="card">
+            <h2 className="text-center card-header">
+              New Registration
+            </h2>
+            <div className="card-body">
+              <form className="signup-user">
+                {/* <div id="uRegistration" className="is-hidden">*/}
+                  <div className="form-row">
+                    <div className="form-group col-md-6">
+                      <label htmlFor="userName-input">Username</label>
+                      <input id="userName-input" className="input form-control" type="text" required placeholder="Username....."/>
+                      <p id="userNameTaken"></p>
+                    </div>
+                    <div className="form-group col-md-6">
+                      <label htmlFor="email-input">Email</label>
+                      <input className="input form-control" id="email-input" type="email" required placeholder="alex@smith.com"/>
+                      <p id="emailInUse"></p>
+                    </div>
+                  </div> 
+                  <div className="form-row">
+                    <div className="form-group col-md-6">
+                      <label htmlFor="phoneNumber-input">Phone Number</label>
+                      <input className="input form-control" id="phoneNumber-input" type="tel" required placeholder="Your phone number....."/>
+                    </div>
+                    <div className="form-group col-md-6">
+                      <label htmlFor="name-input">Name</label>
+                      <input  id="name-input" className="input form-control" type="text" required placeholder="Name....."/>
+                    </div>
+                  </div> 
+                  <div className="form-row">  
+                    <div className="form-group col-md-6">
+                      <label htmlFor="information-input">General Information</label>
+                      <textarea  id="information-input" className="input form-control" type="text" required placeholder="General Information....."/> 
+                    </div>
+                    <div className="form-group col-md-6">
+                      <label className="label">Password</label>
+                      <input className="input form-control" id="password-input" type="password" required placeholder="Password....."/>
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-check">
+                      <input type="checkbox" className="form-check-input" id="terms"/>
+                      <label className="form-check-label" htmlFor="terms">I have read the 
+                        <a href="/"> {/*change to link and actual location*/}
+                          terms & conditions
+                        </a>
+                      </label>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className="text-center">
+                    <button type="submit" className="btn btn-primary">
+                    Submit
+                    </button>
+                  </div>
+                  <br></br>
+                  <div className="text-center">
+                    <p>Already have an account? Login &nbsp; 
+                      <Link to="/"> 
+                        here
+                      </Link>
+                    </p>
+                  </div>
+                {/* </div> */}
+              </form>
+            </div>
+          </div>
+        </div>
+        <br></br>
       </Wrapper>
     )
   }
