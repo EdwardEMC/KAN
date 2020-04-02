@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  const PoI = sequelize.define("PoI", {
+  const Topic = sequelize.define("Topic", {
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -11,22 +11,14 @@ module.exports = function(sequelize, DataTypes) {
     category: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    lat: {
-      type: DataTypes.DECIMAL(9,6),
-      allowNull: false
-    },
-    lng: {
-      type: DataTypes.DECIMAL(9,6),
-      allowNull: false
     }
   },
   {
     freezeTableName: true
   });
 
-  // PoI.associate = function(models) {
-  //   PoI.belongsTo(models.User, {
+  // Topic.associate = function(models) {
+  //   Topic.belongsTo(models.User, {
   //     foreignKey: {
   //       allowNull: false
   //     },
@@ -34,5 +26,13 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
 
-  return PoI;
+  // Topic.associate = function(models) {
+  //   Topic.hasMany(models.Comment, {
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //   });
+  // };
+
+  return Topic;
 };
