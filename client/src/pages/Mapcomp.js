@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import Wrapper from "../components/Wrapper";
 
-class Profile extends Component {
+class Mapcomp extends Component {
   render() {
     return (
       <Wrapper>
-        <p>Profile</p>
+        <p>Map</p>
       </Wrapper>
     )
   }
 }
   
-export default Profile;
+export default Mapcomp;

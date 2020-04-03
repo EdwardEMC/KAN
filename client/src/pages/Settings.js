@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import Wrapper from "../components/Wrapper";
 
-class Profile extends Component {
+class Settings extends Component {
   render() {
     return (
       <Wrapper>
-        <p>Profile</p>
+        <p>Settings</p>
       </Wrapper>
     )
   }
 }
   
-export default Profile;
+export default Settings;
