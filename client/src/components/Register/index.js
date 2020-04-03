@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import registerUser from "../utils/register";
+import RegisterUser from "../utils/register";
 import "./style.css";
 
 function RegisterForm() {
   return (
     <form className="signup-user">
-      {/* <div id="uRegistration" className="is-hidden">*/}
         <div className="form-row">
           <div className="form-group col-md-6">
             <label htmlFor="userName-input">Username</label>
@@ -51,7 +50,7 @@ function RegisterForm() {
         </div>
         <br></br>
         <div className="text-center">
-          <button onClick={registerUser} className="btn btn-primary">
+          <button onClick={RegisterUser} className="btn btn-primary">
           Submit
           </button>
         </div>
@@ -64,7 +63,6 @@ function RegisterForm() {
             </Link>
           </p>
         </div>
-      {/* </div> */}
     </form>
   )
 }

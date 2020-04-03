@@ -1,7 +1,7 @@
 import API from "../utils/API";
 
 // When the signup button is clicked, we validate the username, name, email & password are not blank
-function registerUser(event) {
+function RegisterUser(event) {
   event.preventDefault();
 
   // collecting the form information
@@ -52,6 +52,7 @@ function signUpUser(userName, email, phone, name, generalInformation, password) 
     API.newUser(data)
     .then(result => {
       console.log(result);
+      // redirect
     }) // If there's an error, handle it by throwing up a bootstrap alert
     .catch(handleLoginErr);     
 }
@@ -61,4 +62,4 @@ function handleLoginErr(err) {
 	// document.getElementById("errorMsg").innerHTML = err.responseJSON;
 }
 
-export default registerUser;
+export default RegisterUser;

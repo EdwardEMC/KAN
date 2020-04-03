@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LoginSubmit from "../utils/login";
 import "./style.css";
 
 function LoginForm() {
@@ -17,7 +18,7 @@ function LoginForm() {
         </div>
         <br></br>
         <div className="text-center">
-          <button type="submit" className="btn btn-primary">
+          <button onClick={LoginSubmit} className="btn btn-primary">
           Submit
           </button>
           <p className="help" id="errorMsg"></p>

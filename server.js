@@ -5,8 +5,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Complete but not implemented yet
-// const session = require("express-session");
-// const passport = require("./config/passport");
+const session = require("express-session");
+const passport = require("./config/passport");
 
 // Requiring our models for syncing
 const db = require("./models");
@@ -34,9 +34,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Complete but not implemented yet
-// app.use(session({ secret: "keyboard user", resave: true, saveUninitialized: true }));
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(session({ secret: "keyboard user", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Define API routes here
 require("./routes/api-routes.js")(app);
