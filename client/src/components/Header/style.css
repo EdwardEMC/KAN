@@ -3,7 +3,15 @@
   min-height: 100px;
 }
 
-#logo {
+#logo, #online, #poi, .menu {
   padding-top: 40px;
+}
+
+#online, #poi {
+  clear: both;
+  display: inline-block;
+}
+
+#logo {
   color: white;
 }

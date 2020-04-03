@@ -15,6 +15,9 @@ import "./style.css";
 
 // Making so the navbar does not appear on the login/register page
 const NavRoutes = () => {
+
+  // wrap everything in authentication and redirect to login if not logged in
+
   return (
     <div className="App Site">
       <Header />
