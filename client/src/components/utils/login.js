@@ -43,7 +43,7 @@ function loginUser(email, password) {
     password: password
   })
   .then(function() {
-    window.location.replace("/user");
+    window.location.replace("/profile");
   })// If there's an error, log the error
   .catch(function(err) {
     console.log(err);

@@ -1,11 +1,9 @@
-#footer {
+#header {
   background-color: black;
+  min-height: 100px;
 }
 
-#copyright {
-  color:maroon;
-}
-
-#copyname {
-  color:white;
+#logo {
+  padding-top: 40px;
+  color: white;
 }

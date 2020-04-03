@@ -1,5 +1,6 @@
 #footer {
   background-color: black;
+  min-height: 100px;
 }
 
 #copyright {
@@ -7,5 +8,6 @@
 }
 
 #copyname {
+  padding-top: 40px;
   color:white;
 }

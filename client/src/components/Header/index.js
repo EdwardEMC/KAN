@@ -5,7 +5,7 @@ function Header() {
   return ( 
     <div id="header">
       <div className="row justify-content-center">
-        <p id="copyname">Edward Coad <span id="copyright">&copy;2019</span></p>
+        <p id="logo">KAN</p>
       </div>
     </div>
   )

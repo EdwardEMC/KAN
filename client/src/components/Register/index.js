@@ -10,7 +10,6 @@ function RegisterForm() {
           <div className="form-group col-md-6">
             <label htmlFor="userName-input">Username</label>
             <input id="userName-input" className="input form-control" type="text" required placeholder="Username....."/>
-            <p id="userNameTaken"></p>
           </div>
           <div className="form-group col-md-6">
             <label htmlFor="email-input">Email</label>
@@ -26,12 +25,13 @@ function RegisterForm() {
           <div className="form-group col-md-6">
             <label htmlFor="name-input">Name</label>
             <input  id="name-input" className="input form-control" type="text" required placeholder="Name....."/>
+            <br></br>
           </div>
         </div> 
         <div className="form-row">  
           <div className="form-group col-md-6">
             <label htmlFor="information-input">General Information</label>
-            <textarea  id="information-input" className="input form-control" type="text" required placeholder="General Information....."/> 
+            <textarea  id="information-input" className="input form-control" type="text" placeholder="General Information....."/> 
           </div>
           <div className="form-group col-md-6">
             <label className="label">Password</label>
@@ -46,6 +46,7 @@ function RegisterForm() {
                 terms & conditions
               </a>
             </label>
+            <p id="checked"></p>
           </div>
         </div>
         <br></br>
