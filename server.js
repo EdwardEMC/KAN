@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -10,7 +11,20 @@ const app = express();
 // Requiring our models for syncing
 const db = require("./models");
 
+// Set up a whitelist and check against it: call with app.use(cors(corsOptions))
+// const whitelist = ['http://example1.com', 'http://example2.com']
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
+
 // Define middleware here
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

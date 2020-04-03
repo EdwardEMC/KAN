@@ -15,6 +15,7 @@ module.exports = function(app) {
 
 	// route to POST a new user
 	app.post("/api/register", function(req, res) {
+    console.log(req.body);
     db.User.create({
       userName: req.body.userName,
       email: req.body.email,

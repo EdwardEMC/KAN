@@ -6,9 +6,9 @@ function registerUser(event) {
 
   // collecting the form information
   const userNameInput = document.getElementById("userName-input");
-  const phoneInput = document.getElementById("email-input");
-  const nameInput = document.getElementById("phoneNumber-input");
-  const emailInput = document.getElementById("name-input");
+  const phoneInput = document.getElementById("phoneNumber-input");
+  const nameInput = document.getElementById("name-input");
+  const emailInput = document.getElementById("email-input");
   const generalInput = document.getElementById("information-input")
   const passwordInput = document.getElementById("password-input");
   const terms = document.getElementById("terms").checked;

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "express": "^4.16.3",
     "express-session": "^1.17.0",
     "heroku-cli": "^7.0.9",
