@@ -1,9 +1,20 @@
 import axios from "axios";
 
+// axios.defaults.withCredentials = true
+
 export default {
   // gets all current users data
   getUsers: function() {
-    return axios.get("http://localhost:3001/api/user")
+    return axios.get("http://localhost:3001/api/user", { withCredentials: true });
+  },
+
+  // gets the current users data
+  getUser: function(userName) {
+    return axios.get("http://localhost:3001/api/user/" + userName, { withCredentials: true });
+  },
+
+  getTopics: function(category) {
+    return axios.get("http://localhost:3001/api/topics/" + category);
   },
 
   // checks a user logining in

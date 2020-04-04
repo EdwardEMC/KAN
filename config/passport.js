@@ -3,7 +3,7 @@ var LocalStrategy = require("passport-local").Strategy;
 
 var db = require("../models");
 
-// Telling passport we want to use a Local Strategy, we want login with a email and password
+// Telling passport we want to use a Local Strategy, want login with a email and password
 passport.use(new LocalStrategy(
 	{
 		usernameField: "email"
@@ -23,14 +23,14 @@ passport.use(new LocalStrategy(
 			return done(null, false, {
 				message: "Incorrect password."
 			});
-		}
+    }
 		return done(null, dbUser);
 	});
 	}
 ));
 
 passport.serializeUser(function(user, cb) {
-	cb(null, user);
+	cb(null, user.id);
 });
 
 passport.deserializeUser(function(obj, cb) {

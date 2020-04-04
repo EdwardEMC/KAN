@@ -23,8 +23,18 @@ const db = require("./models");
 //   }
 // }
 
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true
+}
+
+// Complete but not implemented yet
+app.use(session({ secret: "keyboard user", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Define middleware here
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -32,11 +42,6 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-
-// Complete but not implemented yet
-app.use(session({ secret: "keyboard user", resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Define API routes here
 require("./routes/api-routes.js")(app);
