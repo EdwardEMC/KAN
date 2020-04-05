@@ -1,39 +1,33 @@
 import React from "react";
-import API from "../utils/API";
-// import { useStoreContext } from "../utils/GlobalState";
 import "./style.css";
 
-function ProfileInsert() {  
-  const getUserInfo = () => {
-    API.getUser()
-    .then(function(result) {
-      console.log(result);
-    })// If there's an error, log the error
-    .catch(function(err) {
-      console.log(err);
-    });
-  }  
-
-  console.log(getUserInfo())
-  
+function ProfileInsert(props) {  
   return (
-    <p>Profile</p>
+    <div className="container mainWin">
+      <div className="row">
+        <div className="col-sm-6">
+        <img className="img-fluid" src="https://via.placeholder.com/250" alt="profilePic" />
+        </div>
+        <div className="col-sm-6">
+        <br></br>
+        <br></br>
+        <p>My places of interest</p>
+        <br></br>
+        <br></br>
+        <div className="mainInfo">
+          <p>User Name:</p>
+          <p>Email:</p>
+          <p>Name:</p>
+      </div>
+        </div>
+      </div>
+      <br></br>
+      <br></br>
+      <div className="general">
+        <p>General information:</p>
+      </div>
+    </div>
   );
 }
 
 export default ProfileInsert;
-
-// const [state] = useStoreContext();
-
-// const getUserInfo = () => {
-//   // console.log(state);
-//   if(state.user[0]) {
-//     API.getUser(state.user[0].username)
-//     .then(function(result) {
-//       console.log(result);
-//     })// If there's an error, log the error
-//     .catch(function(err) {
-//       console.log(err);
-//     });
-//   }
-// }  

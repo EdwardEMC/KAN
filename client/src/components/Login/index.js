@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useStoreContext } from "../utils/GlobalState";
 import { useHistory } from "react-router-dom";
 import API from "../utils/API";
 import "./style.css";
 
 function LoginForm() {
-  const [state, dispatch] = useStoreContext();
   let history = useHistory();
+  
   const LoginSubmit = (event) => {
 
     event.preventDefault();
@@ -31,21 +30,7 @@ function LoginForm() {
             return;
           }
           else {
-            API.loginCheck({
-              email: userData.email,
-              password: userData.password
-            })
-            .then(result => {
-              // console.log(result);
-              const userData = {username: result.data.userName, email: result.data.email, name: result.data.name};
-              dispatch({
-                type: "SET_USER",
-                user: userData
-              });
-            }).then(function(){
-              history.push('/profile')
-            })
-            .catch(err => console.log(err)); // If there's an error, log the error
+            userCheck(userData.email, userData.password)
           }
         }
         else {
@@ -58,7 +43,18 @@ function LoginForm() {
       });
   };
 
-  // console.log(state);
+  function userCheck(email, password) {
+    API.loginCheck({
+      email: email,
+      password: password
+    })
+    .then(result => {
+      console.log(result);
+    }).then(function(){
+      history.push('/profile')
+    })
+    .catch(err => console.log(err)); // If there's an error, log the error
+  }
 
   return(
     <form className="login">
