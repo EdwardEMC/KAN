@@ -6,7 +6,7 @@ const { Provider } = StoreContext;
 const reducer = (state, action) => {
   switch (action.type) {
   case "SET_USER":
-      console.log(action.user)
+    // console.log(action.user)
     return {
       ...state,
       user: [action.user]

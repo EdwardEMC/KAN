@@ -36,8 +36,7 @@ function LoginForm() {
               password: userData.password
             })
             .then(result => {
-              //set the contextstate here to the username
-              console.log(result);
+              // console.log(result);
               const userData = {username: result.data.userName, email: result.data.email, name: result.data.name};
               dispatch({
                 type: "SET_USER",
@@ -59,7 +58,7 @@ function LoginForm() {
       });
   };
 
-  console.log(state);
+  // console.log(state);
 
   return(
     <form className="login">

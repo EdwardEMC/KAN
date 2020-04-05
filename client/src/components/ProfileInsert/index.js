@@ -1,18 +1,39 @@
 import React from "react";
-import { useStoreContext } from "../utils/GlobalState";
+import API from "../utils/API";
+// import { useStoreContext } from "../utils/GlobalState";
 import "./style.css";
 
-function ProfileInsert() {
-  const [state] = useStoreContext();
+function ProfileInsert() {  
+  const getUserInfo = () => {
+    API.getUser()
+    .then(function(result) {
+      console.log(result);
+    })// If there's an error, log the error
+    .catch(function(err) {
+      console.log(err);
+    });
+  }  
 
-  //checking if state is updating
-  const click = () => {
-    console.log(state);
-  }
+  console.log(getUserInfo())
   
   return (
-    <p onClick={click}>Profile</p>
+    <p>Profile</p>
   );
 }
 
 export default ProfileInsert;
+
+// const [state] = useStoreContext();
+
+// const getUserInfo = () => {
+//   // console.log(state);
+//   if(state.user[0]) {
+//     API.getUser(state.user[0].username)
+//     .then(function(result) {
+//       console.log(result);
+//     })// If there's an error, log the error
+//     .catch(function(err) {
+//       console.log(err);
+//     });
+//   }
+// }  

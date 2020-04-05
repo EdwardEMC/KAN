@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const cors = require("cors");
+// const cors = require("cors");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -11,30 +11,16 @@ const passport = require("./config/passport");
 // Requiring our models for syncing
 const db = require("./models");
 
-// Set up a whitelist and check against it: call with app.use(cors(corsOptions))
-// const whitelist = ['http://example1.com', 'http://example2.com']
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
-
-const corsOptions = {
-  origin: "http://localhost:3000",
-  credentials: true
-}
-
 // Complete but not implemented yet
-app.use(session({ secret: "keyboard user", resave: true, saveUninitialized: true }));
+app.use(session({ 
+  secret: "keyboard user", 
+  resave: true, 
+  saveUninitialized: true 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Define middleware here
-app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

@@ -11,11 +11,14 @@ module.exports = function(app) {
   });
 
   // route to get data about a particular user
-  app.get("/api/user/:userName", function(req, res) { // add isAuthenticated, when it is working
-    console.log(req.params.userName) // undefined
+  app.get("/api/user/id", function(req, res) { // add isAuthenticated, when it is working
+    console.log(req.session);
+    console.log("here");
+    console.log(req.sessionID);
+    console.log(req.user);
     // db.User.findOne({
     //   where: {
-    //     userName: req.session.passport.user.id
+    //     id: req.user
     //   }
     // }).then(function(dbUser) {
     // res.json(dbUser);
@@ -52,10 +55,22 @@ module.exports = function(app) {
       res.status(401).json(err);
     });
   });
+  
+  // example of checking authentication
+  // app.get('/authrequired', (req, res) => {
+  //   if(req.isAuthenticated()) {
+  //     res.send('you hit the authentication endpoint\n')
+  //   } else {
+  //     res.redirect('/')
+  //   }
+  // })
 
-  app.post("/api/login", passport.authenticate('local'), function(req, res) {
-    // console.log(req.sessionID)
-    // console.log(req.user);
-    res.json(req.user);    
-  });
+  app.post('/api/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+      req.login(user, (err) => {
+        return res.send('You were authenticated & logged in!\n');
+      })
+    })(req, res, next);
+  })
+  
 };
