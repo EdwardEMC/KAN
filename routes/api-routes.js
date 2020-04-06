@@ -42,18 +42,15 @@ module.exports = function(app) {
   });
 
   // route to return a list of all comment relating to a topic
-  app.get("/api/topics/comments", function(req, res) {
-    /*Not making it here yet */
-    console.log("here")
-    console.log(req.body);
-    // db.Comment.findAll({ 
-    //   where: {
-    //     TopicId: req.body
-    //   },
-    //   include: [db.User]
-    // }).then(function(dbTopic) {
-    //   res.json(dbTopic);
-    // })
+  app.get("/api/comments/:TopicId", function(req, res) {
+    db.Comment.findAll({ 
+      where: {
+        TopicId: req.params.TopicId
+      },
+      include: [db.User]
+    }).then(function(dbTopic) {
+      res.json(dbTopic);
+    })
   });
 
   //===========================================================================

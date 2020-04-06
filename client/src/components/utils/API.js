@@ -24,7 +24,7 @@ export default {
 
   // gets all comments about a certain topic
   getComments: function(TopicId) {
-    return axios.get("/api/topics/comments", TopicId);
+    return axios.get("/api/comments/" + TopicId);
   },
 
   //============================================

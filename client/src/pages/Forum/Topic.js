@@ -8,13 +8,12 @@ const Topic = (props) => {
   const [comments, setComments] = useState([])
 
   useEffect(() => {
-    getComments()
+    loadComments()
   }, [])
 
-  function getComments() {
+  function loadComments() {
     API.getComments(props.location.state.topic.id)
     .then(function(result) {
-      console.log(result);
       setComments(result.data);
     })// If there's an error, log the error
     .catch(function(err) {
@@ -22,9 +21,6 @@ const Topic = (props) => {
     });
   }
 
-  console.log(props);
-  const topic = window.location.href.split("/forums")
-  
   return (
     <Wrapper>
       <div className="container">
@@ -36,9 +32,9 @@ const Topic = (props) => {
             </Link>
           </div>
           <div className="col-sm-6 text-right">
-            <Link to={"/forums" + topic[1] + "/post/comment"} >
+            {/* <Link to={"/forums" + topic[1] + "/post/comment"} >
               <p>Post New Comment</p>
-            </Link>
+            </Link> */} {/* make this a link to the comment box below the title */}
           </div>
         </div>
         <div key={props.location.state.topic.id}>
@@ -63,27 +59,31 @@ const Topic = (props) => {
           <br></br>
         </div>
         <div className="container">
-          {/* map function for all the comments */}
-          <div className="card">
-            <div className="card-header">
-              <div className="row">
-                <div className="col-sm-6">
-                  <h5>UserName</h5>
-                </div>
-                <div className="col-sm-6 text-right">
-                  <p>Posted at: hh:ss dd/mm/yy</p>
+          {comments.map(element => (
+          <div key={element.id}>
+            <div className="card">
+              <div className="card-header">
+                <div className="row">
+                  <div className="col-sm-6">
+                    <h5>{element.User.userName}</h5>
+                  </div>
+                  <div className="col-sm-6 text-right">
+                    <p>Posted at: {element.createdAt}</p> {/* refine this */}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="card-body">
-              <div>
-                Comment
+              <div className="card-body">
+                <div>
+                  {element.description}
+                </div>
+                <br></br>
               </div>
-              <br></br>
             </div>
+            <br></br>
           </div>
-          {/* adding a comment to the topic */}
+          ))}
           <br></br>
+          {/* adding a comment to the topic */}
           <PostComment id={props.location.state.topic.id}/>
         </div>
       </div>  
