@@ -17,14 +17,14 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true
   });
 
-  // Topic.associate = function(models) {
-  //   Topic.belongsTo(models.User, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     },
-  //     onDelete: "cascade"
-  //   });
-  // };
+  Topic.associate = function(models) {
+    Topic.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      },
+      onDelete: "cascade"
+    });
+  };
 
   // Topic.associate = function(models) {
   //   Topic.hasMany(models.Comment, {

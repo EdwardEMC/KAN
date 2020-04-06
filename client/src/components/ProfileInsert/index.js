@@ -34,14 +34,13 @@ function ProfileInsert(props) {
           <div className="general">
             <p>General information:</p>
             <div className="card">
-              <textarea id="generalInfo" readOnly>
-                {props.currentUser.generalInformation}
+              <textarea id="generalInfo" readOnly value={props.currentUser.generalInformation}>
               </textarea>
             </div>
           </div>
         </div>
         <div className="card-footer">
-
+          {/*Left blank, to be filled in later?*/}
         </div>
       </div>
     </div>

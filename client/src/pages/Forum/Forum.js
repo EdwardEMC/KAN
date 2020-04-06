@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Wrapper from "../components/Wrapper";
-import ForumInsert from "../components/ForumInsert";
+import Wrapper from "../../components/Wrapper";
+import ForumInsert from "../../components/ForumInsert";
 
 class Forum extends Component {
   render() {

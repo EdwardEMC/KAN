@@ -3,6 +3,10 @@ import axios from "axios";
 // axios.defaults.withCredentials = true
 
 export default {
+  //============================================
+  // GET REQUESTS
+  //============================================
+
   // gets all current users data
   getUsers: function() {
     return axios.get("/api/user", { withCredentials: true });
@@ -16,15 +20,40 @@ export default {
   getTopics: function(category) {
     return axios.get("/api/topics/" + category);
   },
+  
+  //============================================
+  // POST REQUESTS
+  //============================================
 
   // checks a user logining in
-  loginCheck: function(postData) {
-    return axios.post("/api/login", postData);
+  loginCheck: function(data) {
+    return axios.post("/api/login", data);
   },
 
   // Saves a new user to the database
-  newUser: function(postData) {
-    return axios.post("/api/register", postData); 
-    //trying to find in 3000 not 3001 (server), have to find a way not to hard code it
+  newUser: function(data) {
+    return axios.post("/api/register", data); 
+  },
+
+  newTopic: function(data) {
+    return axios.post("/api/topic", data); 
+  },
+
+  //============================================
+  // PUT REQUESTS
+  //============================================
+
+  // Updates a user on the database
+  updateUser: function(data) {
+    return axios.put("/api/user", data);
+  },
+
+  //============================================
+  // DELETE REQUESTS
+  //============================================
+
+  // Deletes a user
+  deleteUser: function() {
+    return axios.delete("/api/user");
   }
 };

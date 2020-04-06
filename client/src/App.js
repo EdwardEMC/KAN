@@ -7,8 +7,13 @@ import Header from "./components/Header";
 import MyPlaces from "./pages/MyPlaces";
 import Description from "./pages/Description";
 import Profile from "./pages/Profile";
-import Forum from "./pages/Forum";
-import Subforum from "./pages/Subforum";
+
+//Forum pages
+import Forum from "./pages/Forum/Forum";
+import Subforum from "./pages/Forum/Subforum";
+import Topic from "./pages/Forum/Topic";
+import PostTopic from "./pages/Forum/PostTopic"
+
 import Mapcomp from "./pages/Mapcomp";
 import Chats from "./pages/Chats";
 import Search from "./pages/Search";
@@ -27,7 +32,10 @@ const NavRoutes = () => {
       <div className="Site-content">
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/forums" component={Forum} />
-        <Route path="/forums/:handle" component={Subforum} />
+        <Route exact path="/forums/:handle" component={Subforum} />
+        <Route exact path="/forums/:handle/:topic" component={Topic} />
+        <Route exact path="/forums/:handle/post/topic" component={PostTopic} />
+        {/* <Route exact path="/forums/:handle/:topic/post/comment" component={Topic} /> */}
         <Route exact path="/myPlaces" component={MyPlaces} />
         <Route exact path="/map" component={Mapcomp} />
         <Route exact path="/chats" component={Chats} />

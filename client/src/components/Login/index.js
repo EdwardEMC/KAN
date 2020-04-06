@@ -37,7 +37,7 @@ function LoginForm() {
           // entered email ID is not found in database
           emailInput.value = "";
           passwordInput.value = "";
-          document.getElementById("errorMsg").innerHTML = "Username does not exist!";
+          document.getElementById("errorMsg").innerHTML = "Email does not exist!";
           return;
         }
       });
