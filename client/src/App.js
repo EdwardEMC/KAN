@@ -4,6 +4,7 @@ import { StoreProvider } from "./components/utils/GlobalState";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Header from "./components/Header";
+import MyPlaces from "./pages/MyPlaces";
 import Description from "./pages/Description";
 import Profile from "./pages/Profile";
 import Forum from "./pages/Forum";
@@ -27,6 +28,7 @@ const NavRoutes = () => {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/forums" component={Forum} />
         <Route path="/forums/:handle" component={Subforum} />
+        <Route exact path="/myPlaces" component={MyPlaces} />
         <Route exact path="/map" component={Mapcomp} />
         <Route exact path="/chats" component={Chats} />
         <Route exact path="/search" component={Search} />
