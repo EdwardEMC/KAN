@@ -40,30 +40,34 @@ const Subforum = () => {
             </Link>
           </div>
         </div>
-        {/*Add a map function to display all topics in card form */}
         {topics.map(element => (
           <div key={element.id}>
             <div className="card">
               <div className="card-header">
-                <div className="row">
-                  <div className="col-sm-6">
-                    <h3>{element.title}</h3>
-                  </div>
-                  <div className="col-sm-6 text-right">
-                    <Link to={"/forums/" + category[1] + "/TopicTitle"} >
-                      <p>Expand Topic</p>
-                    </Link>
-                  </div>
-                </div>
+                <h3>{element.title}</h3>
               </div>
               <div className="card-body">
                 <div>
-                  {element.description}
+                  {element.description} {/* Limit to certain amount of letters show full description when expanded */}
                 </div>
                 <br></br>
               </div>
               <div className="card-footer">
-                <p>Posted by: {element.User.userName}</p>
+                <div className="row">
+                  <div className="col-sm-6">
+                    <p>Posted by: {element.User.userName}</p>
+                  </div>
+                  <div className="col-sm-6 text-right">
+                    <Link to={{
+                      pathname: "/forums/" + category[1] + "/" + element.title,
+                      state: {
+                        topic: element
+                        }
+                      }} >
+                      <p>Comments</p> {/* Add comment numbers after comment section complete */}
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
             <br></br>
