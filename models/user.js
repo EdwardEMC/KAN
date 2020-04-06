@@ -52,21 +52,18 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
   
-  // User.associate = function(models) {
-  //   User.hasMany(models.Topics, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
-
-  // User.associate = function(models) {
-  //   User.hasMany(models.Comments, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
+  User.associate = function(models) {
+    User.hasMany(models.Topic, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+    User.hasMany(models.Comment, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
 
   // User.associate = function(models) {
   //   User.hasMany(models.Chats, {

@@ -41,6 +41,21 @@ module.exports = function(app) {
     })
   });
 
+  // route to return a list of all comment relating to a topic
+  app.get("/api/topics/comments", function(req, res) {
+    /*Not making it here yet */
+    console.log("here")
+    console.log(req.body);
+    // db.Comment.findAll({ 
+    //   where: {
+    //     TopicId: req.body
+    //   },
+    //   include: [db.User]
+    // }).then(function(dbTopic) {
+    //   res.json(dbTopic);
+    // })
+  });
+
   //===========================================================================
   // POST REQUESTS
   //===========================================================================
@@ -66,13 +81,27 @@ module.exports = function(app) {
 
   // route to POST a new topic
 	app.post("/api/topic", function(req, res) {
-    console.log("here");
     db.Topic.create({
       title: req.body.title,
       description: req.body.description,
       category: req.body.category,
       UserId: req.user.id
   })
+    .then(function() {
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      res.sendStatus(401).json(err);
+    });
+  });
+
+  // route to POST a new topic
+	app.post("/api/topic/comment", function(req, res) {
+    db.Comment.create({
+      description: req.body.description,
+      TopicId: req.body.topicId,
+      UserId: req.user.id
+    })
     .then(function() {
       res.sendStatus(200);
     })

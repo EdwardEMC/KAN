@@ -17,10 +17,16 @@ export default {
     return axios.get("/api/user/id", { withCredentials: true });
   },
 
+  // gets all topics relating to the subforum
   getTopics: function(category) {
     return axios.get("/api/topics/" + category);
   },
-  
+
+  // gets all comments about a certain topic
+  getComments: function(TopicId) {
+    return axios.get("/api/topics/comments", TopicId);
+  },
+
   //============================================
   // POST REQUESTS
   //============================================
@@ -35,8 +41,14 @@ export default {
     return axios.post("/api/register", data); 
   },
 
+  // Posting a new topic to a forum
   newTopic: function(data) {
     return axios.post("/api/topic", data); 
+  },
+
+  // Posting a comment to a topic
+  newComment: function(data) {
+    return axios.post("/api/topic/comment", data);
   },
 
   //============================================

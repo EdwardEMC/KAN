@@ -35,7 +35,6 @@ const NavRoutes = () => {
         <Route exact path="/forums/:handle" component={Subforum} />
         <Route exact path="/forums/:handle/:topic" component={Topic} />
         <Route exact path="/forums/:handle/post/topic" component={PostTopic} />
-        {/* <Route exact path="/forums/:handle/:topic/post/comment" component={Topic} /> */}
         <Route exact path="/myPlaces" component={MyPlaces} />
         <Route exact path="/map" component={Mapcomp} />
         <Route exact path="/chats" component={Chats} />

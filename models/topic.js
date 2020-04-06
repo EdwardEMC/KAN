@@ -24,15 +24,12 @@ module.exports = function(sequelize, DataTypes) {
       },
       onDelete: "cascade"
     });
+    Topic.hasMany(models.Comment, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
-
-  // Topic.associate = function(models) {
-  //   Topic.hasMany(models.Comment, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
 
   return Topic;
 };
