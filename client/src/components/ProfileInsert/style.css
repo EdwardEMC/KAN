@@ -6,3 +6,13 @@
   resize: none;
   min-height: 100px;
 }
+
+#userName {
+  color: white;
+  text-shadow: 2px 2px 5px black;
+}
+
+.userInfo {
+  color: black;
+  text-shadow: 2px 2px 5px white;
+}

@@ -15,6 +15,7 @@ function Header() {
           </div>
           &emsp;
           &emsp;
+          &emsp;
           <div id="poi">
             <img className="markerImages" src={iconPath + "poi.png"} alt="place of interest" />
           </div>
@@ -23,7 +24,7 @@ function Header() {
           <Logo />
         </div>
         <div className="dropdown menu col-sm-4 text-center">
-          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button className="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Main Menu
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">

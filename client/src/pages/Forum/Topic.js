@@ -28,7 +28,7 @@ const Topic = (props) => {
         <div className="row">
           <div className="col-sm-6">
             <Link to={"/forums/" + props.match.params.handle} >
-              <p>Back</p>
+              <h5>Back</h5>
             </Link>
           </div>
           <div className="col-sm-6 text-right">

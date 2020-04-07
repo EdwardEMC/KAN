@@ -52,7 +52,7 @@ const PostTopic = () => {
       <br></br>
       <div className="container">
         <Link to={"/forums/" + topic[1]} >
-          <p>Back</p>
+          <h5>Back</h5>
         </Link>
         <div className="card">
           <div className="card-header text-center">

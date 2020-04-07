@@ -4,9 +4,12 @@ import { StoreProvider } from "./components/utils/GlobalState";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Header from "./components/Header";
-import MyPlaces from "./pages/MyPlaces";
 import Description from "./pages/Description";
+
+//Profile pages
 import Profile from "./pages/Profile";
+import MyPlaces from "./pages/MyPlaces";
+import MyTopics from "./pages/MyTopics";
 
 //Forum pages
 import Forum from "./pages/Forum/Forum";
@@ -36,6 +39,7 @@ const NavRoutes = () => {
         <Route exact path="/forums/:handle/:topic" component={Topic} />
         <Route exact path="/forums/:handle/post/topic" component={PostTopic} />
         <Route exact path="/myPlaces" component={MyPlaces} />
+        <Route exact path="/myTopics" component={MyTopics} />
         <Route exact path="/map" component={Mapcomp} />
         <Route exact path="/chats" component={Chats} />
         <Route exact path="/search" component={Search} />

@@ -29,12 +29,12 @@ const Subforum = () => {
         <div className="row">
           <div className="col-sm-6">
             <Link to="/forums/" >
-              <p>Back to Forums</p>
+              <h5>Back to Forums</h5>
             </Link>
           </div>
           <div className="col-sm-6 text-right">
             <Link to={"/forums/" + category[1] + "/post/topic"} >
-              <p>Post New Topic</p>
+              <h5>Post New Topic</h5>
             </Link>
           </div>
         </div>
@@ -62,7 +62,7 @@ const Subforum = () => {
                         topic: element
                         }
                       }} >
-                      <p>Comments</p> {/* Add comment numbers after comment section complete */}
+                      <h5>Comments</h5> {/* Add comment numbers after comment section complete */}
                     </Link>
                   </div>
                 </div>

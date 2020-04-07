@@ -61,18 +61,18 @@ function UserSettings(props) {
           <form className="update-user"> 
             <div className="form-row">
               <div className="form-group col-md-6">
-                <label htmlFor="name-input">Name</label>
+                <label htmlFor="name-input"><h5>Name</h5></label>
                 <input  id="name-input" className="input form-control" type="text" required placeholder={props.currentUser.name}/>
               </div>
               <div className="form-group col-md-6">
-                <label htmlFor="phoneNumber-input">Phone Number</label>
+                <label htmlFor="phoneNumber-input"><h5>Phone Number</h5></label>
                 <input className="input form-control" id="phoneNumber-input" type="number" required placeholder={props.currentUser.phone}/>
                 <br></br>
               </div>
             </div> 
             <div className="form-row">  
               <div className="form-group col-md-12">
-                <label htmlFor="information-input">General Information</label>
+                <label htmlFor="information-input"><h5>General Information</h5></label>
                 <textarea id="information-input" className="input form-control" type="text" placeholder={props.currentUser.generalInformation}/> 
               </div>
             </div>
