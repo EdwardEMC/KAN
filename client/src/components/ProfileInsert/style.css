@@ -1,8 +1,8 @@
 .mainWin {
-    margin-top: 5%;
+  margin-top: 5%;
 }
 
 #generalInfo {
-    resize: none;
-    min-height: 100px;
+  resize: none;
+  min-height: 100px;
 }

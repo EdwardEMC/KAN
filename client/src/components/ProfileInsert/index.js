@@ -7,10 +7,10 @@ function ProfileInsert(props) {
   return (
     <div className="container mainWin">
       <div className="card">
-        <div className="card-header">
+        <div className="card-header colorHeader">
           <p>User Name: {props.currentUser.userName}</p>
         </div>
-        <div className="card-body">
+        <div className="card-body colorBody">
           <div className="row">
             <div className="col-sm-6">
             <img className="img-fluid" src="https://via.placeholder.com/250" alt="profilePic" />
@@ -39,10 +39,11 @@ function ProfileInsert(props) {
             </div>
           </div>
         </div>
-        <div className="card-footer">
+        <div className="card-footer colorFooter">
           {/*Left blank, to be filled in later?*/}
         </div>
       </div>
+      <br></br>
     </div>
   );
 }

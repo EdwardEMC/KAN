@@ -39,7 +39,7 @@ const Topic = (props) => {
         </div>
         <div key={props.location.state.topic.id}>
           <div className="card">
-            <div className="card-header">
+            <div className="card-header colorHeader">
               <div className="row">
                 <div className="col-sm-6">
                   <h3>{props.location.state.topic.title}</h3>
@@ -49,7 +49,7 @@ const Topic = (props) => {
                 </div>
               </div>
             </div>
-            <div className="card-body">
+            <div className="card-body colorBody">
               <div>
                 {props.location.state.topic.description} {/* Limit to certain amount of letters show full description when expanded */}
               </div>
@@ -62,7 +62,7 @@ const Topic = (props) => {
           {comments.map(element => (
           <div key={element.id}>
             <div className="card">
-              <div className="card-header">
+              <div className="card-header colorFooter">
                 <div className="row">
                   <div className="col-sm-6">
                     <h5>{element.User.userName}</h5>
@@ -72,7 +72,7 @@ const Topic = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="card-body">
+              <div className="card-body colorBody">
                 <div>
                   {element.description}
                 </div>

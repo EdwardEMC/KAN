@@ -71,7 +71,7 @@ function LoginForm() {
         </div>
         <br></br>
         <div className="text-center">
-          <button onClick={LoginSubmit} className="btn btn-primary">
+          <button onClick={LoginSubmit} className="btn btn-success">
           Submit
           </button>
           <p className="help" id="errorMsg"></p>

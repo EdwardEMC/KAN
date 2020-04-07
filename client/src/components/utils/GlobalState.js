@@ -1,3 +1,5 @@
+// end up using this for dark mode?
+
 import React, { createContext, useReducer, useContext } from "react";
 
 const StoreContext = createContext();

@@ -22,8 +22,6 @@ const Subforum = () => {
     });
   }
 
-  console.log(topics, "USER")
-
   return (
     <Wrapper>
       <div className="container">
@@ -43,16 +41,16 @@ const Subforum = () => {
         {topics.map(element => (
           <div key={element.id}>
             <div className="card">
-              <div className="card-header">
+              <div className="card-header colorHeader">
                 <h3>{element.title}</h3>
               </div>
-              <div className="card-body">
+              <div className="card-body colorBody">
                 <div>
                   {element.description} {/* Limit to certain amount of letters show full description when expanded */}
                 </div>
                 <br></br>
               </div>
-              <div className="card-footer">
+              <div className="card-footer colorFooter">
                 <div className="row">
                   <div className="col-sm-6">
                     <p>Posted by: {element.User.userName}</p>

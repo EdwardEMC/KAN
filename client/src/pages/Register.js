@@ -12,10 +12,10 @@ class Register extends Component {
         <br></br>
         <div className="container">
           <div className="card">
-            <h2 className="text-center card-header">
+            <h2 className="text-center card-header greenHeader">
               New Registration
             </h2>
-            <div className="card-body">
+            <div className="card-body greenBody">
               <RegisterForm />
             </div>
           </div>

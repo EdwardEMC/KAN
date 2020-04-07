@@ -33,23 +33,26 @@ function PostComment(props) {
   };
 
   return (
-    <div className="card">
-      <div className="card-header text-center">
-        New Comment
+    <div>
+      <div className="card">
+        <div className="card-header text-center colorHeaderComment">
+          New Comment
+        </div>
+        <div className="card-body colorBodyComment">
+          <form className="posttopic">
+            <div className="form-group">
+              <textarea id="description-input" className="input form-control" type="text" required placeholder="Text goes here..."/>
+              <p id="missingDescription"></p>
+            </div>
+            <div className="text-center">
+              <button onClick={submitComment} className="btn btn-primary">
+                Post Comment
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div className="card-body">
-        <form className="posttopic">
-          <div className="form-group">
-            <textarea id="description-input" className="input form-control" type="text" required placeholder="Text goes here..."/>
-            <p id="missingDescription"></p>
-          </div>
-          <div className="text-center">
-            <button onClick={submitComment} className="btn btn-primary">
-              Post Comment
-            </button>
-          </div>
-        </form>
-      </div>
+    <br></br>
     </div>
   )
 }
