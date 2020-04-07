@@ -3,16 +3,20 @@ import { Link } from "react-router-dom";
 import Logo from "../Logo";
 import "./style.css";
 
+const iconPath = process.env.PUBLIC_URL + '/assets/HeaderIcons/';
+
 function Header() {
   return ( 
     <div id="header">
       <div className="row">
         <div className="col-sm-4 text-center" id="markers">
           <div id="online">
-            <img src="" alt="oneline marker" />
+            <img className="markerImages" src={iconPath + "online.png"} alt="online marker" />
           </div>
+          &emsp;
+          &emsp;
           <div id="poi">
-            <img src="" alt="place of interest" />
+            <img className="markerImages" src={iconPath + "poi.png"} alt="place of interest" />
           </div>
         </div>
         <div className="col-sm-4 text-center" id="logo">

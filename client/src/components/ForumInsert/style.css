@@ -1,3 +1,7 @@
-.forumPics, .secondRow {
-    margin-top: 15%;
+.forumPics{
+    margin-top: 5%;
+}
+
+.link {
+    color: black;
 }

@@ -54,10 +54,10 @@ function UserSettings(props) {
   return (
     <div className="container update">
       <div className="card">
-        <h2 className="text-center card-header">
+        <h2 className="text-center card-header colorHeader">
           Update User
         </h2>
-        <div className="card-body">
+        <div className="card-body colorBody">
           <form className="update-user"> 
             <div className="form-row">
               <div className="form-group col-md-6">

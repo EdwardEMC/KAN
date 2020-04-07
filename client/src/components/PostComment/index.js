@@ -2,9 +2,10 @@ import React from "react";
 import API from "../../components/utils/API";
 
 function PostComment(props) {
+
   const submitComment = (event) => {
     event.preventDefault();
-        
+    
     document.getElementById("missingDescription").value = "";
 
     // Getting references from inputs
@@ -25,7 +26,7 @@ function PostComment(props) {
       console.log(result);
       document.getElementById("description-input").value = "";
       document.getElementById("missingDescription").value = "";
-      // history.push("/forums/" + topic[1]);
+      window.location.reload(); /*Change to reload component later*/
     })
     .catch(function(err) {
       console.log(err);

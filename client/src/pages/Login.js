@@ -13,10 +13,10 @@ class Login extends Component {
         <br></br>
         <div className="container">
           <div className="card">
-            <h2 className="text-center card-header greenHeader">
+            <h2 className="text-center card-header colorHeader">
               Login
             </h2>
-            <div className="card-body greenBody">
+            <div className="card-body colorBody">
               <LoginForm />
             </div>
           </div>

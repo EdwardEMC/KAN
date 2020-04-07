@@ -3,8 +3,12 @@
   min-height: 100px;
 }
 
-#logo, #online, #poi, .menu {
+#logo, .menu {
   padding-top: 40px;
+}
+
+#markers {
+  padding-top: 20px;
 }
 
 #online, #poi {
@@ -16,3 +20,7 @@
   color: white;
 }
 
+.markerImages {
+  width: 50px;
+  height: 50px;
+}
