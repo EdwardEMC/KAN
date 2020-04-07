@@ -37,7 +37,7 @@ function PostComment(props) {
     <div>
       <div className="card">
         <div className="card-header text-center colorHeaderComment">
-          New Comment
+          <h5>New Comment</h5>
         </div>
         <div className="card-body colorBodyComment">
           <form className="posttopic">

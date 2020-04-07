@@ -17,7 +17,7 @@ import Subforum from "./pages/Forum/Subforum";
 import Topic from "./pages/Forum/Topic";
 import PostTopic from "./pages/Forum/PostTopic"
 
-import Mapcomp from "./pages/Mapcomp";
+import MapComp from "./pages/Mapcomp";
 import Chats from "./pages/Chats";
 import Search from "./pages/Search";
 import Settings from "./pages/Settings";
@@ -40,7 +40,7 @@ const NavRoutes = () => {
         <Route exact path="/forums/:handle/post/topic" component={PostTopic} />
         <Route exact path="/myPlaces" component={MyPlaces} />
         <Route exact path="/myTopics" component={MyTopics} />
-        <Route exact path="/map" component={Mapcomp} />
+        <Route exact path="/map" component={MapComp} />
         <Route exact path="/chats" component={Chats} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/settings" component={Settings} />

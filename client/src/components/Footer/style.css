@@ -1,6 +1,7 @@
 #footer {
   background-color: rgb(201, 132, 116);
   min-height: 100px;
+  z-index: 99;
 }
 
 #copyright {

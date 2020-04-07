@@ -9,7 +9,7 @@ const Topic = (props) => {
 
   useEffect(() => {
     loadComments()
-  }, [PostComment])
+  }, [])
 
   function loadComments() {
     API.getComments(props.location.state.topic.id)

@@ -1,14 +1,33 @@
-import React, { Component } from "react";
-import Wrapper from "../components/Wrapper";
+import React, { Component } from 'react'
+import { GoogleMap, LoadScript } from '@react-google-maps/api'
+import "./style.css";
 
-class Mapcomp extends Component {
+const center = {
+  lat: 0,
+  lng: -180,
+}
+
+class MapComp extends Component {
   render() {
-    return (
-      <Wrapper>
-        <p>Map</p>
-      </Wrapper>
-    )
+     return (
+      <LoadScript
+        id="script-loader"
+        googleMapsApiKey="AIzaSyCPo2a9WyXNAIwuMBgu8AXuCatBsc17TSo"
+      >
+        {/* https://github.com/JustFly1984/react-google-maps-api/blob/master/packages/react-google-maps-api-gatsby-example/src/components/google-maps.js  look at this, almost understand it, need to create a component that exports GoogleMap and insert below*/}
+        <GoogleMap
+          id='map'
+          onLoad={map => {
+            const bounds = new window.google.maps.LatLngBounds();
+            map.fitBounds(bounds);
+          }}
+          center={center}
+        >
+          ...Your map components
+        </GoogleMap>
+      </LoadScript>
+     )
   }
 }
-  
-export default Mapcomp;
+
+export default MapComp
