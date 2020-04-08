@@ -11,13 +11,17 @@ function Header() {
       <div className="row">
         <div className="col-sm-4 text-center" id="markers">
           <div id="online">
-            <img className="markerImages" src={iconPath + "online.png"} alt="online marker" />
+            <Link to="/mapType/setOnline">
+              <img className="markerImages" src={iconPath + "online.png"} alt="online marker" />
+            </Link>
           </div>
           &emsp;
           &emsp;
           &emsp;
           <div id="poi">
-            <img className="markerImages" src={iconPath + "poi.png"} alt="place of interest" />
+            <Link to="/mapType/setPoI">
+              <img className="markerImages" src={iconPath + "poi.png"} alt="place of interest" />
+            </Link>
           </div>
         </div>
         <div className="col-sm-4 text-center" id="logo">
@@ -29,7 +33,7 @@ function Header() {
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <p className="dropdown-item">
-              <Link to="/map"> 
+              <Link to="/mapType/map"> 
                 Map
               </Link>
             </p>
