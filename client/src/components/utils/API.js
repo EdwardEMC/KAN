@@ -27,6 +27,10 @@ export default {
     return axios.get("/api/comments/" + TopicId);
   },
 
+  getAllMarkers: function() {
+    return axios.get("/api/markers");
+  },
+
   //============================================
   // POST REQUESTS
   //============================================
@@ -51,6 +55,10 @@ export default {
     return axios.post("/api/topic/comment", data);
   },
 
+  setPoIMarker: function(data) {
+    return axios.post("/api/user/PoI", data);
+  },
+
   //============================================
   // PUT REQUESTS
   //============================================
@@ -58,6 +66,11 @@ export default {
   // Updates a user on the database
   updateUser: function(data) {
     return axios.put("/api/user", data);
+  },
+
+  // Updates a user with their online marker
+  setOnlineMarker: function(data) {
+    return axios.put("/api/user/online", data);
   },
 
   //============================================

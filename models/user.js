@@ -43,14 +43,6 @@ module.exports = function(sequelize, DataTypes) {
   {
     freezeTableName: true
   });
-
-  // User.associate = function(models) {
-  //   User.hasMany(models.PoI, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
   
   User.associate = function(models) {
     User.hasMany(models.Topic, {
@@ -59,6 +51,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     });
     User.hasMany(models.Comment, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+    User.hasMany(models.PoI, {
       foreignKey: {
         allowNull: false
       }

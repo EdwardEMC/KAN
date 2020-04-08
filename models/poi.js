@@ -25,14 +25,14 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true
   });
 
-  // PoI.associate = function(models) {
-  //   PoI.belongsTo(models.User, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     },
-  //     onDelete: "cascade"
-  //   });
-  // };
+  PoI.associate = function(models) {
+    PoI.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      },
+      onDelete: "cascade"
+    });
+  };
 
   return PoI;
 };

@@ -1,4 +1,5 @@
 const db = require("../models");
+const { Op } = require("sequelize");
 const passport = require("../config/passport");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 
@@ -53,6 +54,22 @@ module.exports = function(app) {
     })
   });
 
+  // route to get all markers
+  app.get("/api/markers", function(req, res) {
+    db.PoI.findAll({include: [db.User]}).then(function(dbPoI) { 
+      db.User.findAll({
+        where: {
+          lat: {
+            [Op.not]: null
+          }
+        }
+      }).then(function(dbUser) {
+        const data = dbPoI.concat(dbUser); //probably manipulate to get same values for markers (id, title, description?)
+        res.json(data);
+      })
+    })
+  });
+  
   //===========================================================================
   // POST REQUESTS
   //===========================================================================
@@ -119,6 +136,26 @@ module.exports = function(app) {
     })(req, res, next);
   })
 
+  // route to POST a new PoI marker
+	app.post("/api/user/PoI", function(req, res) {
+    db.PoI.create({
+      title: req.body.title,
+      description: req.body.description,
+      category: req.body.category,
+      lat: req.body.lat,
+      lng: req.body.lng,
+      UserId: req.user.id
+    })
+    .then(function() {
+      console.log("Successfully set Marker");
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      res.sendStatus(401).json(err);
+    });
+  });
+
+
   //===========================================================================
   // PUT REQUESTS
   //===========================================================================
@@ -143,6 +180,28 @@ module.exports = function(app) {
       res.status(401).json(err);
     });
   });
+
+  // route to PUT (update) a user's online marker (lat, lng)
+  app.put("/api/user/online", function(req, res) {
+    db.User.update({
+      lat: req.body.lat,
+      lng: req.body.lng,
+    },
+    {
+      where: {
+        id: req.user.id
+      }
+    })
+    .then(function() {
+      console.log("User is now online");
+      res.status(200).end();
+    })
+    .catch(function(err) {
+      res.status(401).json(err);
+    });
+  });
+
+  //route to remove lat/lng (going offline)
   
   //===========================================================================
   // DELETE REQUESTS
@@ -159,6 +218,8 @@ module.exports = function(app) {
         res.json(dbUser);
     });
   });
+
+  //route to delete PoI
 };
 
 

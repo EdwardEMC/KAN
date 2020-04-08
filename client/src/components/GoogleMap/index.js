@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 import MapContent from "../MapContent";
+import MapOnline from "../MapOnline";
+import MapPoI from "../MapPoI";
 import "./style.css";
 
 // https://github.com/lauriharpf/shipwrecks/blob/master/src/main/js/map/Map.js <- fucking legend
@@ -65,7 +67,7 @@ const GoogleMaps = () => {
         onLoad={onMapLoad}
         onCenterChanged={centerChanged}
       >
-        {/* <MapOnline /> */}
+        <MapOnline />
       </GoogleMap>
     );
   }
@@ -78,7 +80,7 @@ const GoogleMaps = () => {
         onLoad={onMapLoad}
         onCenterChanged={centerChanged}
       >
-        {/* <MapPoI /> */}
+        <MapPoI />
       </GoogleMap>
     );
   }
