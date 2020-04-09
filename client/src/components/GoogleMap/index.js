@@ -20,15 +20,24 @@ const GoogleMaps = () => {
         setCenter(
           {
             lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lng: position.coords.longitude,
+            zoom: 10
           });
-      })
+      }, 
+      setCenter(
+        {
+          lat: -33.8688,
+          lng: 151.2093,
+          zoom: 3
+        })
+      )
     }
+    // incase the browser doesn't support navigator
     else {
       setCenter(
         {
-          lat: 25.34,
-          lng: 131.04
+          lat: -33.8688,
+          lng: 151.2093,
         });
     }
   }

@@ -81,7 +81,8 @@ module.exports = function(app) {
       email: req.body.email,
       phone: req.body.phone,
       name: req.body.name,
-      generalInformation: req.body.generalInformation,      
+      generalInformation: req.body.generalInformation, 
+      // category: "User", hard coded for icon distribution  
       password: req.body.password,
   })
     .then(function() {

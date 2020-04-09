@@ -21,15 +21,24 @@ const MapOnline = () => {
         setUser(
           {
             lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lng: position.coords.longitude,
+            zoom: 10
           });
-      })
+      }, 
+      setUser(
+        {
+          lat: -33.8688,
+          lng: 151.2093,
+          zoom: 3
+        })
+      )
     }
+    // incase the browser doesn't support navigator
     else {
       setUser(
         {
-          lat: 25.34,
-          lng: 131.04
+          lat: -33.8688,
+          lng: 151.2093,
         });
     }
   }
@@ -80,15 +89,7 @@ const MapOnline = () => {
         draggable={true}
         onDragEnd={event => setUser({lat: event.latLng.lat(), lng: event.latLng.lng()})}
         // Not required, but if you want a custom icon:
-        // When marker loads switch between online and poi marker icons
-        // icon={{
-        //   path:
-        //     "M12.75 0l-2.25 2.25 2.25 2.25-5.25 6h-5.25l4.125 4.125-6.375 8.452v0.923h0.923l8.452-6.375 4.125 4.125v-5.25l6-5.25 2.25 2.25 2.25-2.25-11.25-11.25zM10.5 12.75l-1.5-1.5 5.25-5.25 1.5 1.5-5.25 5.25z",
-        //   fillColor: "#0000ff",
-        //   fillOpacity: 1.0,
-        //   strokeWeight: 0, 
-        //   scale: 1.25
-        // }}
+        // icon={}
       />
       {infoOpen && selectedPlace && (
         <InfoWindow
@@ -96,11 +97,10 @@ const MapOnline = () => {
           onCloseClick={() => setInfoOpen(false)}
         >
           <div>
-            <h3 className="text-center">Set Marker Here?</h3> {/*this will be the userName or PoI title*/}
+            <h3 className="text-center">Set Marker Here?</h3>
             <div className="text-center">
-              <button className="btn btn-success" onClick={setOnline}>Go Online</button> {/*button to save lat/lng to mysql*/}
+              <button className="btn btn-success" onClick={setOnline}>Go Online</button>
             </div>
-            {/* <div>{online.pos.lat},{online.pos.lng}</div>  */}
           </div>
         </InfoWindow>
       )}
