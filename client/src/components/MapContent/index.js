@@ -4,8 +4,8 @@ import API from "../utils/API";
 
 // https://codesandbox.io/s/react-google-maps-api-ir5ks marker code
 
-// const poiPath = process.env.PUBLIC_URL + '/assets/CategoryIcons/';
-// const userPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
+const poiPath = process.env.PUBLIC_URL + '/assets/CategoryIcons/';
+const userPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
 
 const MapContent = () => {
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -52,7 +52,9 @@ const MapContent = () => {
               myPlaces.map(place => {
                 // saved for use with the list to show certain icons
                 if(place.userName) {
-                  // let iconPoI = userPath + place.icon;
+                  let iconUser = userPath + "online.png";
+                  // for custom icons when implemented
+                  // let iconUser = userPath + place.icon;
                   return (
                     <Marker
                       key={place.lat}
@@ -61,12 +63,12 @@ const MapContent = () => {
                       onClick={event => markerClickHandler(event, place)}
                       clusterer={clusterer}
                       // Marker loads user icons
-                      // icon={}
+                      icon={iconUser}
                     /> 
                   )
                 }
                 else {
-                  // let iconPoI = poiPath + place.category;
+                  let iconPoI = poiPath + place.category + ".png";
                   return (
                     <Marker
                       key={place.lat}
@@ -75,7 +77,7 @@ const MapContent = () => {
                       onClick={event => markerClickHandler(event, place)}
                       clusterer={clusterer}
                       // Marker loads category icons
-                      // icon={iconPoI}
+                      icon={iconPoI}
                     /> 
                   )
                 }

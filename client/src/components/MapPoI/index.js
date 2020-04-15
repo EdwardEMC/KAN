@@ -70,7 +70,7 @@ const MapPoI = () => {
     const data = {
       title: document.getElementById("title-input").value,
       description: document.getElementById("description-input").value,
-      category: document.getElementById("category-input").value,
+      category: document.getElementById("category-input").value.replace(/ +/g, ""),
       lat: online.pos.lat,
       lng: online.pos.lng
     }

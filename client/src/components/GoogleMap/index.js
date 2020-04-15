@@ -58,12 +58,8 @@ const GoogleMaps = () => {
         center={center}
         onLoad={onMapLoad}
         onCenterChanged={centerChanged}
-      >
-        <MapContent
-          // shipwrecks={shipwrecks}
-          // favourites={favourites}
-          // handleMarkerClick={handleMarkerClick}
-        />
+      > 
+        <MapContent />
       </GoogleMap>
     );
   }
