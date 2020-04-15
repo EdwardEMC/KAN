@@ -17,6 +17,7 @@ import Subforum from "./pages/Forum/Subforum";
 import Topic from "./pages/Forum/Topic";
 import PostTopic from "./pages/Forum/PostTopic"
 
+import OtherUsers from "./pages/OtherUsers";
 import MapComp from "./pages/Mapcomp";
 import Chats from "./pages/Chats";
 import Search from "./pages/Search";
@@ -34,6 +35,7 @@ const NavRoutes = () => {
       <Header />
       <div className="Site-content">
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/profile/:user" component={OtherUsers} />
         <Route exact path="/forums" component={Forum} />
         <Route exact path="/forums/:handle" component={Subforum} />
         <Route exact path="/forums/:handle/:topic" component={Topic} />

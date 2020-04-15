@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { Marker, MarkerClusterer, InfoWindow } from "@react-google-maps/api";
+import { Link } from "react-router-dom";
 import API from "../utils/API";
 
 // https://codesandbox.io/s/react-google-maps-api-ir5ks marker code
@@ -118,7 +119,8 @@ const MapContent = (props) => {
             onCloseClick={() => setInfoOpen(false)}
           >
             <div>
-              <h3>{selectedPlace.title || selectedPlace.userName}</h3>
+              {selectedPlace.userName ? <Link to={"/profile/" + selectedPlace.userName}>Go To Profile</Link> : null}
+              <h4>{selectedPlace.title || selectedPlace.userName}</h4>
               <div>{selectedPlace.description || selectedPlace.generalInformation}</div>
             </div>
           </InfoWindow>

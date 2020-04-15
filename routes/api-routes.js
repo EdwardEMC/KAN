@@ -15,8 +15,8 @@ module.exports = function(app) {
     })
   });
 
-  // route to get data about a particular user
-  app.get("/api/user/id", function(req, res) { // add isAuthenticated, when it is working
+  // route to get data about the logged in user
+  app.get("/api/user/id", function(req, res) {
     // console.log(req.session);
     // console.log(req.sessionID);
     // console.log(req.user);
@@ -29,6 +29,20 @@ module.exports = function(app) {
     })
   });
   
+  // route to get data about a particular user
+  app.get("/api/user/:userName", function(req, res) {
+    db.User.findOne({
+      where: {
+        userName: req.params.userName,
+        lat: {
+          [Op.not]: null // can only view if the user is online
+        }
+      }
+    }).then(function(dbUser) {
+    res.json(dbUser);
+    })
+  });
+
   // route to return a list of all topics relating to subforum
   app.get("/api/topics/:category", function(req, res) {
     console.log(req.params.category);

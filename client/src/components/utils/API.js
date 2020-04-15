@@ -17,6 +17,11 @@ export default {
     return axios.get("/api/user/id", { withCredentials: true });
   },
 
+  // loads a users profile from the map
+  getProfile: function(userName) {
+    return axios.get("/api/user/" + userName);
+  },
+
   // gets all topics relating to the subforum
   getTopics: function(category) {
     return axios.get("/api/topics/" + category);

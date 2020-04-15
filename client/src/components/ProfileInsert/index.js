@@ -16,11 +16,11 @@ function ProfileInsert(props) {
             </div>
             <div className="col-sm-6">
               <Link to="/myPlaces"> 
-                <h5>My places of interest</h5>
+                <h5>Places of interest</h5>
               </Link>
               <br></br>
               <Link to="/myTopic"> 
-                <h5>My Topics</h5>
+                <h5>Topics</h5>
               </Link>
               <br></br>
               <div className="mainInfo">

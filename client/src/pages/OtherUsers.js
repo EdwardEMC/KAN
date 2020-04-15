@@ -3,15 +3,17 @@ import Wrapper from "../components/Wrapper";
 import API from "../components/utils/API"
 import ProfileInsert from "../components/ProfileInsert";
 
-const Profile = () => {
+const OtherUsers = () => {
   const [user, setUser] = useState([])
 
+  const userProfile = window.location.href.split("profile/");
+  
   useEffect(() => {
     loadUser()
   }, [])
 
   function loadUser() {
-    API.getUser()
+    API.getProfile(userProfile[1])
     .then(function(result) {
       setUser(result.data);
     })// If there's an error, log the error
@@ -20,11 +22,12 @@ const Profile = () => {
     });
   }
 
+  //make a new profile insert below as to add start chatting button
   return (
     <Wrapper>
-      <ProfileInsert currentUser = {user}/>
+      <ProfileInsert currentUser = {user}/> 
     </Wrapper>
   )
 }
   
-export default Profile;
+export default OtherUsers;
