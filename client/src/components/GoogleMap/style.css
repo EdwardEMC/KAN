@@ -1,4 +1,17 @@
 #map {
   min-height: calc(100vh - 200px);
   overflow: none;
+  position: relative;
+}
+
+#selectionTab {
+  position: absolute;
+  z-index: 99;
+  color: black;
+  background-color: white;
+}
+
+#main {
+  position: relative;
+  width: 100%;
 }

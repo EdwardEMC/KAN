@@ -9,6 +9,7 @@ import "./style.css";
 
 const GoogleMaps = () => { 
   const [center, setCenter] = useState();
+  const [icons, setIcons] = useState("all");
 
   useEffect(() => {
     showPosition()
@@ -49,18 +50,36 @@ const GoogleMaps = () => {
 
   // Determine which map content to load
   const mapType = window.location.href.split("/mapType/")
+
+  const selectMarkers = () => {
+    const selection = document.getElementById("selectionTab").value;
+    setIcons(selection);
+  } 
  
   if(mapType[1] === "map") {
     return (
-      <GoogleMap
-        id="map"
-        zoom={10}
-        center={center}
-        onLoad={onMapLoad}
-        onCenterChanged={centerChanged}
-      > 
-        <MapContent />
-      </GoogleMap>
+      <div id="main">
+        <div className="d-flex justify-content-center">
+          <select id="selectionTab" onChange={selectMarkers}>
+            <option value="all">All</option>
+            <option value="users">Users</option>
+            <option value="poi">Points of Interest</option>
+            <option value="Food">- Food</option>
+            <option value="Shop">- Shops</option>
+            <option value="Park">- Parks</option>
+            <option value="ViewPoint">- View Points</option>
+          </select>
+        </div>
+        <GoogleMap
+          id="map"
+          zoom={10}
+          center={center}
+          onLoad={onMapLoad}
+          onCenterChanged={centerChanged}
+        > 
+          <MapContent value={icons} />
+        </GoogleMap>
+      </div>
     );
   }
   else if(mapType[1] === "setOnline") {

@@ -7,11 +7,14 @@ import API from "../utils/API";
 const poiPath = process.env.PUBLIC_URL + '/assets/CategoryIcons/';
 const userPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
 
-const MapContent = () => {
+const MapContent = (props) => {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
   const [markerMap, setMarkerMap] = useState({});
   const [myPlaces, setMyPlaces] = useState();
+
+  // variable to hold which group the user wants to view (users, PoI, etc..)
+  let iconSelection = props.value; 
 
   useEffect(() => {
     getMarkers()
@@ -30,7 +33,7 @@ const MapContent = () => {
   const markerClickHandler = (event, place) => {
     // Remember which place was clicked
     setSelectedPlace(place);
-    // Required so clicking a 2nd marker works as expected
+    // Required so clicking a 2nd marker closes the first infobox
     if (infoOpen) {
       setInfoOpen(false);
     }
@@ -42,6 +45,20 @@ const MapContent = () => {
       return { ...prevState, [place.lat]: marker }; // not the best fix but staying for now (lat instead of id)
     });
   };
+
+  // function to load user markers
+  const displayMarkers = (place, clusterer, icon) => {
+    return (
+      <Marker
+        key={place.lat}
+        position={{lat: parseFloat(place.lat), lng: parseFloat(place.lng)}}
+        onLoad={marker => markerLoadHandler(marker, place)}
+        onClick={event => markerClickHandler(event, place)}
+        clusterer={clusterer}
+        icon={icon}
+      /> 
+    )
+  }
   
   if(myPlaces) {
     return (
@@ -51,36 +68,46 @@ const MapContent = () => {
             return (
               myPlaces.map(place => {
                 // saved for use with the list to show certain icons
-                if(place.userName) {
-                  let iconUser = userPath + "online.png";
-                  // for custom icons when implemented
-                  // let iconUser = userPath + place.icon;
-                  return (
-                    <Marker
-                      key={place.lat}
-                      position={{lat: parseFloat(place.lat), lng: parseFloat(place.lng)}}
-                      onLoad={marker => markerLoadHandler(marker, place)}
-                      onClick={event => markerClickHandler(event, place)}
-                      clusterer={clusterer}
-                      // Marker loads user icons
-                      icon={iconUser}
-                    /> 
-                  )
+                switch(iconSelection) {
+                  case "all":
+                    if(place.userName) {
+                      let icon = userPath + "online.png";
+                      // for custom icons when implemented
+                      // let iconUser = userPath + place.icon;
+                      return displayMarkers(place, clusterer, icon);
+                    }
+                    else {
+                      let icon = poiPath + place.category + ".png";
+                      return displayMarkers(place, clusterer, icon);
+                    }
+
+                  case "users":
+                    if(place.userName) {
+                      let icon = userPath + "online.png";
+                    // for custom icons when implemented
+                    // let iconUser = userPath + place.icon;
+                      return displayMarkers(place, clusterer, icon);
+                    }
+                    break;
+
+                  case "poi":
+                    if(place.category) {
+                      let icon = poiPath + place.category + ".png";
+                      return displayMarkers(place, clusterer, icon);
+                    }
+                    break;
+
+                  case iconSelection:
+                    if(place.category === iconSelection) {
+                      let icon = poiPath + place.category + ".png";
+                      return displayMarkers(place, clusterer, icon);
+                    }
+                    break;
+
+                  default:
+                    return false;
                 }
-                else {
-                  let iconPoI = poiPath + place.category + ".png";
-                  return (
-                    <Marker
-                      key={place.lat}
-                      position={{lat: parseFloat(place.lat), lng: parseFloat(place.lng)}}
-                      onLoad={marker => markerLoadHandler(marker, place)}
-                      onClick={event => markerClickHandler(event, place)}
-                      clusterer={clusterer}
-                      // Marker loads category icons
-                      icon={iconPoI}
-                    /> 
-                  )
-                }
+                return true;
               })
             );
           }}
