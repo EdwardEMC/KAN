@@ -1,0 +1,13 @@
+.outline {
+  outline: 2px solid black;
+}
+
+.remove-padding {
+  padding: 0;
+}
+
+#profilePic {
+  min-height: 100%;
+  min-width: 100%;
+  outline: 2px solid black;
+}

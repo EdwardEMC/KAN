@@ -1,0 +1,8 @@
+.chatArea {
+  min-height: calc(100vh - 200px);
+  overflow: none;
+}
+
+.remove-padding {
+  padding: 0;
+}

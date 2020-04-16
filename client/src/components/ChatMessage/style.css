@@ -1,0 +1,14 @@
+.send {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.remove-padding {
+  padding: 0;
+}
+
+#send-message {
+  resize: none;
+}

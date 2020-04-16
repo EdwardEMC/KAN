@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "../components/Wrapper";
 import API from "../components/utils/API"
-import ProfileInsert from "../components/ProfileInsert";
+import UserInsert from "../components/UserProfiles";
 
 const OtherUsers = () => {
   const [user, setUser] = useState([])
@@ -25,7 +25,7 @@ const OtherUsers = () => {
   //make a new profile insert below as to add start chatting button
   return (
     <Wrapper>
-      <ProfileInsert currentUser = {user}/> 
+      <UserInsert currentUser = {user}/> 
     </Wrapper>
   )
 }
