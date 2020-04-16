@@ -2,6 +2,10 @@
   outline: 2px solid black;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .remove-padding {
   padding: 0;
 }

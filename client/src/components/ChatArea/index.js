@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import API from "../../components/utils/API";
 import ChatBox from "../ChatBox";
 import ChatMessage from "../ChatMessage";
 import "./style.css";
 
 function ChatArea() {
+  const [chats, setChats] = useState([])
+  const [logged, setLogged] = useState();
+
+  // api call to get all active chats
+  useEffect(() => {
+    loadChats()
+  }, [])
+
+  function loadChats() {
+    API.getChats()
+    .then(function(result) {
+      console.log(result);
+      setLogged(result.data.logged.userName)
+      setChats(result.data.chats);
+    })// If there's an error, log the error
+    .catch(function(err) {
+      console.log(err);
+    });
+  }
+
   return ( 
     <div>
       <div className="row no-gutters">
@@ -12,9 +33,10 @@ function ChatArea() {
             <div className="card-header text-center">
               CURRENT ACTIVE CHATS
             </div>
-            <div className="card-body">
-              {/* map the chat boxes from api call */}
-              <ChatBox />
+            <div className="card-body" id="chatboxes">
+              {chats.map(element => (
+                <ChatBox key={element.id} user={element} current={logged} /> //onClick={() => console.log("click")} not working yet
+              ))}
             </div>
           </div>
         </div>

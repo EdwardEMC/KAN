@@ -60,15 +60,12 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
+    User.hasMany(models.Chats, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
-
-  // User.associate = function(models) {
-  //   User.hasMany(models.Chats, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
 
   User.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);

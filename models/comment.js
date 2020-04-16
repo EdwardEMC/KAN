@@ -24,14 +24,5 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
-  // Comment.associate = function(models) {
-  //   Comment.belongsTo(models.User, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     },
-  //     onDelete: "cascade"
-  //   });
-  // };
-
   return Comment;
 };

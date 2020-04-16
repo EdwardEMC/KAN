@@ -60,27 +60,27 @@ const Topic = (props) => {
         </div>
         <div className="container">
           {comments.map(element => (
-          <div key={element.id}>
-            <div className="card">
-              <div className="card-header colorFooter">
-                <div className="row">
-                  <div className="col-sm-6">
-                    <h5>{element.User.userName}</h5>
-                  </div>
-                  <div className="col-sm-6 text-right">
-                    <p>Posted at: {element.createdAt}</p> {/* refine this */}
+            <div key={element.id}>
+              <div className="card">
+                <div className="card-header colorFooter">
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <h5>{element.User.userName}</h5>
+                    </div>
+                    <div className="col-sm-6 text-right">
+                      <p>Posted at: {element.createdAt}</p> {/* refine this */}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="card-body colorBody">
-                <div>
-                  {element.description}
+                <div className="card-body colorBody">
+                  <div>
+                    {element.description}
+                  </div>
+                  <br></br>
                 </div>
-                <br></br>
               </div>
+              <br></br>
             </div>
-            <br></br>
-          </div>
           ))}
           <br></br>
           {/* adding a comment to the topic */}

@@ -12,6 +12,10 @@ function ChatMessage() {
   //   socket = io({query: 'r_var=' + event.target.value})
   // }
 
+  // document.getElementById("chatboxes").addEventListener("click", function(event) {
+  //   console.log("click");
+  // });
+
   function sendMessage(event) {
     event.preventDefault(); // prevents page reloading
     socket.emit('chat message',  document.getElementById('m').value);
@@ -31,10 +35,6 @@ function ChatMessage() {
       <div className="row send">
         <div className="col-lg-12 remove-padding">
           <div className="input-group">
-            {/* <textarea type="text" className="form-control" id="send-message" placeholder="Hi......"/>
-            <span className="input-group-btn">
-              <button className="btn btn-primary" type="submit">Send</button>
-            </span> */}
             <form id="form" action="">
               <input id="m" autoComplete="off" /><button onClick={sendMessage}>Send</button>
             </form>

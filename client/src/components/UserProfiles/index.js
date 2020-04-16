@@ -1,8 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import API from "../utils/API";
 import "./style.css";
 
 function UserInsert(props) {  
+  let history = useHistory();
+
+  function chatting(event) {
+    const data = {
+      currentUser: props.currentUser
+    }
+    API.newChat(data)
+    .then(function(result) {
+      console.log(result);
+      history.push("/chats");
+    })
+    .catch(function(err) {
+      console.log(err);
+      // redirect if the chatbox already exists
+      // history.push("/chats");
+    })
+  }
+
+
   return (
     <div className="container mainWin">
       <div className="card">
@@ -15,9 +35,7 @@ function UserInsert(props) {
               <img className="img-fluid" src="https://via.placeholder.com/250" alt="profilePic" /> {/* src={props.currentUser.profilePic} */}
             </div>
             <div className="col-sm-6">
-              <Link to="/chats"> {/*include username in data link to start chat with api query*/}
-                <h5>Start Chatting</h5>
-              </Link>
+              <button onClick={chatting}>Start Chatting</button>
               <br></br>
               <div className="mainInfo">
                 <h5 className="userInfo">Name: {props.currentUser.name}</h5>

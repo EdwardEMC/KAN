@@ -36,6 +36,10 @@ export default {
     return axios.get("/api/markers");
   },
 
+  getChats: function() {
+    return axios.get("/api/chats");
+  },
+
   //============================================
   // POST REQUESTS
   //============================================
@@ -62,6 +66,10 @@ export default {
 
   setPoIMarker: function(data) {
     return axios.post("/api/user/PoI", data);
+  },
+
+  newChat: function(data) {
+    return axios.post("/api/user/chats", data);
   },
 
   //============================================

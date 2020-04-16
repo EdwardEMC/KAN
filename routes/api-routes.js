@@ -78,9 +78,23 @@ module.exports = function(app) {
           }
         }
       }).then(function(dbUser) {
-        const data = dbPoI.concat(dbUser); //probably manipulate to get same values for markers (id, title, description?)
+        const data = dbPoI.concat(dbUser);
         res.json(data);
       })
+    })
+  });
+
+  app.get("/api/chats", function(req, res) {
+    db.Chats.findAll({ 
+      // where: {
+      //   user1 or user2: req.user.userName // implement the or statement with Op[]??
+      // }
+    }).then(function(dbChats) {
+      data = {
+        chats: dbChats,
+        logged: req.user
+      }
+      res.json(data);
     })
   });
   
@@ -170,6 +184,26 @@ module.exports = function(app) {
     });
   });
 
+  // route to post a new chat box
+  app.post("/api/user/chats", function(req, res) {
+    const data = [req.body.currentUser.userName, req.user.userName];
+
+    // alpha sort the usernames so they are always the same
+    const sortedData = data.sort().join("-");
+
+    db.Chats.create({
+      chatName: sortedData,
+      user1: req.body.currentUser.userName,
+      user2: req.user.userName,
+      UserId: req.user.id
+    })
+    .then(function() {
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      res.sendStatus(401).json(err);
+    });
+  })
 
   //===========================================================================
   // PUT REQUESTS
