@@ -2,7 +2,11 @@ import React from "react";
 import "./style.css";
 
 function ChatBox() {
+
+  // api call to get all active chats
+
   return ( 
+    // map function for each active chat
     <div className="row outline">
       <div className="col-md-3 remove-padding d-flex justify-content-middle">
         <img src="..." alt="profile" id="profilePic"></img>

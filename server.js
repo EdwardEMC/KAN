@@ -1,17 +1,19 @@
 const express = require("express");
 const path = require("path");
-// const cors = require("cors");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// Complete but not implemented yet
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
+
+// Authentication requirements
 const session = require("express-session");
 const passport = require("./config/passport");
 
 // Requiring our models for syncing
 const db = require("./models");
 
-// Complete but not implemented yet
+// Setting up the authentication
 app.use(session({ 
   secret: "keyboard user", 
   resave: true, 
@@ -32,6 +34,25 @@ if (process.env.NODE_ENV === "production") {
 // Define API routes here
 require("./routes/api-routes.js")(app);
 
+// Socket.io configuration
+io.on('connection', function(socket){
+
+  var room = socket.handshake['query']['r_var'];
+
+  socket.join(room);
+  console.log('user joined room #'+room);
+
+  socket.on('disconnect', function() {
+    socket.leave(room)
+    console.log('user disconnected');
+  });
+
+  socket.on('chat message', function(msg){
+    io.to(room).emit('chat message', msg);
+  });
+
+});
+
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {
@@ -39,7 +60,7 @@ app.get("*", (req, res) => {
 });
 
 db.sequelize.sync().then(function() {
-  app.listen(PORT, function() {
+  server.listen(PORT, function() {
     console.log("App listening on http://localhost:" + PORT);
   });
 });
