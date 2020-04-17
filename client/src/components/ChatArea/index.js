@@ -7,6 +7,7 @@ import "./style.css";
 function ChatArea() {
   const [chats, setChats] = useState([])
   const [logged, setLogged] = useState();
+  const [active, setActive] = useState();
 
   // api call to get all active chats
   useEffect(() => {
@@ -19,10 +20,14 @@ function ChatArea() {
       console.log(result);
       setLogged(result.data.logged.userName)
       setChats(result.data.chats);
-    })// If there's an error, log the error
+    }) // If there's an error, log the error
     .catch(function(err) {
       console.log(err);
     });
+  }
+
+  function activate(event) {
+    setActive(event.currentTarget.getAttribute("value"));
   }
 
   return ( 
@@ -35,7 +40,7 @@ function ChatArea() {
             </div>
             <div className="card-body" id="chatboxes">
               {chats.map(element => (
-                <ChatBox key={element.id} user={element} current={logged} /> //onClick={() => console.log("click")} not working yet
+                <ChatBox key={element.id} user={element} current={logged} onClick={activate} />
               ))}
             </div>
           </div>
@@ -45,7 +50,7 @@ function ChatArea() {
             <div className="card-body remove-padding ">
                 {/* component to display the messages */}
                 {/* click on the chat box will trigger api call and show all messages between the two users */}
-                <ChatMessage />
+                <ChatMessage active={active}/>
             </div>
           </div>
         </div>

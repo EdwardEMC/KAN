@@ -2,19 +2,19 @@ import React from "react";
 import io from "socket.io-client";
 import "./style.css";
 
-function ChatMessage() {
-  
+function ChatMessage(props) {
+  // console.log(props, "MESSAGE");
+
+  let room = props.active;
+
   // const socket = io({query: 'r_var=' +room}); join a specific room
-  let socket = io();
+  
+  let socket = io({query: 'r_var=' + room});
 
   // Can get new rooms from button clicks on profile blocks from chatbox
   // function newRoom(event) {
   //   socket = io({query: 'r_var=' + event.target.value})
   // }
-
-  // document.getElementById("chatboxes").addEventListener("click", function(event) {
-  //   console.log("click");
-  // });
 
   function sendMessage(event) {
     event.preventDefault(); // prevents page reloading
