@@ -25,7 +25,7 @@ module.exports = function(app) {
         id: req.user.id
       }
     }).then(function(dbUser) {
-    res.json(dbUser);
+      res.json(dbUser);
     })
   });
   
@@ -39,7 +39,7 @@ module.exports = function(app) {
         }
       }
     }).then(function(dbUser) {
-    res.json(dbUser);
+      res.json(dbUser);
     })
   });
 
@@ -95,6 +95,18 @@ module.exports = function(app) {
         logged: req.user
       }
       res.json(data);
+    })
+  });
+
+  //route to get messages from a certain chat
+  app.get("/api/messages/:id", function(req, res) {
+    db.Messages.findAll({
+      where: {
+        ChatId: req.params.id
+      }
+    })
+    .then(function(dbMessages) {
+      res.json(dbMessages);
     })
   });
   
@@ -204,6 +216,20 @@ module.exports = function(app) {
       res.sendStatus(401).json(err);
     });
   })
+
+  //route to update the message history of a chat
+  app.post("/api/messages", function(req, res) {
+    db.Messages.create({
+      message: req.body.message,
+      ChatId: req.body.id
+    })
+    .then(function() {
+      res.status(200).end();
+    })
+    .catch(function(err) {
+      res.status(401).json(err);
+    });
+  });
 
   //===========================================================================
   // PUT REQUESTS

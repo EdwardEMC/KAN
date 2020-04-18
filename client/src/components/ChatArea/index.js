@@ -8,6 +8,7 @@ function ChatArea() {
   const [chats, setChats] = useState([])
   const [logged, setLogged] = useState();
   const [active, setActive] = useState();
+  const [chatId, setChatId] = useState();
 
   // api call to get all active chats
   useEffect(() => {
@@ -28,6 +29,7 @@ function ChatArea() {
 
   function activate(event) {
     setActive(event.currentTarget.getAttribute("value"));
+    setChatId(event.currentTarget.getAttribute("data-id"));
   }
 
   return ( 
@@ -50,7 +52,7 @@ function ChatArea() {
             <div className="card-body remove-padding ">
                 {/* component to display the messages */}
                 {/* click on the chat box will trigger api call and show all messages between the two users */}
-                <ChatMessage active={active}/>
+                <ChatMessage active={active} id={chatId}/>
             </div>
           </div>
         </div>

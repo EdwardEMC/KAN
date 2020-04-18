@@ -3,7 +3,7 @@ import "./style.css";
 
 function ChatBox(props) {
   return ( 
-    <div className="row outline pointer" value={props.user.chatName} onClick={props.onClick}> 
+    <div className="row outline pointer" value={props.user.chatName} data-id={props.user.id} onClick={props.onClick}> 
       {/* <div className="col-md-3 remove-padding d-flex justify-content-middle">
         <img src="..." alt="profile" id="profilePic"></img>
       </div>

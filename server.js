@@ -34,17 +34,30 @@ if (process.env.NODE_ENV === "production") {
 // Define API routes here
 require("./routes/api-routes.js")(app);
 
+const roomList = [];
+
 // Socket.io configuration
 io.on('connection', function(socket){
 
-  var room = socket.handshake['query']['r_var'];
-  
+  let room = socket.handshake['query']['r_var'];
+
   // Only join a room if the user clicks a chatbox
   if(room !== "undefined") {
-    console.log(room, "ROOM");
+
+    // array to manage the rooms
+    roomList.push(room);
+
+    // if room list has two 'rooms' user leaves the first one
+    if(roomList.length > 1) {
+      socket.on("changeRoom", function() {      
+        socket.leave(roomList[0]);
+        console.log("user left room " + roomList[0]);
+        roomList.shift();
+      })
+    }
 
     socket.join(room);
-    console.log('user joined room #'+room);
+    console.log('user joined room #' + room);
 
     socket.on('disconnect', function() {
       socket.leave(room)
@@ -52,6 +65,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('chat message', function(msg){
+      console.log(msg);
       io.to(room).emit('chat message', msg);
     });
   }

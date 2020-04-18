@@ -40,6 +40,10 @@ export default {
     return axios.get("/api/chats");
   },
 
+  getMessages: function(data) {
+    return axios.get("/api/messages/" + data);
+  },
+
   //============================================
   // POST REQUESTS
   //============================================
@@ -70,6 +74,11 @@ export default {
 
   newChat: function(data) {
     return axios.post("/api/user/chats", data);
+  },
+
+  // Updates the active chats message history
+  sendMessage: function(data) {
+    return axios.post("/api/messages/", data);
   },
 
   //============================================
