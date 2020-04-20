@@ -1,12 +1,33 @@
 .send {
+  max-height: 100px;
   position: absolute;
   bottom: 0;
   width: 100%;
   margin: 0 auto;
 }
 
+.displayArea {
+  height: calc(100vh - 230px);
+  overflow: auto;
+}
+
 .remove-padding {
   padding: 0;
+}
+
+.sendArea {
+  width: 100%;
+}
+
+#m {
+  min-height: 38px;
+  width: 80%;
+  float: left;
+}
+
+#sendButton {
+  width: 20%;
+  float: left;
 }
 
 #send-message {
@@ -24,6 +45,7 @@ li {
 }
 
 li > span {
+  display: inline-block;
   border: 1px solid black;
   border-radius: 10px;
   padding: 5px;

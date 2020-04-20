@@ -39,6 +39,9 @@ function ChatMessage(props) {
       li.append(span);
       area.append(li);
 
+      let objDiv = document.getElementById("messageScroll");
+      objDiv.scrollTop = objDiv.scrollHeight;
+
       return true;
     })
   }  
@@ -121,23 +124,23 @@ function ChatMessage(props) {
     }
     li.append(span);
     area.append(li);
+
+    let objDiv = document.getElementById("messageScroll");
+    objDiv.scrollTop = objDiv.scrollHeight;
   });
     
   return ( 
     <div>
-      <div className="displayArea">
+      <div id="messageScroll" className="displayArea">
         <ul id="messages">
           {/* Area to display messages */}
         </ul> 
       </div>
-      <div className="row send">
-        <div className="col-lg-12 remove-padding">
-          <div className="input-group">
-            <form id="form" action="">
-              <input id="m" autoComplete="off" /><button onClick={sendMessage}>Send</button>
-            </form>
-          </div>
-        </div>
+      <div className="row send remove-padding">
+        <form className="form-horizontal sendArea" id="form" action="">
+          <input id="m" autoComplete="off" />
+          <button id="sendButton" className="btn btn-primary" onClick={sendMessage}>Send</button>
+        </form>
       </div>
     </div>
   )
