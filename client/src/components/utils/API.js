@@ -82,6 +82,7 @@ export default {
 
   // Updates the active chats message history
   sendMessage: function(data) {
+    console.log(data, "CLIENT API")
     return axios.post("/api/messages/", data);
   },
 

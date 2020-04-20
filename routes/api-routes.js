@@ -226,7 +226,7 @@ module.exports = function(app) {
   // route to post a new chat box
   app.post("/api/user/chats", function(req, res) {
     const data = [req.body.currentUser.userName, req.user.userName];
-    console.log(data);
+    // console.log(data);
     // alpha sort the usernames so they are always the same
     const sortedData = data.sort().join("-");
 
@@ -246,6 +246,7 @@ module.exports = function(app) {
 
   //route to update the message history of a chat
   app.post("/api/messages", function(req, res) {
+    console.log(req.body, "SERVER API");
     db.Messages.create({
       message: req.body.message,
       ChatId: req.body.id,

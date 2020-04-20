@@ -38,40 +38,34 @@ const roomList = [];
 
 // Socket.io configuration
 io.on('connection', function(socket){
+  let currentRoom;
 
-  let room = socket.handshake['query']['r_var'];
+  // if room list has two 'rooms' user leaves the first one
+  if(roomList.length > 1) {
+    socket.on("changeRoom", function() {      
+      socket.leave(roomList[0]);
+      console.log("user left room " + roomList[0]);
+      roomList.shift();
+    })
+  }
 
-  // Only join a room if the user clicks a chatbox
-  if(room !== "undefined") {
-
-    // array to manage the rooms
+  socket.on("join", function(room) {
+    currentRoom = room;
     roomList.push(room);
-
-    // if room list has two 'rooms' user leaves the first one
-    if(roomList.length > 1) {
-      socket.on("changeRoom", function() {      
-        socket.leave(roomList[0]);
-        console.log("user left room " + roomList[0]);
-        roomList.shift();
-      })
-    }
-
+    console.log(room, "TRYING TO JOIN");
     socket.join(room);
     console.log('user joined room #' + room);
+  })
+  
+  socket.on('disconnect', function() {
+    socket.leaveAll()
+    console.log('user disconnected');
+  });
 
-    socket.on('disconnect', function() {
-      socket.leave(room)
-      console.log('user disconnected');
-    });
-
-    socket.on('chat message', function(msg){
-      console.log(msg);
-      io.to(room).emit('chat message', msg);
-    });
-  }
-  else {
-    return;
-  }
+  socket.on('chat message', function(msg){
+    console.log(msg);
+    io.to(currentRoom).emit('chat message', msg);
+  });
 });
 
 // Send every other request to the React app

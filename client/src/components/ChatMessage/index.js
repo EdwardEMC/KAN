@@ -60,11 +60,13 @@ function ChatMessage(props) {
   }
   
   // socket.io connection with room query
-  let socket = io( process.env.PORT || 'localhost:3001', {query: 'r_var=' + x.room});
+  // let socket = io( process.env.PORT || 'localhost:3001', {query: 'r_var=' + x.room});
+  let socket = io(process.env.PORT || 'localhost:3001');
 
   // register to listen to the x variable
   if(typeof x.roomInternal !== "undefined") {
     x.registerListener(function(val) {
+      socket.emit('join', x.room);
       socket.emit('changeRoom');
       if(document.getElementById('messages')) {
         document.getElementById('messages').innerHTML = "";
@@ -101,7 +103,6 @@ function ChatMessage(props) {
     // socket emit
     socket.emit('chat message', msg);
     document.getElementById('m').value='';
-    return false;
   }
 
   socket.on('chat message', function(msg){

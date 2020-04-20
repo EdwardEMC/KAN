@@ -12,6 +12,7 @@ function Header() {
     // trigger updating online lat/lng values to null
     API.logOut()
     .then(function() {
+      // using href instead of history as href will refresh the page and disconnect any sockets automatically
       window.location.href="/";
     })
     .catch(function(err) {
