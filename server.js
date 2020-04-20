@@ -31,9 +31,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// Define API routes here
-require("./routes/api-routes.js")(app);
-
 const roomList = [];
 
 // Socket.io configuration
@@ -68,10 +65,14 @@ io.on('connection', function(socket){
   });
 });
 
+// Define API routes here
+require("./routes/api-routes.js")(app);
+
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+  res.send(<h1>Hello!</h1>)
+  // res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
 db.sequelize.sync().then(function() {
