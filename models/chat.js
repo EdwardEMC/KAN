@@ -21,12 +21,6 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Chats.associate = function(models) {
-    Chats.belongsTo(models.User, {
-      foreignKey: {
-        allowNull: false
-      },
-      onDelete: "cascade"
-    });
     Chats.hasMany(models.Messages, {
       foreignKey: {
         allowNull: false
@@ -36,3 +30,10 @@ module.exports = function(sequelize, DataTypes) {
 
   return Chats;
 };
+
+// Chats.belongsTo(models.User, {
+//   foreignKey: {
+//     allowNull: false
+//   },
+//   onDelete: "cascade"
+// });

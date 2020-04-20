@@ -1,24 +1,47 @@
-import React, { useState } from "react";
+import React from "react";
 import API from "../utils/API";
 import io from "socket.io-client";
 import "./style.css";
 
 function ChatMessage(props) {
-  const [activeChat, setActiveChat] = useState();
 
-  // not getting called on variable change ????????????????????????????????????????
+  let currentUser;
+
   // api call to load messages
   function messageHistory() {
-    console.log("GETTING HERE")
     API.getMessages(props.id)
     .then(function(result) {
       console.log(result, "RESULT");
-      // setActiveChat(result); // might be result.data
+      // function to display results in message area
+      currentUser = result.data.id;
+      displayMessages(result.data)
     })
     .catch(function(err) {
       console.log(err);
     })
   }
+
+  // function to display results in message area
+  function displayMessages(data) {
+    const area = document.getElementById('messages');
+    data.messages.map(element => {
+      let li = document.createElement('li');
+      let span = document.createElement('span');
+      span.innerHTML = element.message
+      if(element.UserId === data.id) {
+        li.setAttribute("class", "current");
+        span.setAttribute("class", "sent");
+      }
+      else {
+        li.setAttribute("class", "other");
+        span.setAttribute("class", "received");
+      }
+      li.append(span);
+      area.append(li);
+
+      return true;
+    })
+  }  
 
   // detect if the room has changed when user clicks on chat box
   let x = {
@@ -37,17 +60,19 @@ function ChatMessage(props) {
   }
   
   // socket.io connection with room query
-  let socket = io('localhost:3001', {query: 'r_var=' + x.room}); //change to prcoess.env_PORT?
+  let socket = io( process.env.PORT || 'localhost:3001', {query: 'r_var=' + x.room});
 
   // register to listen to the x variable
-  x.registerListener(function(val) {
-    messageHistory();
-    socket.emit('changeRoom');
-    if(document.getElementById('messages')) {
-      document.getElementById('messages').innerHTML = "";
-    }
-  });
-
+  if(typeof x.roomInternal !== "undefined") {
+    x.registerListener(function(val) {
+      socket.emit('changeRoom');
+      if(document.getElementById('messages')) {
+        document.getElementById('messages').innerHTML = "";
+      }
+      messageHistory();
+    });
+  }
+  
   // reset x.room to the clicked on room
   x.room = props.active;
 
@@ -68,22 +93,41 @@ function ChatMessage(props) {
       console.log(err);
     });
 
+    let msg = {
+      message: document.getElementById('m').value,
+      user: currentUser
+    }
+
     // socket emit
-    socket.emit('chat message', document.getElementById('m').value);
+    socket.emit('chat message', msg);
     document.getElementById('m').value='';
     return false;
   }
 
   socket.on('chat message', function(msg){
-    console.log(msg, "CLIENT");
-    document.getElementById('messages').append(document.createElement('li').innerHTML = msg);
+    // console.log(msg, "CLIENT");
+    let area = document.getElementById('messages');
+    let li = document.createElement('li');
+    let span = document.createElement('span');
+    span.innerHTML = msg.message;
+    if(msg.user === currentUser) {
+      li.setAttribute("class", "current");
+      span.setAttribute("class", "sent");
+    }
+    else {
+      li.setAttribute("class", "other");
+      span.setAttribute("class", "received");
+    }
+    li.append(span);
+    area.append(li);
   });
     
   return ( 
     <div>
       <div className="displayArea">
-        {/* Add a map function of activeChat to display history of messages */}
-        <ul id="messages"></ul> {/* Area to display messages */}
+        <ul id="messages">
+          {/* Area to display messages */}
+        </ul> 
       </div>
       <div className="row send">
         <div className="col-lg-12 remove-padding">

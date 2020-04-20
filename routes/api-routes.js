@@ -86,9 +86,15 @@ module.exports = function(app) {
 
   app.get("/api/chats", function(req, res) {
     db.Chats.findAll({ 
-      // where: {
-      //   user1 or user2: req.user.userName // implement the or statement with Op[]??
-      // }
+      where: {
+        [Op.or]: 
+          [{
+            user1:req.user.userName
+          }, 
+            {
+            user2: req.user.userName
+          }]
+      }
     }).then(function(dbChats) {
       data = {
         chats: dbChats,
@@ -106,7 +112,28 @@ module.exports = function(app) {
       }
     })
     .then(function(dbMessages) {
-      res.json(dbMessages);
+      const data = {
+        id: req.user.id,
+        messages: dbMessages
+      }
+      res.json(data);
+    })
+  });
+
+  // logging out a user
+  app.get("/logout", function(req, res) {
+    db.User.update({ type: null }, {
+        where: {
+          email: req.session.passport.user.email
+        }
+    })
+    .then(function() {
+      console.log("User logged Out");
+      req.logout();
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      console.log(err);
     })
   });
   
@@ -126,8 +153,8 @@ module.exports = function(app) {
       password: req.body.password,
   })
     .then(function() {
-      res.status(200);
-      res.redirect('/');
+      res.sendStatus(200);
+      // res.redirect('/');
     })
     .catch(function(err) {
       res.status(401).json(err);
@@ -199,15 +226,15 @@ module.exports = function(app) {
   // route to post a new chat box
   app.post("/api/user/chats", function(req, res) {
     const data = [req.body.currentUser.userName, req.user.userName];
-
+    console.log(data);
     // alpha sort the usernames so they are always the same
     const sortedData = data.sort().join("-");
 
     db.Chats.create({
       chatName: sortedData,
       user1: req.body.currentUser.userName,
-      user2: req.user.userName,
-      UserId: req.user.id
+      user2: req.user.userName
+      // UserId: req.user.id
     })
     .then(function() {
       res.sendStatus(200);
@@ -221,7 +248,8 @@ module.exports = function(app) {
   app.post("/api/messages", function(req, res) {
     db.Messages.create({
       message: req.body.message,
-      ChatId: req.body.id
+      ChatId: req.body.id,
+      UserId: req.user.id
     })
     .then(function() {
       res.status(200).end();

@@ -1,5 +1,6 @@
 .outline {
   outline: 2px solid black;
+  margin-bottom: 10px;
 }
 
 .pointer {
@@ -15,3 +16,5 @@
   min-width: 100%;
   outline: 2px solid black;
 }
+
+/* Add a focus style to show which chat is selected */

@@ -44,6 +44,10 @@ export default {
     return axios.get("/api/messages/" + data);
   },
 
+  logOut: function(data) {
+    return axios.get("/logout");
+  },
+
   //============================================
   // POST REQUESTS
   //============================================

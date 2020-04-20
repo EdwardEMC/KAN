@@ -19,6 +19,12 @@ module.exports = function(sequelize, DataTypes) {
       },
       onDelete: "cascade"
     });
+    Messages.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+      // onDelete: "cascade" Probably not needed
+    });
   };
 
   return Messages;

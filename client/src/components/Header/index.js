@@ -2,10 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../Logo";
 import "./style.css";
+import API from "../utils/API";
 
 const iconPath = process.env.PUBLIC_URL + '/assets/HeaderIcons/';
 
 function Header() {
+
+  function logout() {
+    // trigger updating online lat/lng values to null
+    API.logOut()
+    .then(function() {
+      window.location.href="/";
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
   return ( 
     <div id="header">
       <div className="row">
@@ -58,9 +71,7 @@ function Header() {
               </Link>
             </p>
             <p className="dropdown-item">
-              <Link to="/"> 
-                Log Out
-              </Link>
+              <button className="btn btn-warning" onClick={logout}>Log Out</button>
             </p>
           </div>
         </div>

@@ -12,3 +12,35 @@
 #send-message {
   resize: none;
 }
+
+ul {
+  padding: 0 10px 0 10px;
+}
+
+li {
+  list-style-type: none;
+  margin: 10px 0 15px 0;
+  width: 100%;
+}
+
+li > span {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.other {
+  text-align: right;
+}
+
+.current {
+  text-align: left;
+}
+
+.sent {
+  background-color: lightgray;
+}
+
+.received {
+  background-color: lightblue;
+}
