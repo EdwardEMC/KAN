@@ -5,3 +5,7 @@
 .remove-padding {
   padding: 0;
 }
+
+.focused {
+  background-color: lightgreen;
+}

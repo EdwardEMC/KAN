@@ -28,9 +28,21 @@ function ChatArea() {
   }
 
   function activate(event) {
+    // add class to change color 
+    let focus = document.getElementsByClassName("focused");
+    if(focus[0]) {
+      focus[0].classList.remove("focused");
+      event.currentTarget.className += " focused";
+    }
+    else {
+      event.currentTarget.className += " focused";
+    }
+    // set currently active chat box
     setActive(event.currentTarget.getAttribute("value"));
     setChatId(event.currentTarget.getAttribute("data-id"));
   }
+
+  // function to delete the chat box and update the setChats
 
   return ( 
     <div>
@@ -50,8 +62,6 @@ function ChatArea() {
         <div className="col-md-8">
           <div className="card chatArea">
             <div className="card-body remove-padding ">
-                {/* component to display the messages */}
-                {/* click on the chat box will trigger api call and show all messages between the two users */}
                 <ChatMessage active={active} id={chatId}/>
             </div>
           </div>
