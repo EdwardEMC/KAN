@@ -11,7 +11,7 @@ const MyTopics = () => {
   }, [])
 
   function loadTopics() {
-    API.getTopics()
+    API.getUserTopics()
     .then(function(result) {
       setList(result.data);
     }) // If there's an error, log the error

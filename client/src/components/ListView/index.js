@@ -3,11 +3,10 @@ import React from "react";
 import "./style.css";
 
 function ListView(props) {
-  console.log(props);
   return (
     <div className="outline card"> 
       <div className="card-header row text-center">
-        {/* {props.user.user1 !== props.current ? props.user.user1 : props.user.user2} */}
+        {/* {props.user.user1 !== props.current ? props.user.user1 : props.user.user2} maybe user something like this later for link to map or forum post*/}
         <div className="col-md-6 d-inline">
           Category: {props.info.category}
         </div>

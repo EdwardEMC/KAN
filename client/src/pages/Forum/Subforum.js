@@ -15,9 +15,7 @@ const Subforum = () => {
     const category = window.location.href.split("forums/");
     API.getTopics(category[1])
     .then(function(result) {
-      // not including users data in route include: []
-      console.log(result.data);
-      // setTopics(result.data);
+      setTopics(result.data);
     })// If there's an error, log the error
     .catch(function(err) {
       console.log(err);

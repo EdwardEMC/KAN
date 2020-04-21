@@ -86,7 +86,7 @@ module.exports = function(app) {
       where: {
         [Op.or]: 
           [{
-            user1:req.user.userName
+            user1: req.user.userName
           }, 
             {
             user2: req.user.userName

@@ -48,7 +48,7 @@ export default {
     return axios.get("/api/users/places");
   },
 
-  getTopics: function() {
+  getUserTopics: function() {
     return axios.get("/api/users/topics");
   },
 
