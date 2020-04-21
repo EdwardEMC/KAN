@@ -21,6 +21,26 @@ const MyPlaces = () => {
     });
   }
 
+  function deletePlace(event) {
+    const title = event.target.getAttribute("value");
+    // console.log(title);
+    API.deletePlace(title)
+    .then(function(result) {
+      console.log(result);
+      const placeList = [];
+      list.map(element => {
+        if(element.title !== title) {
+          return placeList.push(element);
+        }
+        return true;
+      });
+      setList(placeList);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
   return (
     <Wrapper>
       <div className="container">
@@ -30,7 +50,7 @@ const MyPlaces = () => {
       <h2 className="text-center">Places of Interest</h2>
         <br></br>
         {list.map(element => {
-          return <ListView key={element.id} info={element}/>  
+          return <ListView key={element.id} info={element} onClick={deletePlace}/>  
         })}
       </div>
     </Wrapper>

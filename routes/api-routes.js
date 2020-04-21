@@ -371,8 +371,28 @@ module.exports = function(app) {
   //route to delete comment
 
   //route to delete topic
+  app.delete("/api/topics/:topic", function(req, res) {
+    db.Topic.destroy({
+      where: {
+        title: req.params.topic,
+        UserId: req.user.id
+      }
+    }).then(function(dbChats) {
+      res.json(dbChats);
+    });
+  });
 
   //route to delete PoI
+  app.delete("/api/places/:place", function(req, res) {
+    db.PoI.destroy({
+      where: {
+        title: req.params.place,
+        UserId: req.user.id
+      }
+    }).then(function(dbChats) {
+      res.json(dbChats);
+    });
+  });
 };
 
 

@@ -120,5 +120,15 @@ export default {
   // Deletes a chatbox
   deleteChat: function(data) {
     return axios.delete("/api/chat/" + data.chatName);
+  },
+
+  // Deletes a PoI
+  deletePlace: function(data) {
+    return axios.delete("/api/places/" + data);
+  },
+
+  // Deletes a topic
+  deleteTopic: function(data) {
+    return axios.delete("/api/topics/" + data);
   }
 };

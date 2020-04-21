@@ -5,7 +5,6 @@ function ListView(props) {
   return (
     <div className="card"> 
       <div className="card-header text-center colorHeader">
-        {/* {props.user.user1 !== props.current ? props.user.user1 : props.user.user2} maybe user something like this later for link to map or forum post*/}
         <div className="row">
           <div className="col-md-6 d-inline">
             <strong>Category: </strong>{props.info.category}
@@ -22,7 +21,10 @@ function ListView(props) {
           {props.info.description}
         </div>
         <div className="card-text text-right">
-          Link
+          <span className="pointer link" onClick={() => console.log("click")}>Link</span>
+          &emsp;
+          &emsp;
+          <span className="pointer delete" value={props.info.title} onClick={props.onClick}>Delete</span>
         </div>
       </div>
       <div className="card-footer card-text text-muted text-center colorFooter">

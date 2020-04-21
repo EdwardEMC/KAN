@@ -21,6 +21,26 @@ const MyTopics = () => {
     });
   }
 
+  function deleteTopic(event) {
+    const title = event.target.getAttribute("value");
+    // console.log(title);
+    API.deleteTopic(title)
+    .then(function(result) {
+      console.log(result);
+      const topicList = [];
+      list.map(element => {
+        if(element.title !== title) {
+          return topicList.push(element);
+        }
+        return true;
+      })
+      setList(topicList);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
   return (
     <Wrapper>
       <div className="container">
@@ -30,7 +50,7 @@ const MyTopics = () => {
         <h2 className="text-center">Topics</h2>
         <br></br>
         {list.map(element => {
-          return <ListView key={element.id} info={element}/>  
+          return <ListView key={element.id} info={element} onClick={deleteTopic}/>  
         })}
       </div>
     </Wrapper>

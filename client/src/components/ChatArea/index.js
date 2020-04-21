@@ -58,6 +58,7 @@ function ChatArea() {
         if(element.chatName !== data.chatName) {
           return chatList.push(element);
         }
+        return true;
       })
       setChats(chatList);
     })

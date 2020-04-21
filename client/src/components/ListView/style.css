@@ -1,0 +1,11 @@
+.pointer {
+  cursor: pointer;
+}
+
+.delete {
+  color: red;
+}
+
+.link {
+  color: green;
+}
