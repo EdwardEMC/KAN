@@ -64,7 +64,7 @@ function ChatMessage(props) {
   
   // socket.io connection with room query
   // let socket = io( process.env.PORT || 'localhost:3001', {query: 'r_var=' + x.room});
-  let socket = io(process.env.PORT || 'localhost:3001');
+  let socket = io();
 
   // register to listen to the x variable
   if(typeof x.roomInternal !== "undefined") {
