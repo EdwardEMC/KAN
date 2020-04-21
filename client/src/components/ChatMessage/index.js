@@ -61,8 +61,6 @@ function ChatMessage(props) {
       this.roomListener = listener;
     }
   }
-
-  const roomList = [];
   
   // socket.io connection with room query
   let socket = io();
@@ -70,14 +68,8 @@ function ChatMessage(props) {
   // register to listen to the x variable
   if(typeof x.roomInternal !== "undefined") {
     x.registerListener(function(val) {
-      if(roomList.includes(x.room)) {
-        socket.emit('changeRoom', x.room);  
-      }
-      else {
-        roomList.push(x.room);
-        socket.emit('join', x.room);
-      }
-      
+      socket.emit('join', x.room);
+      socket.emit('changeRoom');
       if(document.getElementById('messages')) {
         document.getElementById('messages').innerHTML = "";
       }
@@ -95,7 +87,7 @@ function ChatMessage(props) {
     const data = {
       message: document.getElementById('m').value,
       id: props.id
-    };
+    }
 
     API.sendMessage(data)
     .then(function(result) {
@@ -108,7 +100,7 @@ function ChatMessage(props) {
     let msg = {
       message: document.getElementById('m').value,
       user: currentUser
-    };
+    }
 
     // socket emit
     socket.emit('chat message', msg);
