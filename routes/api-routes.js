@@ -274,7 +274,12 @@ module.exports = function(app) {
 
   //route to update the message history of a chat
   app.post("/api/messages", function(req, res) {
-    console.log(req.body, "SERVER API");
+    const data = {
+      message: req.body.message,
+      ChatId: req.body.id,
+      UserId: req.user.id
+    }
+    console.log(data, "SERVER API");
     db.Messages.create({
       message: req.body.message,
       ChatId: req.body.id,

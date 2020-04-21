@@ -31,24 +31,25 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-const roomList = [];
+// const roomList = [];
 
 // Socket.io configuration
 io.on('connection', function(socket){
   let currentRoom;
 
   // if room list has two 'rooms' user leaves the first one
-  if(roomList.length > 1) {
-    socket.on("changeRoom", function() {      
-      socket.leave(roomList[0]);
-      console.log("user left room " + roomList[0]);
-      roomList.shift();
+  // if(roomList.length > 1) {
+    socket.on("changeRoom", function(room) { 
+      currentRoom = room;     
+      // socket.leave(roomList[0]);
+      // console.log("user left room " + roomList[0]);
+      // roomList.shift();
     })
-  }
+  // }
 
   socket.on("join", function(room) {
     currentRoom = room;
-    roomList.push(room);
+    // roomList.push(room);
     console.log(room, "TRYING TO JOIN");
     socket.join(room);
     console.log('user joined room #' + room);
