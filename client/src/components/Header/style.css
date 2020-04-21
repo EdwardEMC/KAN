@@ -3,8 +3,12 @@
   min-height: 100px;
 }
 
-#logo, .menu {
+.menu {
   padding-top: 40px;
+}
+
+#logo {
+  padding-top: 10px;
 }
 
 #markers {
