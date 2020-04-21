@@ -1,6 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { StoreProvider } from "./components/utils/GlobalState";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Header from "./components/Header";
@@ -10,6 +9,7 @@ import Description from "./pages/Description";
 import Profile from "./pages/Profile";
 import MyPlaces from "./pages/MyPlaces";
 import MyTopics from "./pages/MyTopics";
+import Settings from "./pages/Settings";
 
 //Forum pages
 import Forum from "./pages/Forum/Forum";
@@ -17,14 +17,30 @@ import Subforum from "./pages/Forum/Subforum";
 import Topic from "./pages/Forum/Topic";
 import PostTopic from "./pages/Forum/PostTopic"
 
+//Other user pages
 import OtherUsers from "./pages/OtherUsers";
 import MapComp from "./pages/Mapcomp";
 import Chats from "./pages/Chats";
 import Search from "./pages/Search";
-import Settings from "./pages/Settings";
+
 // import NoMatch from "./pages/NoMatch";
 import Footer from "./components/Footer";
 import "./style.css";
+
+// import API from "./components/utils/API";
+
+// function authenticate() {
+//   let auth;
+//   API.verify()
+//   .then(function(result) {
+//     console.log(result.data, "USER");
+//     auth = result.data;
+//   })
+//   .catch(function(err) {
+//     console.log(err);
+//   })
+//   return auth;
+// }
 
 // Making so the navbar does not appear on the login/register page
 const NavRoutes = () => {
@@ -57,15 +73,27 @@ const NavRoutes = () => {
 function App() {
   return (
     <Router>
-      <StoreProvider>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route component={NavRoutes} />
+          {/* <AuthenticatedRoute component={NavRoutes} /> */}
         </Switch>
-      </StoreProvider>
     </Router>
   );
 }
+
+// const AuthenticatedRoute = ({ component: Component, ...rest }) => {
+//     let auth = authenticate();
+//     <Route {...rest} render={props => (
+//       auth ? ( // if user is authenticated
+//       <Component {...props}/>
+//     ) : (
+//       <Redirect to={{
+//         pathname: '/',
+//       }}/>
+//     )
+//   )}/>
+// };
 
 export default App;

@@ -8,8 +8,18 @@ module.exports = function(app) {
   // GET REQUESTS
   //===========================================================================
 
+  // route to verify user
+  app.get('/api/verify', (req, res) => {
+    console.log("HERE");
+    if(req.isAuthenticated()) {
+      res.send(true)
+    } else {
+      res.send(false)
+    }
+  })
+
   // route to return a list of all users
-  app.get("/api/user", function(req, res) {
+  app.get("/api/user", function(req, res) { // add isAuthenticated to each route to stop unverified api calls
     db.User.findAll({ }).then(function(dbUser) {
       res.json(dbUser);
     })
@@ -134,7 +144,6 @@ module.exports = function(app) {
 
   // route to get all users posted topics
   app.get("/api/users/topics", function(req, res) {
-    console.log("HERE");
     db.Topic.findAll({
       where: {
         UserId: req.user.id

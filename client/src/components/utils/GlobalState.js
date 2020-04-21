@@ -1,4 +1,5 @@
-// end up using this for dark mode?
+// use this for authenication
+// maybe for a dark mode later on as well
 
 import React, { createContext, useReducer, useContext } from "react";
 
@@ -8,10 +9,10 @@ const { Provider } = StoreContext;
 const reducer = (state, action) => {
   switch (action.type) {
   case "SET_USER":
-    // console.log(action.user)
+    console.log(action.user, "ACTION")
     return {
       ...state,
-      user: [action.user]
+      authenticated: action.user
     }
 
   default:
@@ -21,7 +22,7 @@ const reducer = (state, action) => {
 
 const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
-    user:[]
+    authenticated: false
   });
 
   return <Provider value={[state, dispatch]} {...props} />;

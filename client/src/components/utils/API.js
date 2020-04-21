@@ -7,6 +7,11 @@ export default {
   // GET REQUESTS
   //============================================
 
+  // verifies the current user
+  verify: function() {
+    return axios.get("/api/verify");
+  },
+
   // gets all current users data
   getUsers: function() {
     return axios.get("/api/user", { withCredentials: true });
