@@ -24,7 +24,7 @@ function Header() {
     <div id="header">
       <div className="row">
         <div className="col-sm-4 text-center" id="markers">
-          <div id="online">
+          <div id="online" title="Set online marker">
             <Link to="/mapType/setOnline">
               <img className="markerImages" src={iconPath + "online.png"} alt="online marker" />
             </Link>
@@ -32,13 +32,13 @@ function Header() {
           &emsp;
           &emsp;
           &emsp;
-          <div id="poi">
+          <div id="poi" title="Mark a place of interest">
             <Link to="/mapType/setPoI">
               <img className="markerImages" src={iconPath + "poi.png"} alt="place of interest" />
             </Link>
           </div>
         </div>
-        <div className="col-sm-4 text-center" id="logo">
+        <div className="col-sm-4 text-center" id="logo" title="Website Description">
             <Logo height={80}/>
         </div>
         <div className="dropdown menu col-sm-4 text-center">

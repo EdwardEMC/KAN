@@ -28,19 +28,8 @@ app.use(express.json());
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  // app.use(express.static("/client/build"));
-  app.use(express.static(__dirname));
-  app.use(express.static(path.join(__dirname, 'build')));
+  app.use(express.static("/client/build"));
 }
-  
-// Define API routes here
-require("./routes/api-routes.js")(app);
-
-// Send every other request to the React app
-// Define any API routes before this runs
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build/index.html"));
-});
 
 const roomList = [];
 
@@ -74,6 +63,15 @@ io.on('connection', function(socket){
     console.log(msg);
     io.to(currentRoom).emit('chat message', msg);
   });
+});
+
+// Define API routes here
+require("./routes/api-routes.js")(app);
+
+// Send every other request to the React app
+// Define any API routes before this runs
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 db.sequelize.sync().then(function() {

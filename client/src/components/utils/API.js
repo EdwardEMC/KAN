@@ -115,5 +115,10 @@ export default {
   // Deletes a user
   deleteUser: function() {
     return axios.delete("/api/user");
+  },
+
+  // Deletes a chatbox
+  deleteChat: function(data) {
+    return axios.delete("/api/chat/" + data.chatName);
   }
 };

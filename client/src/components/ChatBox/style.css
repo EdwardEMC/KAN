@@ -7,8 +7,8 @@
   cursor: pointer;
 }
 
-.remove-padding {
-  padding: 0;
+.side-padding {
+  padding: 0 10px 0 10px;
 }
 
 #profilePic {
@@ -16,5 +16,3 @@
   min-width: 100%;
   outline: 2px solid black;
 }
-
-/* Add a focus style to show which chat is selected */

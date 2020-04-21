@@ -343,13 +343,28 @@ module.exports = function(app) {
   app.delete("/api/user", function(req, res) {
     var id = req.user.id;
     db.User.destroy({
-        where: {
-          id: id
-        }
+      where: {
+        id: id
+      }
     }).then(function(dbUser) {
-        res.json(dbUser);
+      res.json(dbUser);
     });
   });
+
+  //route to delete chatbox
+  app.delete("/api/chat/:chatName", function(req, res) {
+    db.Chats.destroy({
+      where: {
+        chatName: req.params.chatName
+      }
+    }).then(function(dbChats) {
+      res.json(dbChats);
+    });
+  });
+
+  //route to delete comment
+
+  //route to delete topic
 
   //route to delete PoI
 };

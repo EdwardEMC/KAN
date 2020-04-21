@@ -43,6 +43,28 @@ function ChatArea() {
   }
 
   // function to delete the chat box and update the setChats
+  function deleteBox(event) {
+    const data = {
+      chatName: event.target.getAttribute("value")
+    }
+    
+    console.log(chats, "CHATS");
+
+    API.deleteChat(data)
+    .then(function(result){
+      console.log(result);
+      const chatList = [];
+      chats.map(element => {
+        if(element.chatName !== data.chatName) {
+          return chatList.push(element);
+        }
+      })
+      setChats(chatList);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
 
   return ( 
     <div>
@@ -54,7 +76,7 @@ function ChatArea() {
             </div>
             <div className="card-body" id="chatboxes">
               {chats.map(element => (
-                <ChatBox key={element.id} user={element} current={logged} onClick={activate} />
+                <ChatBox key={element.id} user={element} current={logged} onClick={activate} delete={deleteBox} />
               ))}
             </div>
           </div>
