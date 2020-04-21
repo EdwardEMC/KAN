@@ -12,14 +12,14 @@ function ChatArea() {
 
   // api call to get all active chats
   useEffect(() => {
-    loadChats()
+    loadChats();
   }, [])
 
   function loadChats() {
     API.getChats()
     .then(function(result) {
       console.log(result);
-      setLogged(result.data.logged.userName)
+      setLogged(result.data.logged.userName);
       setChats(result.data.chats);
     }) // If there's an error, log the error
     .catch(function(err) {

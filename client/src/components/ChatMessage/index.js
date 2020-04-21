@@ -87,7 +87,7 @@ function ChatMessage(props) {
     const data = {
       message: document.getElementById('m').value,
       id: props.id
-    }
+    };
 
     API.sendMessage(data)
     .then(function(result) {
@@ -100,7 +100,7 @@ function ChatMessage(props) {
     let msg = {
       message: document.getElementById('m').value,
       user: currentUser
-    }
+    };
 
     // socket emit
     socket.emit('chat message', msg);
