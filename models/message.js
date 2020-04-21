@@ -4,7 +4,6 @@ module.exports = function(sequelize, DataTypes) {
   // can then string query for the individual name within the mysql database
     message: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: true
     }
   },
