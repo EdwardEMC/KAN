@@ -44,6 +44,14 @@ export default {
     return axios.get("/api/messages/" + data);
   },
 
+  getPlaces: function() {
+    return axios.get("/api/users/places");
+  },
+
+  getTopics: function() {
+    return axios.get("/api/users/topics");
+  },
+
   logOut: function(data) {
     return axios.get("/logout");
   },

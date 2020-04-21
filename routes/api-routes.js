@@ -17,9 +17,6 @@ module.exports = function(app) {
 
   // route to get data about the logged in user
   app.get("/api/user/id", function(req, res) {
-    // console.log(req.session);
-    // console.log(req.sessionID);
-    // console.log(req.user);
     db.User.findOne({
       where: {
         id: req.user.id
@@ -51,8 +48,8 @@ module.exports = function(app) {
         category: req.params.category
       },
       include: [db.User]
-    }).then(function(dbTopic) {
-      res.json(dbTopic);
+    }).then(function(data) {
+      res.json(data);
     })
   });
 
@@ -119,6 +116,37 @@ module.exports = function(app) {
       res.json(data);
     })
   });
+
+  // route to get all users PoI's
+  app.get("/api/users/places", function(req, res) {
+    db.PoI.findAll({
+      where: {
+        UserId: req.user.id
+      }
+    })
+    .then(function(result) {
+      res.json(result);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  })
+
+  // route to get all users posted topics
+  app.get("/api/users/topics", function(req, res) {
+    console.log("HERE");
+    db.Topic.findAll({
+      where: {
+        UserId: req.user.id
+      }
+    })
+    .then(function(result) {
+      res.json(result);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  })
 
   // logging out a user
   app.get("/logout", function(req, res) {

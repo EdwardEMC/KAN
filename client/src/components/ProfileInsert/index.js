@@ -19,7 +19,7 @@ function ProfileInsert(props) {
                 <h5>Places of interest</h5>
               </Link>
               <br></br>
-              <Link to="/myTopic"> 
+              <Link to="/myTopics"> 
                 <h5>Topics</h5>
               </Link>
               <br></br>
