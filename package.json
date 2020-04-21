@@ -10,6 +10,7 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
+    "heroku config":"set JS_RUNTIME_TARGET_BUNDLE=/app/client/build/static/js/*.js",
     "heroku-postbuild": "npm run build"
   },
   "author": "Edward Coad",
