@@ -68,7 +68,6 @@ const MapContent = (props) => {
           {clusterer => {
             return (
               myPlaces.map(place => {
-                // saved for use with the list to show certain icons
                 switch(iconSelection) {
                   case "all":
                     if(place.userName) {
