@@ -14,8 +14,7 @@ function RegisterUser(event) {
   const emailInput = document.getElementById("email-input");
   const generalInput = document.getElementById("information-input")
   const passwordInput = document.getElementById("password-input");
-  const terms = document.getElementById("terms").checked;
-  
+
   const userData = {
     userName: userNameInput.value.trim(),
     email: emailInput.value.trim(),
@@ -25,15 +24,7 @@ function RegisterUser(event) {
     password: passwordInput.value.trim(),
   };
 
-  if(terms===false) {
-    document.getElementById("checked").innerHTML = "**Please read the Terms & Conditions**";
-    return;
-  }
-
-  // check if all the data is filled and the terms box is checked
-  if (!userData.userName || !userData.email || !userData.name || !userData.password) {
-    return;
-  }
+  console.log(userData);
 
   // If we have a username, name, email & password, run the signUpUser function
   signUpUser(userData.userName, userData.email, userData.phone, userData.name, userData.generalInformation, userData.password);

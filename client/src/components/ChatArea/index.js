@@ -49,7 +49,7 @@ function ChatArea() {
       <div className="row no-gutters">
         <div className="col-md-4">
           <div className="card chatArea">
-            <div className="card-header text-center">
+            <div className="card-header text-center colorBodyComment">
               CURRENT ACTIVE CHATS
             </div>
             <div className="card-body" id="chatboxes">

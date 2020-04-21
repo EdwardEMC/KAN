@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import API from "../components/utils/API";
 import Wrapper from "../components/Wrapper";
 import ListView from "../components/ListView";
@@ -23,6 +24,9 @@ const MyPlaces = () => {
   return (
     <Wrapper>
       <div className="container">
+      <Link to="/profile">
+        Back
+      </Link>
       <h2 className="text-center">Places of Interest</h2>
         <br></br>
         {list.map(element => {

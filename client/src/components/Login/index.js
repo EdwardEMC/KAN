@@ -36,7 +36,7 @@ function LoginForm() {
           // entered email ID is not found in database
           emailInput.value = "";
           passwordInput.value = "";
-          document.getElementById("errorMsg").innerHTML = "Email does not exist!";
+          document.getElementById("errorMsg").innerHTML = "Email does not exist or Password Incorrect!";
           return;
         }
       });
@@ -76,7 +76,8 @@ function LoginForm() {
           <p className="help" id="errorMsg"></p>
         </div>
         <div className="text-center">
-          <p>Don't have a account? Sign up &nbsp; 
+          <p>Don't have a account? Sign up 
+            &nbsp; 
             <Link to="/register"> 
               here
             </Link>

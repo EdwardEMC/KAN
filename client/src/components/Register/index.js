@@ -5,7 +5,7 @@ import "./style.css";
 
 function RegisterForm() {
   return (
-    <form className="signup-user">
+    <form className="signup-user" onSubmit={RegisterUser}>
       <div className="form-row">
         <div className="form-group col-md-6">
           <label htmlFor="userName-input">Username</label>
@@ -40,8 +40,9 @@ function RegisterForm() {
       </div>
       <div className="form-row">
         <div className="form-check">
-          <input type="checkbox" className="form-check-input" id="terms"/>
-          <label className="form-check-label" htmlFor="terms">I have read the 
+          <input type="checkbox" className="form-check-input" required id="terms"/>
+          <label className="form-check-label" htmlFor="terms">I have read the
+            &nbsp;
             <Link to="/terms">
               terms & conditions
             </Link>
@@ -51,14 +52,15 @@ function RegisterForm() {
       </div>
       <br></br>
       <div className="text-center">
-        <button onClick={RegisterUser} className="btn btn-primary">  {/*fix to show if username or email is already in use*/}
+        <button type="submit" className="btn btn-primary">  {/*fix to show if username or email is already in use*/}
         Submit
         </button>
       </div>
       <p id="errorMsg"></p>
       <br></br>
       <div className="text-center">
-        <p>Already have an account? Login &nbsp; 
+        <p>Already have an account? Login
+          &nbsp; 
           <Link to="/"> 
             here
           </Link>

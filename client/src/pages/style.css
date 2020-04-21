@@ -1,19 +1,19 @@
 body {
   /* background-color: rgb(201, 132, 116); Brown*/ 
   /* background-color: rgb(167, 210, 203); Blue*/
-  background-color: rgb(242, 211, 135);
+  background-color: rgba(248, 229, 179, 0.897);
 }
 
 .colorHeader {
-  background-color: rgb(135, 196, 98);
+  background-color: rgb(201, 132, 116);
 }
 
 .colorBody {
-  background-color: rgb(241, 255, 196);
+  background-color: rgb(255, 255, 255);
 }
 
 .colorFooter {
-  background-color: rgb(221, 252, 164);
+  background-color: rgba(201, 132, 116, 0.589);
 }
 
 .colorHeaderComment {
