@@ -5,7 +5,7 @@ import API from "../utils/API";
 
 // https://codesandbox.io/s/react-google-maps-api-ir5ks marker code
 
-const poiPath = process.env.PUBLIC_URL + '/assets/CategoryIcons/';
+const poiPath = process.env.PUBLIC_URL + '/assets/MapIcons/';
 const userPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
 
 const MapContent = (props) => {
@@ -77,6 +77,7 @@ const MapContent = (props) => {
                       return displayMarkers(place, clusterer, icon);
                     }
                     else {
+                      // not displaying some icons, only online and veiwpoint (perhaps capitals)
                       let icon = poiPath + place.category + ".png";
                       return displayMarkers(place, clusterer, icon);
                     }
