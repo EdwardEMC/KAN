@@ -27,25 +27,8 @@ import Search from "./pages/Search";
 import Footer from "./components/Footer";
 import "./style.css";
 
-// import API from "./components/utils/API";
-
-// function authenticate() {
-//   let auth;
-//   API.verify()
-//   .then(function(result) {
-//     console.log(result.data, "USER");
-//     auth = result.data;
-//   })
-//   .catch(function(err) {
-//     console.log(err);
-//   })
-//   return auth;
-// }
-
 // Making so the navbar does not appear on the login/register page
 const NavRoutes = () => {
-
-  // wrap everything in authentication and redirect to login if not logged in
   return (
     <div className="App Site">
       <Header />
@@ -68,32 +51,24 @@ const NavRoutes = () => {
       <Footer />
     </div>
   )
-}
+};
 
-function App() {
+const App = () => {
   return (
     <Router>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route component={NavRoutes} />
-          {/* <AuthenticatedRoute component={NavRoutes} /> */}
+          <AuthenticatedRoute component={NavRoutes} />
         </Switch>
     </Router>
   );
 }
 
-// const AuthenticatedRoute = ({ component: Component, ...rest }) => {
-//     let auth = authenticate();
-//     <Route {...rest} render={props => (
-//       auth ? ( // if user is authenticated
-//       <Component {...props}/>
-//     ) : (
-//       <Redirect to={{
-//         pathname: '/',
-//       }}/>
-//     )
-//   )}/>
-// };
+const AuthenticatedRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    localStorage.getItem("jwtToken") ? <Component {...props}/> : <Redirect to={{pathname: '/'}}/>
+  )}/>
+);
 
 export default App;

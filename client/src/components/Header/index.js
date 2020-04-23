@@ -13,6 +13,7 @@ function Header() {
     API.logOut()
     .then(function() {
       // using href instead of history as href will refresh the page and disconnect any sockets automatically
+      localStorage.removeItem("jwtToken");
       window.location.href="/";
     })
     .catch(function(err) {

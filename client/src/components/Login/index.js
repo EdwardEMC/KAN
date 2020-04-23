@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import API from "../utils/API";
+import setAuth from "../utils/setAuth";
 import "./style.css";
 
 function LoginForm() {
@@ -15,7 +16,7 @@ function LoginForm() {
     var passwordInput = document.getElementById("password-input");
   
     API.getUsers("/api/user")
-      .then(function(result) {
+      .then(result => {
         const users = result.data;
         const pass = users.find(element => element.email === emailInput.value);
         if(pass) {    
@@ -48,11 +49,23 @@ function LoginForm() {
       password: password
     })
     .then(result => {
-      console.log(result);
-    }).then(function(){
-      history.push('/profile')
+      userAuth()
     })
     .catch(err => console.log(err)); // If there's an error, log the error
+  }
+
+  function userAuth() {
+    API.verify()
+    .then(result => {
+      console.log(result);
+      const token = result.data
+      localStorage.setItem('jwtToken', token);
+      setAuth(token);
+      history.push('/profile')
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   return(

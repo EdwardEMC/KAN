@@ -1,6 +1,7 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const passport = require("../config/passport");
+const jwt = require("jsonwebtoken");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
@@ -10,23 +11,23 @@ module.exports = function(app) {
 
   // route to verify user
   app.get('/api/verify', (req, res) => {
-    console.log("HERE");
     if(req.isAuthenticated()) {
-      res.send(true)
+      const token = jwt.sign({user: "LoggedIn"}, "sandwich"); //change privateKey to process.env later
+      res.send(token);
     } else {
-      res.send(false)
+      res.send(false);
     }
   })
 
   // route to return a list of all users
-  app.get("/api/user", function(req, res) { // add isAuthenticated to each route to stop unverified api calls
+  app.get("/api/user", isAuthenticated, function(req, res) { // add isAuthenticated to each route to stop unverified api calls
     db.User.findAll({ }).then(function(dbUser) {
       res.json(dbUser);
     })
   });
 
   // route to get data about the logged in user
-  app.get("/api/user/id", function(req, res) {
+  app.get("/api/user/id", isAuthenticated, function(req, res) {
     db.User.findOne({
       where: {
         id: req.user.id
@@ -37,7 +38,7 @@ module.exports = function(app) {
   });
   
   // route to get data about a particular user
-  app.get("/api/user/:userName", function(req, res) {
+  app.get("/api/user/:userName", isAuthenticated, function(req, res) {
     db.User.findOne({
       where: {
         userName: req.params.userName,
@@ -51,7 +52,7 @@ module.exports = function(app) {
   });
 
   // route to return a list of all topics relating to subforum
-  app.get("/api/topics/:category", function(req, res) {
+  app.get("/api/topics/:category", isAuthenticated, function(req, res) {
     console.log(req.params.category);
     db.Topic.findAll({ 
       where: {
@@ -64,7 +65,7 @@ module.exports = function(app) {
   });
 
   // route to return a list of all comment relating to a topic
-  app.get("/api/comments/:TopicId", function(req, res) {
+  app.get("/api/comments/:TopicId", isAuthenticated, function(req, res) {
     db.Comment.findAll({ 
       where: {
         TopicId: req.params.TopicId
@@ -76,7 +77,7 @@ module.exports = function(app) {
   });
 
   // route to get all markers
-  app.get("/api/markers", function(req, res) {
+  app.get("/api/markers", isAuthenticated, function(req, res) {
     db.PoI.findAll({include: [db.User]}).then(function(dbPoI) { 
       db.User.findAll({
         where: {
@@ -91,7 +92,7 @@ module.exports = function(app) {
     })
   });
 
-  app.get("/api/chats", function(req, res) {
+  app.get("/api/chats", isAuthenticated, function(req, res) {
     db.Chats.findAll({ 
       where: {
         [Op.or]: 
@@ -112,7 +113,7 @@ module.exports = function(app) {
   });
 
   //route to get messages from a certain chat
-  app.get("/api/messages/:id", function(req, res) {
+  app.get("/api/messages/:id", isAuthenticated, function(req, res) {
     db.Messages.findAll({
       where: {
         ChatId: req.params.id
@@ -128,7 +129,7 @@ module.exports = function(app) {
   });
 
   // route to get all users PoI's
-  app.get("/api/users/places", function(req, res) {
+  app.get("/api/users/places", isAuthenticated, function(req, res) {
     db.PoI.findAll({
       where: {
         UserId: req.user.id
@@ -143,7 +144,7 @@ module.exports = function(app) {
   })
 
   // route to get all users posted topics
-  app.get("/api/users/topics", function(req, res) {
+  app.get("/api/users/topics", isAuthenticated, function(req, res) {
     db.Topic.findAll({
       where: {
         UserId: req.user.id
@@ -158,7 +159,7 @@ module.exports = function(app) {
   })
 
   // logging out a user
-  app.get("/logout", function(req, res) {
+  app.get("/logout", isAuthenticated, function(req, res) {
     db.User.update({ type: null }, {
         where: {
           email: req.session.passport.user.email
@@ -177,6 +178,18 @@ module.exports = function(app) {
   //===========================================================================
   // POST REQUESTS
   //===========================================================================
+
+  // route to authenticate user logging in
+  app.post('/api/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+      req.login(user, (err) => {
+        if(err) {
+          return err;
+        }
+        return res.send('You were authenticated & logged in!\n');
+      })
+    })(req, res, next);
+  })
 
 	// route to POST a new user
 	app.post("/api/register", function(req, res) {
@@ -199,7 +212,7 @@ module.exports = function(app) {
   });
 
   // route to POST a new topic
-	app.post("/api/topic", function(req, res) {
+	app.post("/api/topic", isAuthenticated, function(req, res) {
     db.Topic.create({
       title: req.body.title,
       description: req.body.description,
@@ -215,7 +228,7 @@ module.exports = function(app) {
   });
 
   // route to POST a new topic
-	app.post("/api/topic/comment", function(req, res) {
+	app.post("/api/topic/comment", isAuthenticated, function(req, res) {
     db.Comment.create({
       description: req.body.description,
       TopicId: req.body.topicId,
@@ -229,20 +242,8 @@ module.exports = function(app) {
     });
   });
 
-  // route to authenticate user logging in
-  app.post('/api/login', (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
-      req.login(user, (err) => {
-        if(err) {
-          return err;
-        }
-        return res.send('You were authenticated & logged in!\n');
-      })
-    })(req, res, next);
-  })
-
   // route to POST a new PoI marker
-	app.post("/api/user/PoI", function(req, res) {
+	app.post("/api/user/PoI", isAuthenticated, function(req, res) {
     db.PoI.create({
       title: req.body.title,
       description: req.body.description,
@@ -261,7 +262,7 @@ module.exports = function(app) {
   });
 
   // route to post a new chat box
-  app.post("/api/user/chats", function(req, res) {
+  app.post("/api/user/chats", isAuthenticated, function(req, res) {
     const data = [req.body.currentUser.userName, req.user.userName];
     // console.log(data);
     // alpha sort the usernames so they are always the same
@@ -282,7 +283,7 @@ module.exports = function(app) {
   })
 
   //route to update the message history of a chat
-  app.post("/api/messages", function(req, res) {
+  app.post("/api/messages", isAuthenticated, function(req, res) {
     const data = {
       message: req.body.message,
       ChatId: req.body.id,
@@ -308,7 +309,7 @@ module.exports = function(app) {
   //===========================================================================
 
   // route to PUT (update) a user
-  app.put("/api/user", function(req, res) {
+  app.put("/api/user", isAuthenticated, function(req, res) {
     db.User.update({
       phone: req.body.phone,
       name: req.body.name,
@@ -329,7 +330,7 @@ module.exports = function(app) {
   });
 
   // route to PUT (update) a user's online marker (lat, lng)
-  app.put("/api/user/online", function(req, res) {
+  app.put("/api/user/online", isAuthenticated, function(req, res) {
     db.User.update({
       lat: req.body.lat,
       lng: req.body.lng,
@@ -355,7 +356,7 @@ module.exports = function(app) {
   //===========================================================================
 
   //route to delete a user
-  app.delete("/api/user", function(req, res) {
+  app.delete("/api/user", isAuthenticated, function(req, res) {
     var id = req.user.id;
     db.User.destroy({
       where: {
@@ -367,7 +368,7 @@ module.exports = function(app) {
   });
 
   //route to delete chatbox
-  app.delete("/api/chat/:chatName", function(req, res) {
+  app.delete("/api/chat/:chatName", isAuthenticated, function(req, res) {
     db.Chats.destroy({
       where: {
         chatName: req.params.chatName
@@ -380,7 +381,7 @@ module.exports = function(app) {
   //route to delete comment
 
   //route to delete topic
-  app.delete("/api/topics/:topic", function(req, res) {
+  app.delete("/api/topics/:topic", isAuthenticated, function(req, res) {
     db.Topic.destroy({
       where: {
         title: req.params.topic,
@@ -392,7 +393,7 @@ module.exports = function(app) {
   });
 
   //route to delete PoI
-  app.delete("/api/places/:place", function(req, res) {
+  app.delete("/api/places/:place", isAuthenticated, function(req, res) {
     db.PoI.destroy({
       where: {
         title: req.params.place,
@@ -403,13 +404,3 @@ module.exports = function(app) {
     });
   });
 };
-
-
-// example of checking authentication
-// app.get('/authrequired', (req, res) => {
-//   if(req.isAuthenticated()) {
-//     res.send('you hit the authentication endpoint\n')
-//   } else {
-//     res.redirect('/')
-//   }
-// })
