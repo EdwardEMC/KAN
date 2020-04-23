@@ -161,11 +161,25 @@ module.exports = function(app) {
 
   // logging out a user
   app.get("/logout", isAuthenticated, function(req, res) {
-    db.User.update({ type: null }, {
-        where: {
-          email: req.session.passport.user.email
-        }
+    db.User.update({ lat: null, lng: null }, { // removes online marker
+      where: {
+        email: req.session.passport.user.email
+      }
     })
+    // All ready to go, just keeping like this while testing
+    // .then(function(){
+    //   db.Chats.destroy({ 
+    //     where: {
+    //       [Op.or]: 
+    //         [{
+    //           user1: req.user.userName
+    //         }, 
+    //           {
+    //           user2: req.user.userName
+    //         }]
+    //     }
+    //   })
+    // })
     .then(function() {
       console.log("User logged Out");
       req.logout();
