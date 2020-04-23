@@ -14,33 +14,8 @@ function LoginForm() {
     // Getting references to our form and inputs
     var emailInput = document.getElementById("email-input");
     var passwordInput = document.getElementById("password-input");
-  
-    API.getUsers("/api/user")
-      .then(result => {
-        const users = result.data;
-        const pass = users.find(element => element.email === emailInput.value);
-        if(pass) {    
-          // The user record in database does not have a charity key or a charity key was not entered so it is a regular user
-          const userData = {
-            email: emailInput.value.trim(),
-            password: passwordInput.value.trim(),
-          };    
-          // If we have an email and password we run the loginUser function and clear the form
-          if (!userData.email || !userData.password) {
-            return;
-          }
-          else {
-            userCheck(userData.email, userData.password)
-          }
-        }
-        else {
-          // entered email ID is not found in database
-          emailInput.value = "";
-          passwordInput.value = "";
-          document.getElementById("errorMsg").innerHTML = "Email does not exist or Password Incorrect!";
-          return;
-        }
-      });
+
+    userCheck(emailInput.value.trim(), passwordInput.value.trim())
   };
 
   function userCheck(email, password) {
@@ -49,15 +24,22 @@ function LoginForm() {
       password: password
     })
     .then(result => {
-      userAuth()
+      if(result.data === "Incorrect password.") {
+        return document.getElementById("errorMsg").innerHTML = "Password Incorrect!";  
+      }
+      else if (result.data === "Incorrect email.") {
+        return document.getElementById("errorMsg").innerHTML = "Email Address Does Not Exist!";
+      }
+      else {
+        userAuth()
+      }
     })
-    .catch(err => console.log(err)); // If there's an error, log the error
+    .catch(err => console.log(err));
   }
 
   function userAuth() {
     API.verify()
     .then(result => {
-      console.log(result);
       const token = result.data
       localStorage.setItem('jwtToken', token);
       setAuth(token);

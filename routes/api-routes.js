@@ -186,7 +186,7 @@ module.exports = function(app) {
         if(err) {
           return err;
         }
-        return res.send('You were authenticated & logged in!\n');
+        return res.send(user);
       })
     })(req, res, next);
   })

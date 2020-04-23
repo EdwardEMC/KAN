@@ -15,14 +15,10 @@ passport.use(new LocalStrategy(
 			}
 	}).then(function(dbUser) {
 		if (!dbUser) {
-			return done(null, false, {
-				message: "Incorrect email."
-			});
+			dbUser = "Incorrect email.";
 		}
 		else if (!dbUser.validPassword(password)) {
-			return done(null, false, {
-				message: "Incorrect password."
-			});
+		  dbUser = "Incorrect password.";
     }
 		return done(null, dbUser);
 	});
