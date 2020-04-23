@@ -10,6 +10,7 @@ const OtherUsers = () => {
   
   useEffect(() => {
     loadUser()
+    // eslint-disable-next-line
   }, [])
 
   function loadUser() {

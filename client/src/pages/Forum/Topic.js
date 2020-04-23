@@ -9,6 +9,7 @@ const Topic = (props) => {
 
   useEffect(() => {
     loadComments()
+    // eslint-disable-next-line
   }, [])
 
   function loadComments() {

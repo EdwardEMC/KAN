@@ -4,6 +4,8 @@ import ChatBox from "../ChatBox";
 import ChatMessage from "../ChatMessage";
 import "./style.css";
 
+const iconPath = process.env.PUBLIC_URL + '/assets/MiscIcons/';
+
 function ChatArea() {
   const [chats, setChats] = useState([])
   const [logged, setLogged] = useState();
@@ -13,12 +15,12 @@ function ChatArea() {
   // api call to get all active chats
   useEffect(() => {
     loadChats();
-  }, [])
+  }, []) // setInterval for 5 minutes or find a way to alert user if a new chat has been started
 
   function loadChats() {
     API.getChats()
     .then(function(result) {
-      console.log(result);
+      console.log(result, "CURRENT CHATS");
       setLogged(result.data.logged.userName);
       setChats(result.data.chats);
     }) // If there's an error, log the error
@@ -73,11 +75,24 @@ function ChatArea() {
         <div className="col-md-4">
           <div className="card chatArea">
             <div className="card-header text-center colorBodyComment">
-              CURRENT ACTIVE CHATS
+              <strong>CURRENT ACTIVE CHATS</strong>
+              &emsp;
+              <label htmlFor="checkbox"> 
+                <input type="checkbox" id="checkbox"/>
+                <img className="pointer refresh img-fluid" alt="refreshIcon" onClick={loadChats} src={iconPath + "refresh.png"} />
+              </label> 
             </div>
             <div className="card-body" id="chatboxes">
               {chats.map(element => (
-                <ChatBox key={element.id} user={element} current={logged} onClick={activate} delete={deleteBox} />
+                <ChatBox 
+                  key={element.id} 
+                  user={element} 
+                  current={logged} 
+                  lastMsg={element.Messages[element.Messages.length - 1].message}
+                  lastTime={element.Messages[element.Messages.length - 1].createdAt}
+                  onClick={activate} 
+                  delete={deleteBox} 
+                />
               ))}
             </div>
           </div>

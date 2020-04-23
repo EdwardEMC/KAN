@@ -9,3 +9,22 @@
 .focused {
   background-color: lightgreen;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+#checkbox {
+  display: none;
+}
+
+.refresh {
+  max-width: 36px;
+  max-height: 36px;
+  transition: all 0.75s 0.25s;
+  transform: rotate(0);
+}
+
+#checkbox:checked + .refresh {
+  transform: rotate(360deg);
+}

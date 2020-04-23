@@ -94,6 +94,7 @@ module.exports = function(app) {
 
   app.get("/api/chats", isAuthenticated, function(req, res) {
     db.Chats.findAll({ 
+      include: [db.Messages],
       where: {
         [Op.or]: 
           [{
@@ -204,7 +205,6 @@ module.exports = function(app) {
   })
     .then(function() {
       res.sendStatus(200);
-      // res.redirect('/');
     })
     .catch(function(err) {
       res.status(401).json(err);
@@ -264,7 +264,6 @@ module.exports = function(app) {
   // route to post a new chat box
   app.post("/api/user/chats", isAuthenticated, function(req, res) {
     const data = [req.body.currentUser.userName, req.user.userName];
-    // console.log(data);
     // alpha sort the usernames so they are always the same
     const sortedData = data.sort().join("-");
 
@@ -272,7 +271,6 @@ module.exports = function(app) {
       chatName: sortedData,
       user1: req.body.currentUser.userName,
       user2: req.user.userName
-      // UserId: req.user.id
     })
     .then(function() {
       res.sendStatus(200);

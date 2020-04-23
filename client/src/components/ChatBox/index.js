@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 
 function ChatBox(props) {
+  console.log(props);
   return ( 
     <div className="row outline pointer side-padding" value={props.user.chatName} data-id={props.user.id} onClick={props.onClick}> 
       {/* <div className="col-md-3 remove-padding d-flex justify-content-middle">
@@ -15,11 +16,11 @@ function ChatBox(props) {
           <div className="text-right">
             <span value={props.user.chatName} onClick={props.delete}>X</span>
           </div>
-          <div className="card-text text-center pointer">
-            Last message sent
+          <div className="card-text text-center pointer" id={props.user.chatName + "lastMsg"}>
+            {props.lastMsg}
           </div>
-          <div className="card-text text-muted text-center pointer">
-            Time of last message
+          <div className="card-text text-muted text-center pointer" id={props.user.chatName + "lastTime"}>
+            {props.lastTime}
           </div>
         </div>
       {/* </div> */}

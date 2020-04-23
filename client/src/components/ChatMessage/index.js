@@ -11,7 +11,7 @@ function ChatMessage(props) {
   function messageHistory() {
     API.getMessages(props.id)
     .then(function(result) {
-      console.log(result, "RESULT");
+      // console.log(result, "RESULT");
       // function to display results in message area
       currentUser = result.data.id;
       displayMessages(result.data)
@@ -62,14 +62,21 @@ function ChatMessage(props) {
     }
   }
   
+  let socket; 
+
+  const roomList = [];
+
   // socket.io connection with room query
-  let socket = io();
+  if(typeof props.active !== "undefined" && roomList.indexOf(x.room)) {
+    socket = io();
+  }
 
   // register to listen to the x variable
   if(typeof x.roomInternal !== "undefined") {
     x.registerListener(function(val) {
       socket.emit('join', x.room);
       socket.emit('changeRoom');
+      roomList.push(x.room);
       if(document.getElementById('messages')) {
         document.getElementById('messages').innerHTML = "";
       }
@@ -99,7 +106,8 @@ function ChatMessage(props) {
 
     let msg = {
       message: document.getElementById('m').value,
-      user: currentUser
+      user: currentUser,
+      time: new Date()
     }
 
     // socket emit
@@ -107,26 +115,32 @@ function ChatMessage(props) {
     document.getElementById('m').value='';
   }
 
-  socket.on('chat message', function(msg){
-    console.log(msg, "CLIENT");
-    let area = document.getElementById('messages');
-    let li = document.createElement('li');
-    let span = document.createElement('span');
-    span.innerHTML = msg.message;
-    if(msg.user === currentUser) {
-      li.setAttribute("class", "current");
-      span.setAttribute("class", "sent");
-    }
-    else {
-      li.setAttribute("class", "other");
-      span.setAttribute("class", "received");
-    }
-    li.append(span);
-    area.append(li);
+  if(typeof props.active !== "undefined") {
+    socket.on('chat message', function(msg){
+      console.log(msg, "CLIENT");
+      
+      document.getElementById(props.active + "lastMsg").innerHTML = msg.message;
+      document.getElementById(props.active + "lastTime").innerHTML = msg.time;
 
-    let objDiv = document.getElementById("messageScroll");
-    objDiv.scrollTop = objDiv.scrollHeight;
-  });
+      let area = document.getElementById('messages');
+      let li = document.createElement('li');
+      let span = document.createElement('span');
+      span.innerHTML = msg.message;
+      if(msg.user === currentUser) {
+        li.setAttribute("class", "current");
+        span.setAttribute("class", "sent");
+      }
+      else {
+        li.setAttribute("class", "other");
+        span.setAttribute("class", "received");
+      }
+      li.append(span);
+      area.append(li);
+
+      let objDiv = document.getElementById("messageScroll");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    });
+  }
     
   return ( 
     <div>
