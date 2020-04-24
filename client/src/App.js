@@ -5,6 +5,9 @@ import Register from "./pages/Register";
 import Header from "./components/Header";
 import Description from "./pages/Description";
 
+//Admin
+import Admin from "./pages/Admin";
+
 //Profile pages
 import Profile from "./pages/Profile";
 import MyPlaces from "./pages/MyPlaces";
@@ -59,6 +62,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/register" component={Register} />
+          <AdminRoute exact path="/admin" component={Admin} />
           <AuthenticatedRoute component={NavRoutes} />
         </Switch>
     </Router>
@@ -68,6 +72,12 @@ const App = () => {
 const AuthenticatedRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     localStorage.getItem("jwtToken") ? <Component {...props}/> : <Redirect to={{pathname: '/'}}/>
+  )}/>
+);
+
+const AdminRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    localStorage.getItem("user") ? <Component {...props}/> : <Redirect to={{pathname: '/'}}/>
   )}/>
 );
 

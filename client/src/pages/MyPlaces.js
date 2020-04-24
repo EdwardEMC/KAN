@@ -22,7 +22,7 @@ const MyPlaces = () => {
   }
 
   function deletePlace(event) {
-    const title = event.target.getAttribute("value");
+    const title = event.target.getAttribute("data-title");
     // console.log(title);
     API.deletePlace(title)
     .then(function(result) {

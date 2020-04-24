@@ -11,11 +11,17 @@ module.exports = function(app) {
 
   // route to verify user
   app.get('/api/verify', (req, res) => {
-    if(req.isAuthenticated()) {
-      const token = jwt.sign({user: "LoggedIn"}, "sandwich"); //change privateKey to process.env later
-      res.send(token);
-    } else {
-      res.send(false);
+    console.log(req.user, "USER");
+    if(req.user.category === "Admin") {
+      res.send("Admin");
+    }
+    else {
+      if(req.isAuthenticated()) {
+        const token = jwt.sign({user: "LoggedIn"}, "sandwich"); //change privateKey to process.env later
+        res.send(token);
+      } else {
+        res.send(false);
+      }
     }
   })
 
@@ -187,6 +193,21 @@ module.exports = function(app) {
     })
     .catch(function(err) {
       console.log(err);
+    })
+  });
+
+  app.get("/api/admin", isAuthenticated, function(req, res) {
+    db.Topic.findAll({}).then(function(dbTopic) {
+      db.PoI.findAll({}).then(function(dbPoI) {
+        db.Comment.findAll({}).then(function(dbComment) {
+          const data = {
+            topic: dbTopic,
+            poi: dbPoI,
+            comment: dbComment
+          }
+          res.json(data);
+        })
+      })
     })
   });
   
@@ -414,5 +435,43 @@ module.exports = function(app) {
     }).then(function(dbChats) {
       res.json(dbChats);
     });
+  });
+
+  //route to delete PoI
+  app.delete("/api/delete/:database/:title/:UserId", isAuthenticated, function(req, res) {
+    console.log(req.params.database, "DELETE");
+    console.log(req.params.title, "DELETE");
+    console.log(req.params.UserId, "DELETE");
+    switch(req.params.database) {
+      case "topic":
+        db.Topic.destroy({
+          where: {
+            title: req.params.title,
+            UserId: req.params.UserId
+          }
+        }).then(function(dbChats) {
+          res.json(dbChats);
+        });
+      case "comment":
+        db.Comment.destroy({
+          where: {
+            createdAt: req.params.title,
+            UserId: req.params.UserId
+          }
+        }).then(function(dbChats) {
+          res.json(dbChats);
+        });
+      case "poi":
+        db.PoI.destroy({
+          where: {
+            title: req.params.title,
+            UserId: req.params.UserId
+          }
+        }).then(function(dbChats) {
+          res.json(dbChats);
+        });
+      default:
+        return;
+    }
   });
 };

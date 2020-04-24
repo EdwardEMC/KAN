@@ -61,6 +61,10 @@ export default {
     return axios.get("/logout");
   },
 
+  getAdminList: function() {
+    return axios.get("/api/admin");
+  },
+
   //============================================
   // POST REQUESTS
   //============================================
@@ -127,6 +131,11 @@ export default {
     return axios.delete("/api/chat/" + data.chatName);
   },
 
+  // Deletes a comment
+  // deleteComment: function(data) {
+  //   return axios.delete("/api/comments/" + data);
+  // },
+
   // Deletes a PoI
   deletePlace: function(data) {
     return axios.delete("/api/places/" + data);
@@ -135,5 +144,10 @@ export default {
   // Deletes a topic
   deleteTopic: function(data) {
     return axios.delete("/api/topics/" + data);
+  },
+
+  // Admin can delete a topic, poi or comment
+  deleteAdmin: function(data) {
+    return axios.delete("/api/delete/" + data.database + "/" + data.title + "/" + data.user);
   }
 };

@@ -40,10 +40,16 @@ function LoginForm() {
   function userAuth() {
     API.verify()
     .then(result => {
-      const token = result.data
-      localStorage.setItem('jwtToken', token);
-      setAuth(token);
-      history.push('/profile')
+      if(result.data === "Admin") {
+        localStorage.setItem('user', result.data);
+        history.push('/admin');
+      }
+      else {
+        const token = result.data
+        localStorage.setItem('jwtToken', token);
+        setAuth(token);
+        history.push('/profile');
+      }
     })
     .catch(err => {
       console.log(err);

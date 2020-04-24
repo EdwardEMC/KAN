@@ -22,7 +22,7 @@ const MyTopics = () => {
   }
 
   function deleteTopic(event) {
-    const title = event.target.getAttribute("value");
+    const title = event.target.getAttribute("data-title");
     // console.log(title);
     API.deleteTopic(title)
     .then(function(result) {
