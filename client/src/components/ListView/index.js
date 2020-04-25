@@ -1,8 +1,6 @@
 import React from "react";
 import "./style.css";
 
-// add a line break between boxes
-
 function ListView(props) {
   return (
     <div>

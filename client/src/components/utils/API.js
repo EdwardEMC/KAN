@@ -57,12 +57,17 @@ export default {
     return axios.get("/api/users/topics");
   },
 
-  logOut: function(data) {
+  logOut: function() {
     return axios.get("/logout");
   },
 
   getAdminList: function() {
     return axios.get("/api/admin");
+  },
+
+  onlineUsers: function(search) {
+    console.log(search);
+    return axios.get("/api/online/" + search);
   },
 
   //============================================

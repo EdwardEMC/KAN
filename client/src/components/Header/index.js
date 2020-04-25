@@ -69,6 +69,11 @@ function Header() {
               </Link>
             </p>
             <p className="dropdown-item">
+              <Link to="/search"> 
+                Search
+              </Link>
+            </p>
+            <p className="dropdown-item">
               <Link to="/settings"> 
                 Settings
               </Link>

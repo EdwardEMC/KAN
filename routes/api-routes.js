@@ -209,6 +209,22 @@ module.exports = function(app) {
       })
     })
   });
+
+  // route to get online users
+  app.get("/api/online/:userName", isAuthenticated, function(req, res) {
+    db.User.findAll({
+      where: {
+        userName: {
+          [Op.substring]: "%"+req.params.userName+"%",
+        },
+        lat: {
+          [Op.not]: null // can only view if the user is online
+        }
+      }
+    }).then(function(dbUser) {
+      res.json(dbUser);
+    })
+  });
   
   //===========================================================================
   // POST REQUESTS

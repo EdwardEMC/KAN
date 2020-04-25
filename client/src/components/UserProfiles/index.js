@@ -18,7 +18,7 @@ function UserInsert(props) {
     .catch(function(err) {
       console.log(err);
       // redirect if the chatbox already exists
-      // history.push("/chats");
+      history.push("/chats");
     })
   }
 
@@ -33,9 +33,12 @@ function UserInsert(props) {
           <div className="row">
             <div className="col-sm-6 text-center">
               <img className="img-fluid" src="https://via.placeholder.com/250" alt="profilePic" /> {/* src={props.currentUser.profilePic} */}
+              <br></br>
+              <br></br>
             </div>
             <div className="col-sm-6">
-              <button onClick={chatting}>Start Chatting</button>
+              <button className="btn btn-success" onClick={chatting}>Start Chatting</button>
+              <br></br>
               <br></br>
               <div className="mainInfo">
                 <h5 className="userInfo">Name: {props.currentUser.name}</h5>
