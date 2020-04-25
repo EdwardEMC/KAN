@@ -76,8 +76,12 @@ module.exports = function(app) {
         TopicId: req.params.TopicId
       },
       include: [db.User]
-    }).then(function(dbTopic) {
-      res.json(dbTopic);
+    }).then(function(dbComment) {
+      const data = {
+        comments: dbComment,
+        user: req.user.id
+      }
+      res.json(data);
     })
   });
 
@@ -397,7 +401,24 @@ module.exports = function(app) {
     });
   });
 
-  //route to remove lat/lng (going offline)
+  //route to edit a comment
+  app.put("/api/comment/edit", isAuthenticated, function(req, res) {
+    db.Comment.update({
+      description: req.body.edit
+    },
+    {
+      where: {
+        createdAt: req.body.time,
+        UserId: req.user.id
+      }
+    })
+    .then(function() {
+      res.status(200).end();
+    })
+    .catch(function(err) {
+      res.status(401).json(err);
+    });
+  });
   
   //===========================================================================
   // DELETE REQUESTS
@@ -427,16 +448,16 @@ module.exports = function(app) {
   });
 
   //route to delete comment
-  // app.delete("/api/comments/:comment", isAuthenticated, function(req, res) {
-  //   db.Topic.destroy({
-  //     where: {
-  //       createdAt: req.params.topic,
-  //       UserId: req.user.id
-  //     }
-  //   }).then(function(dbChats) {
-  //     res.json(dbChats);
-  //   });
-  // });
+  app.delete("/api/comments/:comment", isAuthenticated, function(req, res) {
+    db.Comment.destroy({
+      where: {
+        createdAt: req.params.comment,
+        UserId: req.user.id
+      }
+    }).then(function(dbComment) {
+      res.json(dbComment);
+    });
+  });
 
   //route to delete topic
   app.delete("/api/topics/:topic", isAuthenticated, function(req, res) {

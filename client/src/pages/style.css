@@ -28,3 +28,22 @@ body {
   min-height: calc(100vh - 200px);
   overflow: none;
 }
+
+#delete {
+  color: red;
+}
+
+#edit {
+  color: green;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hide{
+  display: none;
+}
+.show{
+  display: block;
+}

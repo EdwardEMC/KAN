@@ -37,34 +37,42 @@ export default {
     return axios.get("/api/comments/" + TopicId);
   },
 
+  // gets all current map markers
   getAllMarkers: function() {
     return axios.get("/api/markers");
   },
 
+  // gets all active chats
   getChats: function() {
     return axios.get("/api/chats");
   },
 
+  // gets all messages relating to the active chatbox
   getMessages: function(data) {
     return axios.get("/api/messages/" + data);
   },
 
+  // gets all places marked by the current user
   getPlaces: function() {
     return axios.get("/api/users/places");
   },
 
+  // gets all topics posted by the current user
   getUserTopics: function() {
     return axios.get("/api/users/topics");
   },
 
+  // logs out the current user
   logOut: function() {
     return axios.get("/logout");
   },
 
+  // gets the list of all topics, places and comments
   getAdminList: function() {
     return axios.get("/api/admin");
   },
 
+  // gets the list of all online users
   onlineUsers: function(search) {
     console.log(search);
     return axios.get("/api/online/" + search);
@@ -94,10 +102,12 @@ export default {
     return axios.post("/api/topic/comment", data);
   },
 
+  // sets the position of a place of interest
   setPoIMarker: function(data) {
     return axios.post("/api/user/PoI", data);
   },
 
+  // creates a new chat entry
   newChat: function(data) {
     return axios.post("/api/user/chats", data);
   },
@@ -122,6 +132,10 @@ export default {
     return axios.put("/api/user/online", data);
   },
 
+  editComment: function(data) {
+    return axios.put("/api/comment/edit", data)
+  },
+
   //============================================
   // DELETE REQUESTS
   //============================================
@@ -137,9 +151,9 @@ export default {
   },
 
   // Deletes a comment
-  // deleteComment: function(data) {
-  //   return axios.delete("/api/comments/" + data);
-  // },
+  deleteComment: function(data) {
+    return axios.delete("/api/comments/" + data);
+  },
 
   // Deletes a PoI
   deletePlace: function(data) {

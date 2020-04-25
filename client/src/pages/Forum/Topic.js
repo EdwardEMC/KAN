@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const Topic = (props) => {
   const [comments, setComments] = useState([])
+  const [user, setUser] = useState();
 
   useEffect(() => {
     loadComments()
@@ -15,11 +16,66 @@ const Topic = (props) => {
   function loadComments() {
     API.getComments(props.location.state.topic.id)
     .then(function(result) {
-      setComments(result.data);
+      setUser(result.data.user);
+      setComments(result.data.comments);
     })// If there's an error, log the error
     .catch(function(err) {
       console.log(err);
     });
+  }
+
+  function deleteComment(event) {
+    const created = event.target.parentElement.getAttribute("value")
+    API.deleteComment(created)
+    .then(function(result) {
+      console.log(result);
+      const placeList = [];
+      comments.map(element => {
+        if(element.createdAt !== created) {
+          return placeList.push(element);
+        } 
+        return true;
+      });
+      setComments(placeList);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
+  function editSubmit(data) {
+    API.editComment(data)
+    .then(function(result) {
+      loadComments();
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
+  function editComment(event) {
+    const commentId = event.target.parentElement.getAttribute("data-id");
+    document.getElementById('editDescription'+commentId).className="show";
+    document.getElementById('description'+commentId).className="hide";
+  }
+
+  function submitEdit(event) {
+    const commentId = event.target.getAttribute("data-id");
+    const created = event.target.getAttribute("data-created");
+    const edited = document.getElementById('editbox'+commentId).value.trim()
+    if(edited !== "") {
+      const data = {
+        edit: edited,
+        time: created
+      }
+      editSubmit(data);
+    }
+    else {
+      return document.getElementById('editbox'+commentId).value = "**Comment cannot be blank**";
+    }
+    
+    document.getElementById('editDescription'+commentId).className="hide";
+    document.getElementById('description'+commentId).className="show";
   }
 
   return (
@@ -74,10 +130,25 @@ const Topic = (props) => {
                   </div>
                 </div>
                 <div className="card-body colorBody">
-                  <div>
+                  <div id={"description" + element.id} className="show">
                     {element.description}
                   </div>
+                  <div id={"editDescription" + element.id} className="hide">
+                    <textarea id={"editbox" + element.id} style={{width:"100%"}}>
+
+                    </textarea>
+                    <button data-id={element.id} data-created={element.createdAt} onClick={submitEdit}>Submit</button>
+                  </div>
                   <br></br>
+                  {user === element.User.id ? 
+                    <div className="text-right" data-id={element.id} value={element.createdAt}>
+                      <span id="edit" className="pointer" onClick={editComment}>Edit</span>
+                      &emsp;
+                      <span id="delete" className="pointer" onClick={deleteComment}>Delete</span>
+                    </div> 
+                    : 
+                    null
+                  }
                 </div>
               </div>
               <br></br>
