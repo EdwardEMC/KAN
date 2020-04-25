@@ -1,3 +1,24 @@
 .update {
- margin-top: 5%;
+ margin-top: 2%;
+}
+
+.profilePic {
+  margin: 0 auto;
+  max-width: 150px;
+  max-height: 150px;
+  cursor: pointer;
+}
+
+.profilePic:hover {
+  outline: 1px solid black;
+}
+
+.iconPic {
+  max-width: 50px;
+  max-height: 50px;
+  cursor: pointer;
+}
+
+.iconPic:focus {
+  outline: 1px solid black;
 }

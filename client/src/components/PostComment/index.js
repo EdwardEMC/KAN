@@ -26,7 +26,7 @@ function PostComment(props) {
       console.log(result);
       document.getElementById("description-input").value = "";
       document.getElementById("missingDescription").value = "";
-      window.location.reload(); /*Change to reload component later*/
+      props.onClick();
     })
     .catch(function(err) {
       console.log(err);

@@ -1,17 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import API from "../utils/API";
 import { useHistory } from "react-router-dom";
 import "./style.css";
 
+import Modal from "react-modal";
+
+const iconPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+Modal.setAppElement('body');
+
 function UserSettings(props) {
+  const [modalIsOpen,setIsOpen] = useState(false);
+
   let history = useHistory();
+  let subtitle;
+  let selectedIcon;
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    subtitle.style.color = '#f00';
+  }
+ 
+  function closeModal(){
+    setIsOpen(false);
+  }
+
+  function selected(event) {
+    selectedIcon = event.target.getAttribute("id")
+  }
+
+  function picChange() {
+    document.getElementById("picture").src = iconPath + selectedIcon + ".png";
+    setIsOpen(false);
+  }
 
   function sumbitUpdate(event) {
     event.preventDefault();
 
-    var nameInput = document.getElementById("name-input");
-    var phoneInput =  document.getElementById("phoneNumber-input");
-    var infoInput = document.getElementById("information-input");
+    // determine the selected icon name
+    let profilePic = document.getElementById("picture").getAttribute("src");
+    let image = profilePic.split("UserIcons/");
+    let icon = image[1].split(".png");
+
+    let nameInput = document.getElementById("name-input");
+    let phoneInput =  document.getElementById("phoneNumber-input");
+    let infoInput = document.getElementById("information-input");
 
     // Keep current values if not there is no input
     if(nameInput.value === "") {
@@ -24,7 +71,8 @@ function UserSettings(props) {
       infoInput.value = props.currentUser.generalInformation;
     }
 
-    var userData = {
+    const userData = {
+      icon: icon[0],
       name: nameInput.value.trim(),
       phone: phoneInput.value.trim(),
       generalInformation: infoInput.value.trim()
@@ -57,8 +105,69 @@ function UserSettings(props) {
         <h2 className="text-center card-header colorHeader">
           Update User
         </h2>
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Picture Selection"
+        >
+          <h2 ref={_subtitle => (subtitle = _subtitle)}>Select a new image</h2>
+
+
+          {/* working just need to add more icons */}
+          <div className="icons">
+            <div className="row">
+              <div className="col-4">
+                <img onClick={selected} id="Default" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+              </div>
+              <div className="col-4">
+                <img onClick={selected} id="Smile" className="img-fluid iconPic" src={iconPath + "Smile.png"} alt="Smile" tabIndex="0"/>
+              </div>
+              <div className="col-4">
+                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+              </div>
+            </div>   
+            <div className="row">
+              <div className="col-4">
+                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+              </div>
+              <div className="col-4">
+                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+              </div>
+              <div className="col-4">
+                <img onClick={selected} d="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+              </div>
+            </div>  
+            <div className="row">
+              <div className="col-4">
+                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+              </div>
+              <div className="col-4">
+                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+              </div>
+              <div className="col-4">
+                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+              </div>
+            </div>  
+          </div>
+          <br></br>
+          <button onClick={picChange}>Confirm</button> 
+          &emsp;
+          &emsp; 
+          <button onClick={closeModal}>close</button>
+        </Modal>
+
         <div className="card-body colorBody">
           <form className="update-user"> 
+            <div className="form-row">
+              <img 
+                id="picture"
+                className="img-fluid profilePic" 
+                onClick={openModal} 
+                src={iconPath + props.currentUser.icon + ".png"} 
+                alt="profilePic" />
+            </div>
             <div className="form-row">
               <div className="form-group col-md-6">
                 <label htmlFor="name-input"><h5>Name</h5></label>
@@ -92,6 +201,7 @@ function UserSettings(props) {
           </form>
         </div>
       </div>
+      <br></br>
     </div>
   )
 }

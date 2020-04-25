@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 
-function ProfileInsert(props) {  
+const iconPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
+
+function ProfileInsert(props) { 
+  console.log(props); 
   return (
     <div className="container mainWin">
       <div className="card">
@@ -12,7 +15,7 @@ function ProfileInsert(props) {
         <div className="card-body colorBody">
           <div className="row">
             <div className="col-sm-6 text-center">
-              <img className="img-fluid" src="https://via.placeholder.com/250" alt="profilePic" /> {/* src={props.currentUser.profilePic} */}
+              <img className="img-fluid profilePic" src={iconPath + props.currentUser.icon + ".png"} alt="profilePic" />
             </div>
             <div className="col-sm-6">
               <Link to="/myPlaces"> 

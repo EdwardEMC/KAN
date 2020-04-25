@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import API from "../utils/API";
 import "./style.css";
 
+const iconPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
+
 function UserInsert(props) {  
   let history = useHistory();
 
@@ -32,7 +34,7 @@ function UserInsert(props) {
         <div className="card-body colorBody">
           <div className="row">
             <div className="col-sm-6 text-center">
-              <img className="img-fluid" src="https://via.placeholder.com/250" alt="profilePic" /> {/* src={props.currentUser.profilePic} */}
+              <img className="img-fluid profilePic" src={iconPath + props.currentUser.icon + ".png"} alt="profilePic" />
               <br></br>
               <br></br>
             </div>

@@ -89,9 +89,10 @@ const Topic = (props) => {
             </Link>
           </div>
           <div className="col-sm-6 text-right">
+            {/* https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/focus */}
             {/* <Link to={"/forums" + topic[1] + "/post/comment"} >
               <p>Post New Comment</p>
-            </Link> */} {/* make this a link to the comment box below the title */}
+            </Link> */}
           </div>
         </div>
         <div key={props.location.state.topic.id}>
@@ -134,8 +135,8 @@ const Topic = (props) => {
                     {element.description}
                   </div>
                   <div id={"editDescription" + element.id} className="hide">
-                    <textarea id={"editbox" + element.id} style={{width:"100%"}}>
-
+                    <textarea id={"editbox" + element.id} style={{width:"100%"}} defaultValue={element.description}>
+                      {/*Area for edited comment*/}
                     </textarea>
                     <button data-id={element.id} data-created={element.createdAt} onClick={submitEdit}>Submit</button>
                   </div>
@@ -156,7 +157,7 @@ const Topic = (props) => {
           ))}
           <br></br>
           {/* adding a comment to the topic */}
-          <PostComment id={props.location.state.topic.id}/>
+          <PostComment id={props.location.state.topic.id} onClick={loadComments}/>
         </div>
       </div>  
     </Wrapper>

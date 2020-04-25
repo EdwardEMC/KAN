@@ -254,7 +254,7 @@ module.exports = function(app) {
       phone: req.body.phone,
       name: req.body.name,
       generalInformation: req.body.generalInformation, 
-      // category: "User", hard coded for icon distribution  
+      icon: "Default",
       password: req.body.password,
   })
     .then(function() {
@@ -363,6 +363,7 @@ module.exports = function(app) {
   // route to PUT (update) a user
   app.put("/api/user", isAuthenticated, function(req, res) {
     db.User.update({
+      icon: req.body.icon,
       phone: req.body.phone,
       name: req.body.name,
       generalInformation: req.body.generalInformation
