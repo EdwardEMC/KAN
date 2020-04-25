@@ -11,7 +11,6 @@ module.exports = function(app) {
 
   // route to verify user
   app.get('/api/verify', (req, res) => {
-    console.log(req.user, "USER");
     if(req.user.category === "Admin") {
       res.send("Admin");
     }
@@ -412,12 +411,22 @@ module.exports = function(app) {
   });
 
   //route to delete comment
+  // app.delete("/api/comments/:comment", isAuthenticated, function(req, res) {
+  //   db.Topic.destroy({
+  //     where: {
+  //       createdAt: req.params.topic,
+  //       UserId: req.user.id
+  //     }
+  //   }).then(function(dbChats) {
+  //     res.json(dbChats);
+  //   });
+  // });
 
   //route to delete topic
   app.delete("/api/topics/:topic", isAuthenticated, function(req, res) {
     db.Topic.destroy({
       where: {
-        title: req.params.topic,
+        createdAt: req.params.topic,
         UserId: req.user.id
       }
     }).then(function(dbChats) {
@@ -429,7 +438,7 @@ module.exports = function(app) {
   app.delete("/api/places/:place", isAuthenticated, function(req, res) {
     db.PoI.destroy({
       where: {
-        title: req.params.place,
+        createdAt: req.params.place,
         UserId: req.user.id
       }
     }).then(function(dbChats) {
@@ -446,12 +455,13 @@ module.exports = function(app) {
       case "topic":
         db.Topic.destroy({
           where: {
-            title: req.params.title,
+            createdAt: req.params.title,
             UserId: req.params.UserId
           }
         }).then(function(dbChats) {
           res.json(dbChats);
         });
+        break;
       case "comment":
         db.Comment.destroy({
           where: {
@@ -461,15 +471,17 @@ module.exports = function(app) {
         }).then(function(dbChats) {
           res.json(dbChats);
         });
+        break;
       case "poi":
         db.PoI.destroy({
           where: {
-            title: req.params.title,
+            createdAt: req.params.title,
             UserId: req.params.UserId
           }
         }).then(function(dbChats) {
           res.json(dbChats);
         });
+        break;
       default:
         return;
     }

@@ -3,10 +3,7 @@ import Wrapper from "../components/Wrapper";
 import ListView from "../components/ListView";
 import API from "../components/utils/API";
 
-const Admin = (props) => {
-  // const [topic, setTopic] = useState([]);
-  // const [comment, setComment] = useState([]);
-  // const [poi, setPoi] = useState([]);
+const Admin = () => {
   const [list, setList] = useState([]);
   const [view, setView] = useState([]);
 
@@ -20,9 +17,7 @@ const Admin = (props) => {
     .then(function(result) {
       console.log(result);
       setList(result.data);
-      // setTopic(result.data.topic);
-      // setComment(result.data.comment);
-      // setPoi(result.data.poi);
+      setView(result.data.topic);
     })
     .catch(function(err) {
       console.log(err);
@@ -42,13 +37,13 @@ const Admin = (props) => {
     API.deleteAdmin(data)
     .then(function(result) {
       const placeList = [];
-      list.map(element => {
-        if(element.title !== title) {
+      view.map(element => {
+        if(element.createdAt !== title) {
           return placeList.push(element);
-        }
+        } 
         return true;
       });
-      setList(placeList);
+      setView(placeList);
     })
     .catch(function(err) {
       console.log(err);
@@ -68,18 +63,31 @@ const Admin = (props) => {
         setView(list.poi);
         break;
       default:
-        // const all = list.topic + list.comment + list.poi // concat the arrays
-        // setView(all);
         return;
     }
   }
 
+  function logout() {
+    // trigger updating online lat/lng values to null
+    API.logOut()
+    .then(function() {
+      // using href instead of history as href will refresh the page and disconnect any sockets automatically
+      localStorage.removeItem("jwtToken");
+      localStorage.removeItem("user");
+      window.location.href="/";
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
   return (
     <Wrapper>
+      <h2 style={{float: "left"}}>ADMIN ONLY</h2>
+      <button className="btn btn-warning" style={{float: "right"}} onClick={logout}>Log Out</button>
       <div id="main">
         <div className="d-flex justify-content-center">
           <select id="selectionTab" onChange={selectMarkers}>
-            <option value="all">All</option>
             <option value="topic">Forum Topics</option>
             <option value="comment">Comments</option>
             <option value="poi">Points of Interest</option>
@@ -88,7 +96,6 @@ const Admin = (props) => {
       </div>
       <br></br>
       <br></br>
-      {/*switch case*/}
       {view.map(element => {
         return <ListView key={element.id} info={element} onClick={deleteThis}/>
       })}

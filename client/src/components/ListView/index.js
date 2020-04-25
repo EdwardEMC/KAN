@@ -27,7 +27,7 @@ function ListView(props) {
             <span className="pointer link" onClick={() => console.log("click")}>Link</span>
             &emsp;
             &emsp;
-            <span className="pointer delete" data-user={props.info.UserId} data-title={props.info.title||props.info.createdAt} onClick={props.onClick}>Delete</span>
+            <span className="pointer delete" data-user={props.info.UserId} data-title={props.info.createdAt} onClick={props.onClick}>Delete</span>
           </div>
         </div>
         <div className="card-footer card-text text-muted text-center colorFooter">
