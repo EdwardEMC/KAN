@@ -23,7 +23,7 @@ function ChatMessage(props) {
 
   // function to display results in message area
   function displayMessages(data) {
-    const area = document.getElementById('messages');
+    const area = document.getElementById('messages' + props.active);
     data.messages.map(element => {
       let li = document.createElement('li');
       let span = document.createElement('span');
@@ -75,8 +75,8 @@ function ChatMessage(props) {
       socket.emit('leave', last);
       socket.emit('join', x.room);
       last = x.room;
-      if(document.getElementById('messages')) {
-        document.getElementById('messages').innerHTML = "";
+      if(document.getElementById('messages' + props.active)) {
+        document.getElementById('messages' + props.active).innerHTML = "";
       }
       messageHistory();
     });
@@ -121,7 +121,7 @@ function ChatMessage(props) {
         document.getElementById(props.active + "lastMsg").innerHTML = msg.message;
         document.getElementById(props.active + "lastTime").innerHTML = msg.time;
 
-        let area = document.getElementById('messages');
+        let area = document.getElementById('messages' + props.active);
         let li = document.createElement('li');
         let span = document.createElement('span');
         span.innerHTML = msg.message;
@@ -145,7 +145,7 @@ function ChatMessage(props) {
   return ( 
     <div>
       <div id="messageScroll" className="displayArea">
-        <ul id="messages">
+        <ul id={"messages" + props.active}>
           {/* Area to display messages */}
         </ul> 
       </div>

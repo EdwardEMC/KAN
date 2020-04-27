@@ -111,7 +111,7 @@ function ChatArea() {
         <div className="col-md-8">
           <div className="card chatArea">
             <div className="card-body remove-padding ">
-                <ChatMessage active={active} id={chatId}/>
+              <ChatMessage active={active} id={chatId}/>
             </div>
           </div>
         </div>
