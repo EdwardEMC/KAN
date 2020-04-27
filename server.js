@@ -39,7 +39,8 @@ io.on('connection', function(socket){
 
   // if room list has two 'rooms' user leaves the first one
   if(roomList.length > 1) {
-    socket.on("changeRoom", function() {      
+    socket.on("changeRoom", function() {  
+      currentRoom = roomList[1];    
       socket.leave(roomList[0]);
       console.log("user left room " + roomList[0]);
       roomList.shift();
@@ -54,10 +55,10 @@ io.on('connection', function(socket){
     console.log('user joined room #' + room);
   })
   
-  socket.on('disconnect', function() {
-    socket.leave(room)
-    console.log('user disconnected');
-  });
+  // socket.on('disconnect', function() {
+  //   socket.leave(room)
+  //   console.log('user disconnected');
+  // });
 
   socket.on('chat message', function(msg){
     console.log(msg);
