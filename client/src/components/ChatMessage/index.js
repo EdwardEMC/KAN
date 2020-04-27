@@ -64,10 +64,8 @@ function ChatMessage(props) {
   
   let socket; 
 
-  const roomList = [];
-
   // socket.io connection with room query
-  if(typeof props.active !== "undefined" && roomList.indexOf(x.room)) {
+  if(typeof props.active !== "undefined") {
     socket = io();
   }
 
@@ -75,8 +73,6 @@ function ChatMessage(props) {
   if(typeof x.roomInternal !== "undefined") {
     x.registerListener(function(val) {
       socket.emit('join', x.room);
-      socket.emit('changeRoom');
-      roomList.push(x.room);
       if(document.getElementById('messages')) {
         document.getElementById('messages').innerHTML = "";
       }
