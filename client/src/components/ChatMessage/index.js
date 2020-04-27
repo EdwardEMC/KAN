@@ -3,6 +3,8 @@ import API from "../utils/API";
 import io from "socket.io-client";
 import "./style.css";
 
+let last; 
+
 function ChatMessage(props) {
 
   let currentUser;
@@ -11,10 +13,8 @@ function ChatMessage(props) {
   function messageHistory() {
     API.getMessages(props.id)
     .then(function(result) {
-      // console.log(result, "RESULT");
-      // function to display results in message area
       currentUser = result.data.id;
-      displayMessages(result.data)
+      displayMessages(result.data);
     })
     .catch(function(err) {
       console.log(err);
@@ -61,18 +61,19 @@ function ChatMessage(props) {
       this.roomListener = listener;
     }
   }
-  
-  let socket; 
 
   // socket.io connection with room query
-  if(typeof props.active !== "undefined") {
-    socket = io();
-  }
+  // if(typeof props.active !== "undefined") {
+  //   socket = io();
+  // }
+  let socket = io();
 
   // register to listen to the x variable
   if(typeof x.roomInternal !== "undefined") {
     x.registerListener(function(val) {
+      socket.emit('leave', last);
       socket.emit('join', x.room);
+      last = x.room;
       if(document.getElementById('messages')) {
         document.getElementById('messages').innerHTML = "";
       }

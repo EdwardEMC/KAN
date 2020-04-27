@@ -35,12 +35,16 @@ let currentRoom;
 
 // Socket.io configuration
 io.on('connection', function(socket){
+  socket.on("leave", function(last) {
+    socket.leave(last);
+    console.log('user left room ' + last);
+  });
 
   socket.on("join", function(room) {
     currentRoom = room;
     socket.join(room);
-    console.log('user joined room #' + room);
-  })
+    console.log('user joined room ' + room);
+  });
   
   socket.on('disconnect', function() {
     socket.leaveAll()
