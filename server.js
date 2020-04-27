@@ -35,6 +35,7 @@ let currentRoom;
 
 // Socket.io configuration
 io.on('connection', function(socket){
+  console.log(socket, "SOCKET");
   socket.on("leave", function(last) {
     socket.leave(last);
     console.log('user left room ' + last);
@@ -53,7 +54,7 @@ io.on('connection', function(socket){
 
   socket.on('chat message', function(msg){
     console.log(msg);
-    io.to(currentRoom).emit('chat message', msg);
+    io.sockets.in(currentRoom).emit('chat message', msg);
   });
 });
 
