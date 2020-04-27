@@ -125,29 +125,29 @@ function UserSettings(props) {
                 <img onClick={selected} id="Smile" className="img-fluid iconPic" src={iconPath + "Smile.png"} alt="Smile" tabIndex="0"/>
               </div>
               <div className="col-4">
-                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+                <img onClick={selected} id="Cat" className="img-fluid iconPic" src={iconPath + "Cat.png"} alt="Cat" tabIndex="0"/>
               </div>
             </div>   
             <div className="row">
               <div className="col-4">
-                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+                <img onClick={selected} id="Duck" className="img-fluid iconPic" src={iconPath + "Duck.png"} alt="Duck" tabIndex="0"/>
               </div>
               <div className="col-4">
-                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+                <img onClick={selected} id="Santa" className="img-fluid iconPic" src={iconPath + "Santa.png"} alt="Santa" tabIndex="0"/>
               </div>
               <div className="col-4">
-                <img onClick={selected} d="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+                <img onClick={selected} id="Orange" className="img-fluid iconPic" src={iconPath + "Orange.png"} alt="Orange" tabIndex="0"/>
               </div>
             </div>  
             <div className="row">
               <div className="col-4">
-                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+                <img onClick={selected} id="Monkey" className="img-fluid iconPic" src={iconPath + "Monkey.png"} alt="Monkey" tabIndex="0"/>
               </div>
               <div className="col-4">
-                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+                <img onClick={selected} id="Elephant" className="img-fluid iconPic" src={iconPath + "Elephant.png"} alt="Elephant" tabIndex="0"/>
               </div>
               <div className="col-4">
-                <img onClick={selected} id="" className="img-fluid iconPic" src={iconPath + "Default.png"} alt="Default" tabIndex="0"/>
+                <img onClick={selected} id="Dog" className="img-fluid iconPic" src={iconPath + "Dog.png"} alt="Dog" tabIndex="0"/>
               </div>
             </div>  
           </div>
