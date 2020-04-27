@@ -20,7 +20,7 @@ function RegisterForm() {
       <div className="form-row">
         <div className="form-group col-md-6">
           <label htmlFor="phoneNumber-input">Phone Number</label>
-          <input className="input form-control" id="phoneNumber-input" type="number" required placeholder="Your phone number....."/>
+          <input className="input form-control" id="phoneNumber-input" type="number" placeholder="Optional....."/>
         </div>
         <div className="form-group col-md-6">
           <label htmlFor="name-input">Name</label>
@@ -31,7 +31,7 @@ function RegisterForm() {
       <div className="form-row">  
         <div className="form-group col-md-6">
           <label htmlFor="information-input">General Information</label>
-          <textarea  id="information-input" className="input form-control" type="text" placeholder="General Information....."/> 
+          <textarea  id="information-input" className="input form-control" type="text" placeholder="Optional....."/> 
         </div>
         <div className="form-group col-md-6">
           <label className="label">Password</label>
