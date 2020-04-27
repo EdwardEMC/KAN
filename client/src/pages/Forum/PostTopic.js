@@ -55,10 +55,10 @@ const PostTopic = () => {
           <h5>Back</h5>
         </Link>
         <div className="card">
-          <div className="card-header text-center">
+          <div className="card-header text-center colorHeader">
             New Topic
           </div>
-          <div className="card-body">
+          <div className="card-body colorBody">
             <form className="posttopic">
               <br></br>
               <div className="form-group">

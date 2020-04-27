@@ -45,7 +45,7 @@ const MyTopics = () => {
     <Wrapper>
       <div className="container">
         <Link to="/profile">
-          Back
+          <h5>Back</h5>
         </Link>
         <h2 className="text-center">Topics</h2>
         <br></br>

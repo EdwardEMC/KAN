@@ -1,7 +1,7 @@
 body {
   /* background-color: rgb(201, 132, 116); Brown*/ 
   /* background-color: rgb(167, 210, 203); Blue*/
-  background-color: rgba(248, 229, 179, 0.897);
+  background-color: white;
 }
 
 .colorHeader {
@@ -9,7 +9,7 @@ body {
 }
 
 .colorBody {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(231, 231, 231);
 }
 
 .colorFooter {

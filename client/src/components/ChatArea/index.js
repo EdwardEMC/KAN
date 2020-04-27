@@ -84,6 +84,17 @@ function ChatArea() {
             </div>
             <div className="card-body" id="chatboxes">
               {chats.map(element => (
+                element.Messages.length === 0 ? 
+                <ChatBox 
+                  key={element.id} 
+                  user={element} 
+                  current={logged} 
+                  lastMsg={"No past messages"}
+                  lastTime={"Not available"}
+                  onClick={activate} 
+                  delete={deleteBox} 
+                />
+                :
                 <ChatBox 
                   key={element.id} 
                   user={element} 

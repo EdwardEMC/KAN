@@ -170,7 +170,8 @@ module.exports = function(app) {
 
   // logging out a user
   app.get("/logout", isAuthenticated, function(req, res) {
-    db.User.update({ lat: null, lng: null }, { // removes online marker
+    // db.User.update({ lat: null, lng: null }, { // removes online marker
+    db.User.update({}, { // removes online marker
       where: {
         email: req.session.passport.user.email
       }
