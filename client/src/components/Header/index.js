@@ -44,7 +44,7 @@ function Header() {
             <Logo height={80}/>
         </div>
         <div className="dropdown menu col-sm-4 text-center">
-          <button className="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Main Menu
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">

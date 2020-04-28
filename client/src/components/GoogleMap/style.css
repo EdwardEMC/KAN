@@ -1,5 +1,5 @@
 #map {
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 140px);
   overflow: none;
   position: relative;
 }

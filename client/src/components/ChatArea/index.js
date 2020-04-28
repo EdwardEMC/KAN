@@ -72,7 +72,7 @@ function ChatArea() {
       <div className="row no-gutters">
         <div className="col-md-4">
           <div className="card chatArea">
-            <div className="card-header text-center colorBodyComment">
+            <div className="card-header text-center">
               <strong>CURRENT ACTIVE CHATS</strong>
               &emsp;
               <label htmlFor="checkbox"> 

@@ -76,6 +76,8 @@ function ChatMessage(props) {
         document.getElementById('messages').innerHTML = "";
       }
       messageHistory();
+
+      window.scrollTo(0, document.body.scrollHeight);
     });
   }
   

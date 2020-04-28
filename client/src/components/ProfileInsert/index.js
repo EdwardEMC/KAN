@@ -45,9 +45,6 @@ function ProfileInsert(props) {
             </div>
           </div>
         </div>
-        <div className="card-footer colorFooter">
-          {/*Left blank, to be filled in later?*/}
-        </div>
       </div>
       <br></br>
     </div>

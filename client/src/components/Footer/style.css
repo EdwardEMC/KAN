@@ -1,6 +1,6 @@
 #footer {
   background-color: rgb(201, 132, 116);
-  min-height: 100px;
+  min-height: 25px;
   z-index: 99;
 }
 
@@ -9,6 +9,6 @@
 }
 
 #copyname {
-  padding-top: 40px;
+  /* padding-top: 10px; */
   color:white;
 }
