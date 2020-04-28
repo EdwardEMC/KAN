@@ -4,10 +4,12 @@ import io from "socket.io-client";
 import "./style.css";
 
 let last; 
+const socket = io();
 
 function ChatMessage(props) {
 
   let currentUser;
+  socket.removeListener("chat message");
 
   // api call to load messages
   function messageHistory() {
@@ -18,12 +20,12 @@ function ChatMessage(props) {
     })
     .catch(function(err) {
       console.log(err);
-    })
+    });
   }
 
   // function to display results in message area
   function displayMessages(data) {
-    const area = document.getElementById('messages' + props.active);
+    const area = document.getElementById('messages');
     data.messages.map(element => {
       let li = document.createElement('li');
       let span = document.createElement('span');
@@ -62,21 +64,15 @@ function ChatMessage(props) {
     }
   }
 
-  let socket;
-
-  // socket.io connection with room query
-  if(typeof props.active !== "undefined") {
-    socket = io();
-  }
-
   // register to listen to the x variable
   if(typeof x.roomInternal !== "undefined") {
     x.registerListener(function(val) {
+      socket.removeListener("chat message");
       socket.emit('leave', last);
       socket.emit('join', x.room);
       last = x.room;
-      if(document.getElementById('messages' + props.active)) {
-        document.getElementById('messages' + props.active).innerHTML = "";
+      if(document.getElementById('messages')) {
+        document.getElementById('messages').innerHTML = "";
       }
       messageHistory();
     });
@@ -121,7 +117,7 @@ function ChatMessage(props) {
         document.getElementById(props.active + "lastMsg").innerHTML = msg.message;
         document.getElementById(props.active + "lastTime").innerHTML = msg.time;
 
-        let area = document.getElementById('messages' + props.active);
+        let area = document.getElementById('messages');
         let li = document.createElement('li');
         let span = document.createElement('span');
         span.innerHTML = msg.message;
@@ -145,7 +141,7 @@ function ChatMessage(props) {
   return ( 
     <div>
       <div id="messageScroll" className="displayArea">
-        <ul id={"messages" + props.active}>
+        <ul id={"messages"}>
           {/* Area to display messages */}
         </ul> 
       </div>
