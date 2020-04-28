@@ -132,8 +132,14 @@ export default {
     return axios.put("/api/user/online", data);
   },
 
+  // Updates a users comment
   editComment: function(data) {
     return axios.put("/api/comment/edit", data)
+  },
+
+  // Updates a users lat & lng to make them go offline
+  offline: function() {
+    return axios.put("/api/offline");
   },
 
   //============================================

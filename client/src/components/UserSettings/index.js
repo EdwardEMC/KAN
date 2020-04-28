@@ -44,8 +44,20 @@ function UserSettings(props) {
   }
 
   function picChange() {
-    document.getElementById("picture").src = iconPath + selectedIcon + ".png";
+    if(typeof selectedIcon !== "undefined") {
+      document.getElementById("picture").src = iconPath + selectedIcon + ".png";
+    }
     setIsOpen(false);
+  }
+
+  function goOffline() {
+    API.offline()
+    .then(function(result) {
+      document.getElementById("offline").innerHTML = result.data;
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
   }
 
   function sumbitUpdate(event) {
@@ -188,6 +200,10 @@ function UserSettings(props) {
             <br></br>
             <div className="text-center">
               <div className="buttons">
+                <button onClick={goOffline} className="btn btn-warning">
+                  Go Offline
+                </button>
+                &emsp;
                 <button onClick={sumbitUpdate} className="btn btn-primary">
                   Update
                 </button>
@@ -195,7 +211,8 @@ function UserSettings(props) {
                 <button onClick={handleDelete} className="btn btn-danger delete-user">
                   Delete User
                 </button>
-              </div>  
+              </div> 
+              <p id="offline"></p> 
             </div>
             <br></br>
           </form>

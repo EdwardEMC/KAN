@@ -24,11 +24,6 @@ body {
   background-color: rgb(241, 255, 196);
 }
 
-#map {
-  min-height: calc(100vh - 200px);
-  overflow: none;
-}
-
 #delete {
   color: red;
 }

@@ -421,6 +421,34 @@ module.exports = function(app) {
       res.status(401).json(err);
     });
   });
+
+  //route to go offline
+  app.put("/api/offline", isAuthenticated, function(req, res) {
+    db.User.update({ lat: null, lng: null }, { // removes online marker
+      where: {
+        email: req.session.passport.user.email
+      }
+    })
+    .then(function(){
+      db.Chats.destroy({ 
+        where: {
+          [Op.or]: 
+            [{
+              user1: req.user.userName
+            }, 
+              {
+              user2: req.user.userName
+            }]
+        }
+      })
+    })
+    .then(function() {
+      res.send("User has gone offline");
+    })
+    .catch(function(err) {
+      res.status(401).json(err);
+    });
+  });
   
   //===========================================================================
   // DELETE REQUESTS
