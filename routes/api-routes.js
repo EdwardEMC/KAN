@@ -16,7 +16,7 @@ module.exports = function(app) {
     }
     else {
       if(req.isAuthenticated()) {
-        const token = jwt.sign({user: "LoggedIn"}, "sandwich"); //change privateKey to process.env later
+        const token = jwt.sign({user: "LoggedIn"}, process.env.REACT_APP_KEY); //change privateKey to process.env later
         res.send(token);
       } else {
         res.send(false);

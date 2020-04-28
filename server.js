@@ -13,6 +13,9 @@ const passport = require("./config/passport");
 // Requiring our models for syncing
 const db = require("./models");
 
+// .env process set up
+require('dotenv').config()
+
 // Setting up the authentication
 app.use(session({ 
   secret: "keyboard user", 

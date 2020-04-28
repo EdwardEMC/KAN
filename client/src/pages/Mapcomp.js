@@ -5,15 +5,14 @@ import "./style.css";
 
 class MapComp extends Component {
   render() {
-     return (
+    return (
       <LoadScript
         id="script-loader"
         googleMapsApiKey="AIzaSyCPo2a9WyXNAIwuMBgu8AXuCatBsc17TSo"
-        // googleMapsApiKey={process.env.APIKey}
       >
         <GoogleMaps />
       </LoadScript>
-     )
+    )
   }
 }
 
