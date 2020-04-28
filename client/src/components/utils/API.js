@@ -74,7 +74,7 @@ export default {
 
   // gets the list of all online users
   onlineUsers: function(search) {
-    console.log(search);
+    // console.log(search);
     return axios.get("/api/online/" + search);
   },
 
@@ -114,7 +114,7 @@ export default {
 
   // Updates the active chats message history
   sendMessage: function(data) {
-    console.log(data, "CLIENT API")
+    // console.log(data, "CLIENT API")
     return axios.post("/api/messages/", data);
   },
 

@@ -22,7 +22,7 @@ class Search extends Component {
 
     API.onlineUsers(this.state.search)
     .then(result => {
-      console.log(result);
+      // console.log(result);
       this.setState({
         results: result.data
       });

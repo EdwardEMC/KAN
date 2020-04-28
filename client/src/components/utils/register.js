@@ -24,7 +24,7 @@ function RegisterUser(event) {
     password: passwordInput.value.trim(),
   };
 
-  console.log(userData);
+  // console.log(userData);
 
   // If we have a username, name, email & password, run the signUpUser function
   signUpUser(userData.userName, userData.email, userData.phone, userData.name, userData.generalInformation, userData.password);
@@ -47,7 +47,7 @@ function signUpUser(userName, email, phone, name, generalInformation, password) 
     generalInformation: generalInformation,
     password: password,
   };
-    console.log(data);
+    // console.log(data);
     API.newUser(data)
     .then(result => {
       // console.log(result);

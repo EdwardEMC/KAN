@@ -89,7 +89,7 @@ function UserSettings(props) {
       phone: phoneInput.value.trim(),
       generalInformation: infoInput.value.trim()
     }
-    console.log(userData);
+    // console.log(userData);
 
     updateUser(userData);    
   }

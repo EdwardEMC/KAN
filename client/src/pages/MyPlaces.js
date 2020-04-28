@@ -26,7 +26,7 @@ const MyPlaces = () => {
     // console.log(title);
     API.deletePlace(title)
     .then(function(result) {
-      console.log(result);
+      // console.log(result);
       const placeList = [];
       list.map(element => {
         if(element.title !== title) {

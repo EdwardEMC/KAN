@@ -29,7 +29,8 @@ function ChatMessage(props) {
     data.messages.map(element => {
       let li = document.createElement('li');
       let span = document.createElement('span');
-      span.innerHTML = element.message
+      span.innerHTML = element.message;
+      span.setAttribute("title", element.createdAt);
       if(element.UserId === data.id) {
         li.setAttribute("class", "current");
         span.setAttribute("class", "sent");
@@ -112,15 +113,18 @@ function ChatMessage(props) {
 
   if(typeof props.active !== "undefined") {
     socket.on('chat message', function(msg) {
-      console.log(msg, "CLIENT");
+      // console.log(msg, "CLIENT");
       if(props.active === msg.room) {
+        // set limit for max letters
         document.getElementById(props.active + "lastMsg").innerHTML = msg.message;
+        //
         document.getElementById(props.active + "lastTime").innerHTML = msg.time;
 
         let area = document.getElementById('messages');
         let li = document.createElement('li');
         let span = document.createElement('span');
         span.innerHTML = msg.message;
+        span.setAttribute("title", msg.time);
         if(msg.user === currentUser) {
           li.setAttribute("class", "current");
           span.setAttribute("class", "sent");

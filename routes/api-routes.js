@@ -58,7 +58,6 @@ module.exports = function(app) {
 
   // route to return a list of all topics relating to subforum
   app.get("/api/topics/:category", isAuthenticated, function(req, res) {
-    console.log(req.params.category);
     db.Topic.findAll({ 
       where: {
         category: req.params.category
@@ -342,7 +341,7 @@ module.exports = function(app) {
       ChatId: req.body.id,
       UserId: req.user.id
     }
-    console.log(data, "SERVER API");
+    // console.log(data, "SERVER API");
     db.Messages.create({
       message: req.body.message,
       ChatId: req.body.id,
@@ -515,9 +514,6 @@ module.exports = function(app) {
 
   //route to delete PoI
   app.delete("/api/delete/:database/:title/:UserId", isAuthenticated, function(req, res) {
-    console.log(req.params.database, "DELETE");
-    console.log(req.params.title, "DELETE");
-    console.log(req.params.UserId, "DELETE");
     switch(req.params.database) {
       case "topic":
         db.Topic.destroy({

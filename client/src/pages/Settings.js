@@ -14,7 +14,7 @@ const Settings = () => {
   function loadUser() {
     API.getUser()
     .then(function(result) {
-      console.log(result);
+      // console.log(result);
       setUser(result.data);
     })// If there's an error, log the error
     .catch(function(err) {

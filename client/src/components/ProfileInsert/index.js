@@ -5,7 +5,7 @@ import "./style.css";
 const iconPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
 
 function ProfileInsert(props) { 
-  console.log(props); 
+  // console.log(props); 
   return (
     <div className="container mainWin">
       <div className="card">

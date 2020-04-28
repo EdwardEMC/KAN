@@ -15,7 +15,7 @@ const Admin = () => {
   function adminList() {
     API.getAdminList()
     .then(function(result) {
-      console.log(result);
+      // console.log(result);
       setList(result.data);
       setView(result.data.topic);
     })

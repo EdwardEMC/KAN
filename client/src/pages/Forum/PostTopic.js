@@ -39,7 +39,7 @@ const PostTopic = () => {
 
     API.newTopic(data)
     .then(function(result) {
-      console.log(result);
+      // console.log(result);
       history.push("/forums/" + topic[1]);
     })
     .catch(function(err) {

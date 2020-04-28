@@ -26,7 +26,7 @@ const MyTopics = () => {
     // console.log(title);
     API.deleteTopic(title)
     .then(function(result) {
-      console.log(result);
+      // console.log(result);
       const topicList = [];
       list.map(element => {
         if(element.title !== title) {

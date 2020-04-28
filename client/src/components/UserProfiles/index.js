@@ -14,7 +14,7 @@ function UserInsert(props) {
     }
     API.newChat(data)
     .then(function(result) {
-      console.log(result);
+      // console.log(result);
       history.push("/chats");
     })
     .catch(function(err) {

@@ -20,7 +20,7 @@ function ChatArea() {
   function loadChats() {
     API.getChats()
     .then(function(result) {
-      console.log(result, "CURRENT CHATS");
+      // console.log(result, "CURRENT CHATS");
       setLogged(result.data.logged.userName);
       setChats(result.data.chats);
     }) // If there's an error, log the error
@@ -49,12 +49,10 @@ function ChatArea() {
     const data = {
       chatName: event.target.getAttribute("value")
     }
-    
-    console.log(chats, "CHATS");
-
+    // console.log(chats, "CHATS");
     API.deleteChat(data)
     .then(function(result){
-      console.log(result);
+      // console.log(result);
       const chatList = [];
       chats.map(element => {
         if(element.chatName !== data.chatName) {

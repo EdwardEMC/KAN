@@ -28,7 +28,7 @@ const Topic = (props) => {
     const created = event.target.parentElement.getAttribute("value")
     API.deleteComment(created)
     .then(function(result) {
-      console.log(result);
+      // console.log(result);
       const placeList = [];
       comments.map(element => {
         if(element.createdAt !== created) {

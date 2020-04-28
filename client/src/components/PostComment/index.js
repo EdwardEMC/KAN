@@ -23,7 +23,7 @@ function PostComment(props) {
 
     API.newComment(data)
     .then(function(result) {
-      console.log(result);
+      // console.log(result);
       document.getElementById("description-input").value = "";
       document.getElementById("missingDescription").value = "";
       props.onClick();
