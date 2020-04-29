@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import API from "../utils/API";
 import { useHistory } from "react-router-dom";
-import "./style.css";
-
 import Modal from "react-modal";
+import { useStoreContext } from "../utils/GlobalState";
+import "./style.css";
 
 const iconPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
 
@@ -21,7 +21,17 @@ const customStyles = {
 Modal.setAppElement('body');
 
 function UserSettings(props) {
+  const [state, dispatch] = useStoreContext();
   const [modalIsOpen,setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if(state.mode === "dark") {
+      document.getElementById("checkMode").setAttribute("checked", "checked");
+    }
+    else {
+      document.getElementById("checkMode").removeAttribute("checked");
+    }
+  }, [])
 
   let history = useHistory();
   let subtitle;
@@ -111,6 +121,24 @@ function UserSettings(props) {
     .then(history.push('/'));
   }
 
+  function changeMode() {
+    let checkBox = document.getElementById("checkMode");
+    if(checkBox.checked === true) {
+      dispatch({
+        type: "SET_MODE",
+        mode: "dark"
+      });
+    }
+    else {
+      dispatch({
+        type: "SET_MODE",
+        mode: "light"
+      });
+    }
+  }
+
+  console.log(state.mode, "MODE");
+
   return (
     <div className="container update">
       <div className="card">
@@ -126,8 +154,6 @@ function UserSettings(props) {
         >
           <h2 ref={_subtitle => (subtitle = _subtitle)}>Select a new image</h2>
 
-
-          {/* working just need to add more icons */}
           <div className="icons">
             <div className="row">
               <div className="col-4">
@@ -171,6 +197,12 @@ function UserSettings(props) {
         </Modal>
 
         <div className="card-body colorBody">
+          <span id="dark">Dark Mode</span>
+          <br></br>
+          <label className="switch">
+            <input id="checkMode" type="checkbox" onClick={changeMode}/>
+            <span className="slider round"></span>
+          </label>
           <form className="update-user"> 
             <div className="form-row">
               <img 

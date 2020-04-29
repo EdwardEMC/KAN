@@ -4,7 +4,6 @@ import UserSettings from "../components/UserSettings";
 import Wrapper from "../components/Wrapper";
 
 const Settings = () => {
-
   const [user, setUser] = useState([])
 
   useEffect(() => {

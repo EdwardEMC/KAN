@@ -30,6 +30,12 @@ import Search from "./pages/Search";
 import Footer from "./components/Footer";
 import "./style.css";
 
+// dark/light mode
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './styles/theme';
+import { GlobalStyles } from './styles/global';
+import { useStoreContext, StoreProvider } from "./components/utils/GlobalState";
+
 // Making so the navbar does not appear on the login/register page
 const NavRoutes = () => {
   return (
@@ -57,15 +63,20 @@ const NavRoutes = () => {
 };
 
 const App = () => {
+  const [state] = useStoreContext();
+  
   return (
-    <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <AdminRoute exact path="/admin" component={Admin} />
-          <AuthenticatedRoute component={NavRoutes} />
-        </Switch>
-    </Router>
+    <ThemeProvider theme={state.mode==="light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
+      <Router>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <AdminRoute exact path="/admin" component={Admin} />
+            <AuthenticatedRoute component={NavRoutes} />
+          </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 
@@ -81,4 +92,12 @@ const AdminRoute = ({ component: Component, ...rest }) => (
   )}/>
 );
 
-export default App;
+const AppWrapper = () => {
+  return (
+    <StoreProvider>
+      <App/>
+    </StoreProvider>
+  )
+}
+
+export default AppWrapper;

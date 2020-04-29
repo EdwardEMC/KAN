@@ -8,11 +8,10 @@ const { Provider } = StoreContext;
 
 const reducer = (state, action) => {
   switch (action.type) {
-  case "SET_USER":
-    console.log(action.user, "ACTION")
+  case "SET_MODE":
     return {
       ...state,
-      authenticated: action.user
+      mode: action.mode
     }
 
   default:
@@ -22,7 +21,7 @@ const reducer = (state, action) => {
 
 const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
-    authenticated: false
+    mode: "light"
   });
 
   return <Provider value={[state, dispatch]} {...props} />;
