@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const compression = require("compression");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -14,7 +15,9 @@ const passport = require("./config/passport");
 const db = require("./models");
 
 // .env process set up
-require('dotenv').config()
+require('dotenv').config();
+
+app.use(compression());
 
 // Setting up the authentication
 app.use(session({ 
@@ -52,7 +55,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('chat message', function(msg){
-    // console.log(msg);
     io.emit('chat message', msg);
   });
 });
