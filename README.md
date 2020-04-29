@@ -11,19 +11,19 @@ The secondary feature of the map is to allow other users to see who is online, a
 On logging out, the users online marker is automatically removed and any active chats and their message history deleted whilst any places of interest or forum posts stay until the user or admin decides otherwise.
 
 # Built with
-React/
-Socket.io/
-MySQL/
-Passport/
-JsonWebToken/
-Express.js/
+React\
+Socket.io\
+MySQL\
+Passport\
+JsonWebToken\
+Express.js\
 Node.js
 
 # Authors
 Edward Coad
 
 # Acknowledgements
-stackoverflow.com/
-w3school.com/
-socketio.com/
+stackoverflow.com\
+w3school.com\
+socketio.com\
 heroku.com
