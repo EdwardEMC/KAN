@@ -16,3 +16,7 @@
   min-width: 100%;
   outline: 2px solid black;
 }
+
+.textColor {
+  color: black;
+}

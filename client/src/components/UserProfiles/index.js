@@ -56,7 +56,7 @@ function UserInsert(props) {
           <div className="general">
             <h5 className="userInfo">General information:</h5>
             <div className="card">
-              <textarea id="generalInfo" readOnly value={props.currentUser.generalInformation}>
+              <textarea id="generalInfo" className="inputColor" readOnly value={props.currentUser.generalInformation}>
               </textarea>
             </div>
           </div>

@@ -1,29 +1,6 @@
 body {
-  /* background-color: rgb(201, 132, 116); Brown*/ 
-  /* background-color: rgb(167, 210, 203); Blue*/
-  background-color: white;
-  /* background-image: url("https://images.wallpapersden.com/image/download/persona-5-video-game_61179_5120x2880.jpg");
-  background-size: cover; */
-}
-
-.colorHeader {
-  background-color: rgb(201, 132, 116);
-}
-
-.colorBody {
-  background-color: rgb(231, 231, 231);
-}
-
-.colorFooter {
-  background-color: rgba(201, 132, 116, 0.589);
-}
-
-.colorHeaderComment {
-  background-color: rgb(167, 210, 203)
-}
-
-.colorBodyComment {
-  background-color: rgb(241, 255, 196);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 #delete {

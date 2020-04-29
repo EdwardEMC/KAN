@@ -96,10 +96,10 @@ const MapOnline = () => {
           anchor={markerMap[selectedPlace.id]}
           onCloseClick={() => setInfoOpen(false)}
         >
-          <div>
-            <h3 className="text-center">Set Marker Here?</h3>
+          <div className="chatColor">
+            <h3 className="text-center"><span className="onlineTitle">Set Marker Here?</span></h3>
             <div className="text-center">
-              <button className="btn btn-success" onClick={setOnline}>Go Online</button>
+              <button className="btn btn-light" onClick={setOnline}>Go Online</button>
             </div>
           </div>
         </InfoWindow>

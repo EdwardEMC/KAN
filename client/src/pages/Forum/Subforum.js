@@ -29,12 +29,12 @@ const Subforum = () => {
         <div className="row">
           <div className="col-sm-6">
             <Link to="/forums/" >
-              <h5>Back to Forums</h5>
+              <h5><span className="link">Back to Forums</span></h5>
             </Link>
           </div>
           <div className="col-sm-6 text-right">
             <Link to={"/forums/" + category[1] + "/post/topic"} >
-              <h5>Post New Topic</h5>
+              <h5><span className="link">Post New Topic</span></h5>
             </Link>
           </div>
         </div>

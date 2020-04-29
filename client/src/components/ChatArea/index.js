@@ -72,7 +72,7 @@ function ChatArea() {
       <div className="row no-gutters">
         <div className="col-md-4">
           <div className="card chatArea">
-            <div className="card-header text-center">
+            <div className="card-header text-center colorHeader">
               <strong>CURRENT ACTIVE CHATS</strong>
               &emsp;
               <label htmlFor="checkbox"> 
@@ -80,7 +80,7 @@ function ChatArea() {
                 <img className="pointer refresh img-fluid" alt="refreshIcon" onClick={loadChats} src={iconPath + "refresh.png"} />
               </label> 
             </div>
-            <div className="card-body" id="chatboxes">
+            <div className="card-body chatBoxArea" id="chatboxes">
               {chats.map(element => (
                 element.Messages.length === 0 ? 
                 <ChatBox 
@@ -108,7 +108,7 @@ function ChatArea() {
         </div>
         <div className="col-md-8">
           <div className="card chatArea">
-            <div className="card-body remove-padding ">
+            <div className="card-body remove-padding chatColor">
               <ChatMessage active={active} id={chatId}/>
             </div>
           </div>

@@ -58,10 +58,10 @@ li > span {
   text-align: left;
 }
 
-.sent {
+/* .sent {
   background-color: lightgray;
 }
 
 .received {
-  background-color: lightblue;
-}
+  background-color: rgb(173, 216, 230);
+} */

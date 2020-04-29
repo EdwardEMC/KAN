@@ -101,14 +101,14 @@ const MapPoI = () => {
           anchor={markerMap[selectedPlace.id]}
           onCloseClick={() => setInfoOpen(false)}
         >
-          <div>
+          <div className="chatColor">
             <div className="text-center">
               <form className="setPoIMarker"> 
-                <label htmlFor="title-input"><h5>Title</h5></label>
+                <label htmlFor="title-input"><h5><span className="onlineTitle">Title</span></h5></label>
                 <input  id="title-input" className="input form-control" type="text" required placeholder={"Title...."}/>
-                <label htmlFor="description-input"><h5>Description</h5></label>
+                <label htmlFor="description-input"><h5><span className="onlineTitle">Description</span></h5></label>
                 <textarea className="input form-control" id="description-input" type="text" required placeholder={"Description...."}/>
-                <label htmlFor="category-input"><h5>Category</h5></label>
+                <label htmlFor="category-input"><h5><span className="onlineTitle">Category</span></h5></label>
                 <select id="category-input" className="input form-control" required>
                   <option>Food</option>
                   <option>Park</option>
@@ -118,7 +118,7 @@ const MapPoI = () => {
                 <br></br>
                 <div className="text-center">
                   <div className="buttons">
-                  <button className="btn btn-success" onClick={setPoI}>Place Marker</button>
+                  <button className="btn btn-light" onClick={setPoI}>Place Marker</button>
                   </div>  
                 </div>
                 <br></br>

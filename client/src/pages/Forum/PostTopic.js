@@ -52,23 +52,23 @@ const PostTopic = () => {
       <br></br>
       <div className="container">
         <Link to={"/forums/" + topic[1]} >
-          <h5>Back</h5>
+          <h5><span className="link">Back</span></h5>
         </Link>
         <div className="card">
           <div className="card-header text-center colorHeader">
-            New Topic
+            <h3>New Topic</h3>
           </div>
           <div className="card-body colorBody">
             <form className="posttopic">
               <br></br>
               <div className="form-group">
                 <label htmlFor="title-input">Title</label>
-                <input id="title-input" className="input form-control" type="text" required placeholder="Topic title..."/>
+                <input id="title-input" className="input form-control inputColor" type="text" required placeholder="Topic title..."/>
                 <p id="missingTitle"></p>
               </div>
               <div className="form-group">
                 <label htmlFor="description-input">Description</label>
-                <textarea id="description-input" className="input form-control" type="text" required placeholder="Text goes here..."/>
+                <textarea id="description-input" className="input form-control inputColor" type="text" required placeholder="Text goes here..."/>
                 <p id="missingDescription"></p>
               </div>
               <br></br>

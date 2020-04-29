@@ -85,7 +85,7 @@ const Topic = (props) => {
         <div className="row">
           <div className="col-sm-6">
             <Link to={"/forums/" + props.match.params.handle} >
-              <h5>Back</h5>
+              <h5><span className="link">Back</span></h5>
             </Link>
           </div>
           <div className="col-sm-6 text-right">
@@ -135,7 +135,7 @@ const Topic = (props) => {
                     {element.description}
                   </div>
                   <div id={"editDescription" + element.id} className="hide">
-                    <textarea id={"editbox" + element.id} style={{width:"100%"}} defaultValue={element.description}>
+                    <textarea id={"editbox" + element.id} className="inputColor" style={{width:"100%"}} defaultValue={element.description}>
                       {/*Area for edited comment*/}
                     </textarea>
                     <button data-id={element.id} data-created={element.createdAt} onClick={submitEdit}>Submit</button>

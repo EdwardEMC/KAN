@@ -31,6 +31,7 @@ function UserSettings(props) {
     else {
       document.getElementById("checkMode").removeAttribute("checked");
     }
+    // eslint-disable-next-line
   }, [])
 
   let history = useHistory();
@@ -137,8 +138,6 @@ function UserSettings(props) {
     }
   }
 
-  console.log(state.mode, "MODE");
-
   return (
     <div className="container update">
       <div className="card">
@@ -215,18 +214,18 @@ function UserSettings(props) {
             <div className="form-row">
               <div className="form-group col-md-6">
                 <label htmlFor="name-input"><h5>Name</h5></label>
-                <input  id="name-input" className="input form-control" type="text" required placeholder={props.currentUser.name}/>
+                <input  id="name-input" className="input form-control inputColor" type="text" required placeholder={props.currentUser.name}/>
               </div>
               <div className="form-group col-md-6">
                 <label htmlFor="phoneNumber-input"><h5>Phone Number</h5></label>
-                <input className="input form-control" id="phoneNumber-input" type="number" required placeholder={props.currentUser.phone}/>
+                <input className="input form-control inputColor" id="phoneNumber-input" type="number" required placeholder={props.currentUser.phone}/>
                 <br></br>
               </div>
             </div> 
             <div className="form-row">  
               <div className="form-group col-md-12">
                 <label htmlFor="information-input"><h5>General Information</h5></label>
-                <textarea id="information-input" className="input form-control" type="text" placeholder={props.currentUser.generalInformation}/> 
+                <textarea id="information-input" className="input form-control inputColor" type="text" placeholder={props.currentUser.generalInformation}/> 
               </div>
             </div>
             <br></br>

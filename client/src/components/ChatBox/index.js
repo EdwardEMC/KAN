@@ -2,9 +2,8 @@ import React from "react";
 import "./style.css";
 
 function ChatBox(props) {
-  console.log(props);
   return ( 
-    <div className="row outline pointer side-padding" value={props.user.chatName} data-id={props.user.id} onClick={props.onClick}> 
+    <div className="row outline pointer side-padding textColor" value={props.user.chatName} data-id={props.user.id} onClick={props.onClick}> 
       <div className="card-title text-center pointer">
         {props.user.user1 !== props.current ? props.user.user1 : props.user.user2}
       </div>

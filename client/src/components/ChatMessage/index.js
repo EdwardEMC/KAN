@@ -153,7 +153,7 @@ function ChatMessage(props) {
       </div>
       <div className="row send remove-padding">
         <form className="form-horizontal sendArea" id="form" action="">
-          <input id="m" autoComplete="off" />
+          <input id="m" autoComplete="off" className="inputColor"/>
           <button id="sendButton" className="btn btn-primary" onClick={sendMessage}>Send</button>
         </form>
       </div>

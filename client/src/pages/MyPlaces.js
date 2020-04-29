@@ -45,7 +45,7 @@ const MyPlaces = () => {
     <Wrapper>
       <div className="container">
       <Link to="/profile">
-        <h5>Back</h5>
+        <h5><span className="link">Back</span></h5>
       </Link>
       <h2 className="text-center">Places of Interest</h2>
         <br></br>
