@@ -9,7 +9,7 @@ function ListView(props) {
         <div className="card-header text-center colorHeader">
           <strong>Username: </strong>{props.info.userName}
         </div>
-        <div className="card-body">
+        <div className="card-body colorBody">
           <div className="card-text">
             <strong>Description: </strong>
             <br></br>
