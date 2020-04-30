@@ -77,7 +77,8 @@ function ChatMessage(props) {
       }
       messageHistory();
 
-      window.scrollTo(0, document.body.scrollHeight);
+      // window.scrollTo(0, document.body.scrollHeight);
+      document.getElementById('messages').scrollIntoView();
     });
   }
   
