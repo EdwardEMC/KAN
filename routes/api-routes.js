@@ -25,7 +25,7 @@ module.exports = function(app) {
   })
 
   // route to return a list of all users
-  app.get("/api/user", isAuthenticated, function(req, res) { // add isAuthenticated to each route to stop unverified api calls
+  app.get("/api/user", isAuthenticated, function(req, res) {
     db.User.findAll({ }).then(function(dbUser) {
       res.json(dbUser);
     })
