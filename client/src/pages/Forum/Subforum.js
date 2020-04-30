@@ -50,19 +50,19 @@ const Subforum = () => {
                 </div>
                 <br></br>
               </div>
-              <div className="card-footer colorFooter">
+              <div className="card-footer colorFooter forumFooter">
                 <div className="row">
                   <div className="col-sm-6">
-                    <p>Posted by: {element.User.userName}</p>
+                    <p className="noMargin">Posted by: {element.User.userName}</p>
                   </div>
-                  <div className="col-sm-6 text-right">
+                  <div className="col-sm-6 text-right noMargin">
                     <Link to={{
                       pathname: "/forums/" + category[1] + "/" + element.title,
                       state: {
                         topic: element
                         }
                       }} >
-                      <h5>Comments</h5> {/* Add comment numbers after comment section complete */}
+                      <h5 className="noMargin">Comments</h5> {/* Add comment numbers after comment section complete */}
                     </Link>
                   </div>
                 </div>

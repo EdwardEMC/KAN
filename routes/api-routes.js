@@ -428,19 +428,19 @@ module.exports = function(app) {
         email: req.session.passport.user.email
       }
     })
-    .then(function(){
-      db.Chats.destroy({ 
-        where: {
-          [Op.or]: 
-            [{
-              user1: req.user.userName
-            }, 
-              {
-              user2: req.user.userName
-            }]
-        }
-      })
-    })
+    // .then(function(){
+    //   db.Chats.destroy({ 
+    //     where: {
+    //       [Op.or]: 
+    //         [{
+    //           user1: req.user.userName
+    //         }, 
+    //           {
+    //           user2: req.user.userName
+    //         }]
+    //     }
+    //   })
+    // })
     .then(function() {
       res.send("User has gone offline");
     })
