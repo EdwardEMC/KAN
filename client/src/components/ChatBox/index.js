@@ -11,7 +11,7 @@ function ChatBox(props) {
         <div className="text-right">
           <span value={props.user.chatName} onClick={props.delete}>X</span>
         </div>
-        <div className="card-text text-center pointer" id={props.user.chatName + "lastMsg"}>
+        <div className={"card-text text-center pointer " + props.user.chatName} id={props.user.chatName + "lastMsg"}>
           {props.lastMsg}
         </div>
         <div className="card-text text-muted text-center pointer" id={props.user.chatName + "lastTime"}>

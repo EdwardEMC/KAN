@@ -20,3 +20,7 @@
 .textColor {
   color: black;
 }
+
+.bold {
+  font-weight: bolder;
+}

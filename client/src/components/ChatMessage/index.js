@@ -114,14 +114,16 @@ function ChatMessage(props) {
     document.getElementById('m').value='';
   }
 
-  if(typeof props.active !== "undefined") {
+  // if(typeof props.active !== "undefined") {
     socket.on('chat message', function(msg) {
       console.log(msg, "CLIENT");
       console.log(props.user);
       const users = msg.room.split("-");
       if(props.active === msg.room) {
+
         // set limit for max letters
         document.getElementById(props.active + "lastMsg").innerHTML = msg.message;
+        
         // format time function
         document.getElementById(props.active + "lastTime").innerHTML = msg.time;
 
@@ -144,18 +146,22 @@ function ChatMessage(props) {
         let objDiv = document.getElementById("messageScroll");
         objDiv.scrollTop = objDiv.scrollHeight;
       }
-      //loading latest message into chatbox
-      else if(props.user === users[0] || props.user === users[1]) {
-        // make the text bold?
-        document.getElementById(msg.room + "lastMsg").innerHTML = msg.message;
-        document.getElementById(msg.room + "lastTime").innerHTML = msg.time;
-      }
       //refresh chat component if someone clicked start chatting button
       else if((props.user === users[0] || props.user === users[1]) && !document.getElementById(msg.room + "lastMsg")) {
         props.function();
       }
+      //loading latest message into chatbox
+      else if(props.user === users[0] || props.user === users[1]) {
+        // make the text bold
+        let box = document.getElementsByClassName(msg.room);
+        if(!box[0].classList.contains("bold")) {
+          box[0].className += " bold";
+        }
+        document.getElementById(msg.room + "lastMsg").innerHTML = msg.message;
+        document.getElementById(msg.room + "lastTime").innerHTML = msg.time;
+      }
     });
-  }
+  // }
     
   return ( 
     <div>

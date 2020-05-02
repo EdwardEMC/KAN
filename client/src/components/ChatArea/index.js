@@ -31,16 +31,25 @@ function ChatArea() {
 
   function activate(event) {
     // add class to change color 
+    let chatName = event.currentTarget.getAttribute("value");
     let focus = document.getElementsByClassName("focused");
+    let selected = document.getElementsByClassName(chatName);
+
     if(focus[0]) {
       focus[0].classList.remove("focused");
       event.currentTarget.className += " focused";
+      if(selected[0].classList.contains("bold")) {
+        selected[0].classList.remove("bold");
+      }
     }
     else {
       event.currentTarget.className += " focused";
+      if(selected[0].classList.contains("bold")) {
+        selected[0].classList.remove("bold");
+      }
     }
     // set currently active chat box
-    setActive(event.currentTarget.getAttribute("value"));
+    setActive(chatName);
     setChatId(event.currentTarget.getAttribute("data-id"));
   }
 
