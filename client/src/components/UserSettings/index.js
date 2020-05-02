@@ -140,7 +140,7 @@ function UserSettings(props) {
 
   return (
     <div className="container update">
-      <div className="card">
+      <div className="card settingCard">
         <h2 className="text-center card-header colorHeader">
           Update User
         </h2>

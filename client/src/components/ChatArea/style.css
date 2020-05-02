@@ -1,5 +1,6 @@
 .chatArea {
   height: calc(100vh - 140px);
+  border: none;
 }
 
 #chatboxes {
@@ -31,4 +32,8 @@
 
 #checkbox:checked + .refresh {
   transform: rotate(360deg);
+}
+
+.trans {
+  opacity: .9;
 }

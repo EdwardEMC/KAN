@@ -6,6 +6,10 @@
  margin-top: 2%;
 }
 
+.settingCard{
+  border: none;
+}
+
 .profilePic {
   margin: 0 auto;
   max-width: 150px;

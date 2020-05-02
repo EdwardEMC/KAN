@@ -8,7 +8,7 @@ function ProfileInsert(props) {
   // console.log(props); 
   return (
     <div className="container mainWin">
-      <div className="card">
+      <div className="card profileCard">
         <div className="card-header colorHeader text-center">
           <h3 id="userName">User Name: {props.currentUser.userName}</h3> {/*Remove after auth done, just keep props. */}
         </div>

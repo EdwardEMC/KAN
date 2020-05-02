@@ -36,13 +36,16 @@ function ChatArea() {
     let selected = document.getElementsByClassName(chatName);
 
     if(focus[0]) {
+      focus[0].className += " chatBoxColor";
       focus[0].classList.remove("focused");
+      event.currentTarget.classList.remove("chatBoxColor");
       event.currentTarget.className += " focused";
       if(selected[0].classList.contains("bold")) {
         selected[0].classList.remove("bold");
       }
     }
     else {
+      event.currentTarget.classList.remove("chatBoxColor");
       event.currentTarget.className += " focused";
       if(selected[0].classList.contains("bold")) {
         selected[0].classList.remove("bold");
@@ -116,8 +119,8 @@ function ChatArea() {
           </div>
         </div>
         <div className="col-md-8">
-          <div className="card chatArea">
-            <div className="card-body remove-padding chatColor">
+          <div className="card chatArea chatColor">
+            <div className="card-body remove-padding">
               <ChatMessage active={active} id={chatId} function={loadChats} user={logged}/>
             </div>
           </div>
