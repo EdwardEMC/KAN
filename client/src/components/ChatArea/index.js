@@ -20,7 +20,7 @@ function ChatArea() {
   function loadChats() {
     API.getChats()
     .then(function(result) {
-      // console.log(result, "CURRENT CHATS");
+      console.log(result, "CURRENT CHATS");
       setLogged(result.data.logged.userName);
       setChats(result.data.chats);
     }) // If there's an error, log the error
@@ -109,7 +109,7 @@ function ChatArea() {
         <div className="col-md-8">
           <div className="card chatArea">
             <div className="card-body remove-padding chatColor">
-              <ChatMessage active={active} id={chatId}/>
+              <ChatMessage active={active} id={chatId} function={loadChats} user={logged}/>
             </div>
           </div>
         </div>
