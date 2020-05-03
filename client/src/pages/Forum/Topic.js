@@ -3,6 +3,8 @@ import API from "../../components/utils/API";
 import Wrapper from "../../components/Wrapper";
 import PostComment from "../../components/PostComment";
 import { Link } from "react-router-dom";
+import formatTime from "../../components/utils/timeFormat";
+import "../style.css";
 
 const Topic = (props) => {
   const [comments, setComments] = useState([])
@@ -78,6 +80,10 @@ const Topic = (props) => {
     document.getElementById('description'+commentId).className="show";
   }
 
+  function focusComment() {
+    document.getElementById("description-input").focus({preventScroll:false});
+  }
+
   return (
     <Wrapper>
       <div className="container">
@@ -90,13 +96,13 @@ const Topic = (props) => {
           </div>
           <div className="col-sm-6 text-right">
             {/* https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/focus */}
-            {/* <Link to={"/forums" + topic[1] + "/post/comment"} >
-              <p>Post New Comment</p>
-            </Link> */}
+            <button className="commentButton" onClick={focusComment}>
+              <h5 className="link commentLink">Post New Comment</h5>
+            </button>
           </div>
         </div>
         <div key={props.location.state.topic.id}>
-          <div className="card">
+          <div className="card noBorder">
             <div className="card-header colorHeader">
               <div className="row">
                 <div className="col-sm-6">
@@ -114,23 +120,23 @@ const Topic = (props) => {
               <br></br>
             </div>
           </div>
-          <br></br>
         </div>
         <div className="container">
           {comments.map(element => (
             <div key={element.id}>
-              <div className="card">
-                <div className="card-header colorFooter">
+              <div className="card noBorder">
+                <div className="card-header colorFooter noMargin noPadding trans">
                   <div className="row">
                     <div className="col-sm-6">
-                      <h5>{element.User.userName}</h5>
+                      <h5 className="noMargin">{element.User.userName}</h5>
                     </div>
                     <div className="col-sm-6 text-right">
-                      <p>Posted at: {element.createdAt}</p> {/* refine this */}
+                      <p className="noMargin">Posted at: {formatTime(element.createdAt)}</p> 
+                      {/* refine this */}
                     </div>
                   </div>
                 </div>
-                <div className="card-body colorBody">
+                <div className="card-body colorBody commentPadding">
                   <div id={"description" + element.id} className="show">
                     {element.description}
                   </div>
@@ -140,7 +146,6 @@ const Topic = (props) => {
                     </textarea>
                     <button data-id={element.id} data-created={element.createdAt} onClick={submitEdit}>Submit</button>
                   </div>
-                  <br></br>
                   {user === element.User.id ? 
                     <div className="text-right" data-id={element.id} value={element.createdAt}>
                       <span id="edit" className="pointer" onClick={editComment}>Edit</span>
@@ -152,7 +157,6 @@ const Topic = (props) => {
                   }
                 </div>
               </div>
-              <br></br>
             </div>
           ))}
           <br></br>

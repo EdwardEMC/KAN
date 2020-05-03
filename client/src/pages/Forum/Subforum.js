@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "../../components/Wrapper";
 import API from "../../components/utils/API";
 import { Link } from "react-router-dom";
+import "../style.css";
 
 const Subforum = () => {
   const [topics, setTopics] = useState([])
@@ -15,7 +16,8 @@ const Subforum = () => {
     const category = window.location.href.split("forums/");
     API.getTopics(category[1])
     .then(function(result) {
-      setTopics(result.data);
+      let rev = result.data.reverse();
+      setTopics(rev);
     })// If there's an error, log the error
     .catch(function(err) {
       console.log(err);
@@ -40,7 +42,7 @@ const Subforum = () => {
         </div>
         {topics.map(element => (
           <div key={element.id}>
-            <div className="card">
+            <div className="card noBorder">
               <div className="card-header colorHeader">
                 <h3>{element.title}</h3>
               </div>

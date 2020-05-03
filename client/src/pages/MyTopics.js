@@ -14,7 +14,8 @@ const MyTopics = () => {
   function loadTopics() {
     API.getUserTopics()
     .then(function(result) {
-      setList(result.data);
+      let rev = result.data.reverse();
+      setList(rev);
     }) // If there's an error, log the error
     .catch(function(err) {
       console.log(err);
@@ -50,7 +51,7 @@ const MyTopics = () => {
         <h2 className="text-center">Topics</h2>
         <br></br>
         {list.map(element => {
-          return <ListView key={element.id} info={element} onClick={deleteTopic}/>  
+          return <ListView key={element.id} info={element} onClick={deleteTopic} load={loadTopics}/>  
         })}
       </div>
     </Wrapper>

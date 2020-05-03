@@ -6,6 +6,18 @@
   color: red;
 }
 
+.edit {
+  color: green;
+}
+
 .link {
   color: green;
+}
+
+.hide{
+  display: none;
+}
+
+.show{
+  display: block;
 }

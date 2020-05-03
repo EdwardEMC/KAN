@@ -2,6 +2,7 @@
   border: 2px solid black;
   border-radius: 5px;
   margin-bottom: 10px;
+  overflow: hidden;
 }
 
 .pointer {
@@ -12,12 +13,6 @@
   padding: 0 10px 0 10px;
 }
 
-#profilePic {
-  min-height: 100%;
-  min-width: 100%;
-  outline: 2px solid black;
-}
-
 .textColor {
   color: black;
 }
@@ -26,6 +21,22 @@
   font-weight: bolder;
 }
 
-.deleteChat{
+.deleteIcon {
+  float: right;
+}
+
+.deleteChat {
   color: red;
+}
+
+.chatBoxName, .deleteIcon {
+  display: inline;
+}
+
+.chatBoxMsg {
+  text-align: left;
+}
+
+.chatBoxTime {
+  float: right;
 }

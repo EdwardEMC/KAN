@@ -11,6 +11,18 @@ body {
   margin: 0;
 }
 
+.noPadding {
+  padding: 0 15px;
+}
+
+.commentPadding {
+  padding: 5px 15px;
+}
+
+.noBorder {
+  border: none;
+}
+
 #delete {
   color: red;
 }
@@ -26,6 +38,21 @@ body {
 .hide{
   display: none;
 }
+
 .show{
   display: block;
+}
+
+.commentButton {
+  cursor: pointer;
+  padding: 0;
+  border: none;
+}
+
+.commentLink {
+  margin: 0;
+}
+
+.trans {
+  opacity: 0.8;
 }

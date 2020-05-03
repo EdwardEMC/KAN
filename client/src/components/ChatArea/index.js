@@ -82,9 +82,9 @@ function ChatArea() {
   return ( 
     <div>
       <div className="row no-gutters">
-        <div className="col-md-4">
-          <div className="card chatArea">
-            <div className="card-header text-center colorHeader">
+        <div className="chatWrapper">
+          <div className="card chatArea resize">
+            <div className="card-header text-center colorHeader chatBoxHeader">
               <strong>CURRENT ACTIVE CHATS</strong>
               &emsp;
               <label htmlFor="checkbox"> 
@@ -118,7 +118,7 @@ function ChatArea() {
             </div>
           </div>
         </div>
-        <div className="col-md-8">
+        <div className="col-md adapt">
           <div className="card chatArea chatColor">
             <div className="card-body remove-padding">
               <ChatMessage active={active} id={chatId} function={loadChats} user={logged}/>

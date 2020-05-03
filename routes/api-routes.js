@@ -421,6 +421,46 @@ module.exports = function(app) {
     });
   });
 
+  //route to edit either myTopics or myPlaces list item
+  app.put("/api/list/edit", isAuthenticated, function(req, res) {
+    if(req.body.type === "Topics") {
+      db.Topic.update({
+        title: req.body.editT,
+        description: req.body.editD
+      },
+      {
+        where: {
+          createdAt: req.body.time,
+          UserId: req.user.id
+        }
+      })
+      .then(function() {
+        res.status(200).end();
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
+    }
+    else {
+      db.PoI.update({
+        title: req.body.editT,
+        description: req.body.edit
+      },
+      {
+        where: {
+          createdAt: req.body.time,
+          UserId: req.user.id
+        }
+      })
+      .then(function() {
+        res.status(200).end();
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
+    }
+  });
+
   //route to go offline
   app.put("/api/offline", isAuthenticated, function(req, res) {
     db.User.update({ lat: null, lng: null }, { // removes online marker
@@ -428,19 +468,6 @@ module.exports = function(app) {
         email: req.session.passport.user.email
       }
     })
-    // .then(function(){
-    //   db.Chats.destroy({ 
-    //     where: {
-    //       [Op.or]: 
-    //         [{
-    //           user1: req.user.userName
-    //         }, 
-    //           {
-    //           user2: req.user.userName
-    //         }]
-    //     }
-    //   })
-    // })
     .then(function() {
       res.send("User has gone offline");
     })

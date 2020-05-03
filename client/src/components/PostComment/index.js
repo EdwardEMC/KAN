@@ -40,13 +40,13 @@ function PostComment(props) {
           <h5>New Comment</h5>
         </div>
         <div className="card-body colorBodyComment">
-          <form className="posttopic">
+          <form className="posttopic" onSubmit={submitComment}>
             <div className="form-group">
               <textarea id="description-input" className="input form-control" type="text" required placeholder="Text goes here..."/>
               <p id="missingDescription"></p>
             </div>
             <div className="text-center">
-              <button onClick={submitComment} className="btn btn-primary">
+              <button type="submit" className="btn btn-primary">
                 Post Comment
               </button>
             </div>

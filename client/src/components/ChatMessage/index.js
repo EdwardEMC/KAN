@@ -1,6 +1,7 @@
 import React from "react";
 import API from "../utils/API";
 import io from "socket.io-client";
+import formatTime from "../utils/timeFormat";
 import "./style.css";
 
 let last; 
@@ -31,7 +32,7 @@ function ChatMessage(props) {
       let li = document.createElement('li');
       let span = document.createElement('span');
       span.innerHTML = element.message;
-      span.setAttribute("title", element.createdAt);
+      span.setAttribute("title", formatTime(element.createdAt));
       if(element.UserId === data.id) {
         li.setAttribute("class", "current");
         span.setAttribute("class", "sent");
@@ -148,13 +149,14 @@ function ChatMessage(props) {
       
       return;
     }
-    //refresh chat component if someone clicked start chatting button
+    //refresh chat component if someone clicked start chatting button and sent a message
     else if((props.user === users[0] || props.user === users[1]) && !document.getElementById(msg.room + "lastMsg")) {
       props.function();
-      let box = document.getElementsByClassName(msg.room);
-      if(!box[0].classList.contains("bold")) {
-        box[0].className += " bold";
-      }
+      // might not work after reload ^ double check this
+      // let box = document.getElementsByClassName(msg.room);
+      // if(!box[0].classList.contains("bold")) {
+      //   box[0].className += " bold";
+      // }
 
       return;
     }

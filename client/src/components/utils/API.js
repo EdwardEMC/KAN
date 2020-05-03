@@ -137,6 +137,10 @@ export default {
     return axios.put("/api/comment/edit", data)
   },
 
+  editList: function(data) {
+    return axios.put("/api/list/edit", data)
+  },
+
   // Updates a users lat & lng to make them go offline
   offline: function() {
     return axios.put("/api/offline");

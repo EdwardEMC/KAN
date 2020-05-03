@@ -37,3 +37,24 @@
 .trans {
   opacity: .9;
 }
+
+.resize {
+  resize: horizontal;
+  overflow: auto;
+}
+
+.adapt {
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 767px) {
+  .resize {
+    resize: none;
+    overflow: auto;
+    width: 100% !important;
+  }
+
+  .chatWrapper {
+    width: 100%;
+  }
+}

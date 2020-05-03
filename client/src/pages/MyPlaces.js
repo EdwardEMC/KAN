@@ -14,7 +14,8 @@ const MyPlaces = () => {
   function loadList() {
     API.getPlaces()
     .then(function(result) {
-      setList(result.data);
+      let rev = result.data.reverse();
+      setList(rev);
     }) // If there's an error, log the error
     .catch(function(err) {
       console.log(err);
@@ -50,7 +51,7 @@ const MyPlaces = () => {
       <h2 className="text-center">Places of Interest</h2>
         <br></br>
         {list.map(element => {
-          return <ListView key={element.id} info={element} onClick={deletePlace}/>  
+          return <ListView key={element.id} info={element} onClick={deletePlace} load={loadList}/>  
         })}
       </div>
     </Wrapper>

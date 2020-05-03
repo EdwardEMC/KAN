@@ -51,8 +51,15 @@ h1,h2,h3,h4,h5,h6,h7 {
   background: ${({ theme }) => theme.input};
 }
 
+.chatBoxHeader {
+  border: 3px solid ${({ theme }) => theme.chatBoxHeader};
+  border-style: ridge;
+}
+
 .chatBoxArea {
-  background: ${({ theme }) => theme.chatBoxArea};
+  background-image: ${({ theme }) => theme.chatBoxArea};
+  background-size: 100% 100%;
+  border-right: 3px solid ${({ theme }) => theme.chatBoxHeader}
 }
 
 .chatBoxColor {
@@ -68,6 +75,7 @@ h1,h2,h3,h4,h5,h6,h7 {
 }
 
 .received {
+  text-align: left;
   background: ${({ theme }) => theme.received};
 }
 
