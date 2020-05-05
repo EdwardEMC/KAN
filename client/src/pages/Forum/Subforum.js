@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "../../components/Wrapper";
 import API from "../../components/utils/API";
+import shorten from "../../components/utils/shorten";
 import { Link } from "react-router-dom";
 import "../style.css";
 
@@ -48,7 +49,7 @@ const Subforum = () => {
               </div>
               <div className="card-body colorBody">
                 <div>
-                  {element.description} {/* Limit to certain amount of letters show full description when expanded */}
+                  {shorten(element.description, 250)}
                 </div>
                 <br></br>
               </div>

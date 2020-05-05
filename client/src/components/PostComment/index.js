@@ -35,14 +35,14 @@ function PostComment(props) {
 
   return (
     <div>
-      <div className="card">
+      <div className="card noBorder">
         <div className="card-header text-center colorHeaderComment">
           <h5>New Comment</h5>
         </div>
         <div className="card-body colorBodyComment">
           <form className="posttopic" onSubmit={submitComment}>
             <div className="form-group">
-              <textarea id="description-input" className="input form-control" type="text" required placeholder="Text goes here..."/>
+              <textarea id="description-input" className="input form-control inputColor noBorder" type="text" required placeholder="Text goes here..."/>
               <p id="missingDescription"></p>
             </div>
             <div className="text-center">

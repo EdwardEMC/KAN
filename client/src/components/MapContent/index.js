@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { Marker, MarkerClusterer, InfoWindow } from "@react-google-maps/api";
 import { Link } from "react-router-dom";
+import shorten from "../utils/shorten";
 import API from "../utils/API";
 
 // https://codesandbox.io/s/react-google-maps-api-ir5ks marker code
@@ -120,8 +121,8 @@ const MapContent = (props) => {
           >
             <div>
               {selectedPlace.userName ? <Link to={"/profile/" + selectedPlace.userName}>Go To Profile</Link> : null}
-              <h4>{selectedPlace.title || selectedPlace.userName}</h4>
-              <div>{selectedPlace.description || selectedPlace.generalInformation}</div>
+              <h4 style={{color:"black"}}>{selectedPlace.title || selectedPlace.userName}</h4>
+              <div style={{color:"black"}}>{selectedPlace.description || shorten(selectedPlace.generalInformation, 40)}</div>
             </div>
           </InfoWindow>
         )}

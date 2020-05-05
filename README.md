@@ -18,6 +18,9 @@ The secondary feature of the map is to allow other users to see who is online, a
 
 On logging out, the users online marker is automatically removed and any active chats and their message history deleted whilst any places of interest or forum posts stay until the user or admin decides otherwise.
 
+# Deployed
+https://knowaneighbour.herokuapp.com/
+
 # Built with
 React\
 Socket.io\

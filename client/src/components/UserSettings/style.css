@@ -10,14 +10,14 @@
   border: none;
 }
 
-.profilePic {
+.profilePicSet {
   margin: 0 auto;
-  max-width: 150px;
-  max-height: 150px;
+  max-width: 250px;
+  max-height: 250px;
   cursor: pointer;
 }
 
-.profilePic:hover {
+.profilePicSet:hover {
   outline: 1px solid black;
 }
 
@@ -29,6 +29,10 @@
 
 .iconPic:focus {
   outline: 1px solid black;
+}
+
+.closeModal {
+  float: right;
 }
 
 /* Toggle styling */

@@ -11,7 +11,7 @@ class Register extends Component {
         <Logo />
         <br></br>
         <div className="container">
-          <div className="card">
+          <div className="card noBorder">
             <h2 className="text-center card-header colorHeader">
               New Registration
             </h2>

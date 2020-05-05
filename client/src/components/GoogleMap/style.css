@@ -18,6 +18,6 @@
 
 @media only screen and (max-width: 575px) {
   #map {
-    min-height: calc(100vh - 318px);
+    min-height: calc(100vh - 258px);
   }
 }

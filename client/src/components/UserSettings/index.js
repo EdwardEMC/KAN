@@ -9,6 +9,7 @@ const iconPath = process.env.PUBLIC_URL + '/assets/UserIcons/';
 
 const customStyles = {
   content : {
+    backgroundColor       : 'grey',
     top                   : '50%',
     left                  : '50%',
     right                 : 'auto',
@@ -43,7 +44,7 @@ function UserSettings(props) {
   }
 
   function afterOpenModal() {
-    subtitle.style.color = '#f00';
+    subtitle.style.color = 'black';
   }
  
   function closeModal(){
@@ -189,10 +190,10 @@ function UserSettings(props) {
             </div>  
           </div>
           <br></br>
-          <button onClick={picChange}>Confirm</button> 
+          <button className="btn btn-success" onClick={picChange}>Confirm</button> 
           &emsp;
           &emsp; 
-          <button onClick={closeModal}>close</button>
+          <button className="btn btn-danger closeModal" onClick={closeModal}>close</button>
         </Modal>
 
         <div className="card-body colorBody">
@@ -206,7 +207,7 @@ function UserSettings(props) {
             <div className="form-row">
               <img 
                 id="picture"
-                className="img-fluid profilePic" 
+                className="img-fluid profilePicSet" 
                 onClick={openModal} 
                 src={iconPath + props.currentUser.icon + ".png"} 
                 alt="profilePic" />

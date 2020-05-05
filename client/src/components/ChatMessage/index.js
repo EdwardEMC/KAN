@@ -2,6 +2,7 @@ import React from "react";
 import API from "../utils/API";
 import io from "socket.io-client";
 import formatTime from "../utils/timeFormat";
+import shorten from "../utils/shorten";
 import "./style.css";
 
 let last; 
@@ -123,10 +124,10 @@ function ChatMessage(props) {
     if(props.active === msg.room) {
 
       // set limit for max letters
-      document.getElementById(props.active + "lastMsg").innerHTML = msg.message;
+      document.getElementById(props.active + "lastMsg").innerHTML = shorten(msg.message, 30);
 
       // format time function
-      document.getElementById(props.active + "lastTime").innerHTML = msg.time;
+      document.getElementById(props.active + "lastTime").innerHTML = formatTime(msg.time);
 
       let area = document.getElementById('messages');
       let li = document.createElement('li');
@@ -167,8 +168,8 @@ function ChatMessage(props) {
       if(!box[0].classList.contains("bold")) {
         box[0].className += " bold";
       }
-      document.getElementById(msg.room + "lastMsg").innerHTML = msg.message;
-      document.getElementById(msg.room + "lastTime").innerHTML = msg.time;
+      document.getElementById(msg.room + "lastMsg").innerHTML = shorten(msg.message, 30);
+      document.getElementById(msg.room + "lastTime").innerHTML = formatTime(msg.time);
 
       return;
     }
@@ -177,7 +178,7 @@ function ChatMessage(props) {
   return ( 
     <div>
       <div id="messageScroll" className="displayArea">
-        <ul id={"messages"}>
+        <ul id="messages">
           {/* Area to display messages */}
         </ul> 
       </div>

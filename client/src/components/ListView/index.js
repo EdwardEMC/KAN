@@ -1,6 +1,8 @@
 import React from "react";
 import API from "../utils/API";
 import formatTime from "../utils/timeFormat";
+import shorten from "../utils/shorten";
+// import { Link } from "react-router-dom";
 import "./style.css";
 
 function ListView(props) {
@@ -62,7 +64,7 @@ function ListView(props) {
           <div id={"description" + props.info.id} className="show">
             <strong>Description: </strong>
             <br></br>
-            {props.info.description}
+            {shorten(props.info.description, 250)}
           </div>
           <div id={"editDescription" + props.info.id} className="hide">
             <label htmlFor={"edittitle" + props.info.id}>Title</label>
@@ -73,7 +75,7 @@ function ListView(props) {
             <textarea id={"editbox" + props.info.id} className="inputColor" style={{width:"100%"}} defaultValue={props.info.description}>
               {/*Area for edited description*/}
             </textarea>
-            <button data-id={props.info.id} data-created={props.info.createdAt} onClick={submitEdit}>Submit</button>
+            <button className="btn btn-info" data-id={props.info.id} data-created={props.info.createdAt} onClick={submitEdit}>Submit</button>
           </div>
           <div className="card-text text-right">
             <span id="edit" className="pointer" 
@@ -85,8 +87,15 @@ function ListView(props) {
               Edit
             </span>
             &emsp;
-            &emsp; 
-            <span className="pointer link" onClick={() => console.log("click")}>Link</span>
+            &emsp;
+            {/* <Link to={{
+              pathname: '/forums/' + props.info.category + "/" + props.info.title,
+              state: {
+                topic: props.info
+                }
+              }}>
+              <span className="pointer link">Link</span>
+            </Link>  */}
             &emsp;
             &emsp;
             <span className="pointer delete" data-user={props.info.UserId} data-title={props.info.createdAt} onClick={props.onClick}>Delete</span>
