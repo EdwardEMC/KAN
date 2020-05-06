@@ -10,6 +10,7 @@ function RegisterForm() {
         <div className="form-group col-md-6">
           <label htmlFor="userName-input">Username</label>
           <input id="userName-input" className="input form-control" type="text" required placeholder="Username....."/>
+          <p id="usernameInUse"></p>
         </div>
         <div className="form-group col-md-6">
           <label htmlFor="email-input">Email</label>

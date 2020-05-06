@@ -4,9 +4,6 @@ import API from "../utils/API";
 function RegisterUser(event) {
   event.preventDefault();
 
-  // remove error messages if users has filled in required now
-  document.getElementById("checked").innerHTML = "";
-
   // collecting the form information
   const userNameInput = document.getElementById("userName-input");
   const phoneInput = document.getElementById("phoneNumber-input");
@@ -24,8 +21,6 @@ function RegisterUser(event) {
     password: passwordInput.value.trim(),
   };
 
-  // console.log(userData);
-
   // If we have a username, name, email & password, run the signUpUser function
   signUpUser(userData.userName, userData.email, userData.phone, userData.name, userData.generalInformation, userData.password);
   userNameInput.value = "";
@@ -39,6 +34,9 @@ function RegisterUser(event) {
 // Does a post to the signup route. If successful, we are redirected to the user's home page
 // Otherwise we log any errors
 function signUpUser(userName, email, phone, name, generalInformation, password) {
+  document.getElementById("usernameInUse").innerHTML = "";
+  document.getElementById("emailInUse").innerHTML = "";
+
   const data = {
     userName: userName,
     email: email,
@@ -47,19 +45,24 @@ function signUpUser(userName, email, phone, name, generalInformation, password) 
     generalInformation: generalInformation,
     password: password,
   };
-    // console.log(data);
-    API.newUser(data)
-    .then(result => {
-      // console.log(result);
-      // work out how to redirect within react
+
+  API.newUser(data)
+  .then(result => {
+    if(result.data === "user.userName must be unique") {
+      document.getElementById("usernameInUse").innerHTML = "Username already in use";
+    }
+    else if(result.data === "user.email must be unique") {
+      document.getElementById("emailInUse").innerHTML = "Email already in use";
+    }
+    else {
       window.location.replace("/");
-    }) // If there's an error, handle it by throwing up a bootstrap alert
-    .catch(handleLoginErr);     
+    }
+  })
+  .catch(handleLoginErr);     
 }
 
 function handleLoginErr(err) {
-  console.log(err)
-	document.getElementById("emailInUse").innerHTML = "Email already in use";
+  console.log(err);
 }
 
 export default RegisterUser;

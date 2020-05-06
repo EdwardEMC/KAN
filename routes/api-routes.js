@@ -261,7 +261,8 @@ module.exports = function(app) {
       res.sendStatus(200);
     })
     .catch(function(err) {
-      res.status(401).json(err);
+      res.json(err.errors[0].message);
+      // res.status(401);
     });
   });
 

@@ -57,7 +57,7 @@ function LoginForm() {
   }
 
   return(
-    <form className="login">
+    <form className="login" onSubmit={LoginSubmit}>
         <br></br>
         <div className="form-group">
           <label htmlFor="email-input">Email</label>
@@ -71,8 +71,8 @@ function LoginForm() {
         </div>
         <br></br>
         <div className="text-center">
-          <button onClick={LoginSubmit} className="btn btn-success">
-          Submit
+          <button type="submit" className="btn btn-success">
+            Submit
           </button>
           <p className="help" id="errorMsg"></p>
         </div>
