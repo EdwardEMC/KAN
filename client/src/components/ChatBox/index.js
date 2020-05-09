@@ -6,7 +6,13 @@ import "./style.css";
 function ChatBox(props) {
 
   return ( 
-    <div className="outline pointer side-padding textColor chatBoxColor container" value={props.user.chatName} data-id={props.user.id} onClick={props.onClick}> 
+    <div id={props.user.user1 !== props.current ? props.user.user1 : props.user.user2}
+    className={"outline pointer side-padding textColor chatBoxColor container " +  props.user.chatName}
+    value={props.user.chatName} 
+    data-socketid="" 
+    data-id={props.user.id} 
+    onClick={props.onClick}
+    > 
       <div className="row">
         <div className="col-md">
           <div className="text-left pointer chatBoxName">

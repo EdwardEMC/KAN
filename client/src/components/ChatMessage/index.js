@@ -6,12 +6,41 @@ import shorten from "../utils/shorten";
 import "./style.css";
 
 let last; 
+
+// let updated = false;
+
+let isAlreadyCalling = false;
+let getCalled = false;
+let rec;
+
+// let isNegotiating = false;
+// let isCalling = false;
+
+const { RTCPeerConnection, RTCSessionDescription } = window;
+
+const peerConnection = new RTCPeerConnection();
 const socket = io();
 
 function ChatMessage(props) {
+  console.log(props);
 
   let currentUser;
+  let videoArea = false;
+  let chat = true;
+
+  let user = {
+    name: props.user,
+    socket: socket.id
+  }
+
+  // if(!updated) {
+    socket.emit("socket-update", user);
+  //   updated = true;
+  // }
+
   socket.removeListener("chat message");
+  socket.removeListener("update-user-list");
+  socket.removeListener("remove-user");
 
   // api call to load messages
   function messageHistory() {
@@ -80,7 +109,6 @@ function ChatMessage(props) {
       }
       messageHistory();
 
-      // window.scrollTo(0, document.body.scrollHeight);
       document.getElementById('messages').scrollIntoView();
     });
   }
@@ -109,7 +137,8 @@ function ChatMessage(props) {
       message: document.getElementById('m').value,
       user: currentUser,
       time: new Date(),
-      room: x.room
+      room: x.room,
+      socket: socket.id //can access id like this anywhere on this page
     }
 
     // socket emit
@@ -174,13 +203,183 @@ function ChatMessage(props) {
       return;
     }
   });
+
+  // only works if someone is only already and someone joins need to update everyone when someone enters????
+  // can use for now for testing
+  socket.on("socket-update", function(users) {
+    // update the chat box with the latest online user, set the data-socketId on the chat box
+    console.log(users, "Updating Chatbox");
+    // props.user = currently logged in
+
+    if(document.getElementById(users.name)) {
+      document.getElementById(users.name).setAttribute("data-socketid", users.socket);
+    }
+  });
+
+  socket.on("remove-user", function() {
+    console.log("user left");
+  });
+
+  //===============================================================================================
+  // Calling functionality
+  //===============================================================================================
+  async function callUser(receiver) {
+    console.log(peerConnection, "call user");
+    // // Making sure chrone only triggers negotiating once
+    // if(!isNegotiating) {
+      const offer = await peerConnection.createOffer();
+      await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
+      
+      console.log(rec, "REC");
+
+      socket.emit("call-user", {
+        offer,
+        to: receiver,
+        from: socket.id
+      });
+
+      // isNegotiating = true;
+    // }
+  }
+
+  socket.on("call-made", async data => {
+    console.log(peerConnection, "call made");
+  //   isCalling = true;
+
+    if (getCalled) {
+      const confirmed = window.confirm(
+        //later change to the username
+        `User "Socket: ${data.socket}" wants to call you. Do accept this call?`
+      );
+
+      if (!confirmed) {
+        socket.emit("reject-call", {
+          from: data.socket
+        });
+        return;
+      }
+    }
+
+    await peerConnection.setRemoteDescription(
+      new RTCSessionDescription(data.offer)
+    );
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
+
+    socket.emit("make-answer", {
+      answer,
+      to: data.socket
+    });
+
+    getCalled = true;
+  });
+
+  socket.on("answer-made", async data => {
+    console.log(peerConnection, "call answer");
+
+    await peerConnection.setRemoteDescription(
+      new RTCSessionDescription(data.answer)
+    );
+    
+    if (!isAlreadyCalling) {
+      callUser(data.socket);
+      isAlreadyCalling = true;
+    }
+  });
+
+  socket.on("call-rejected", data => {
+    window.alert(`User: "Socket: ${data.socket}" rejected your call.`);
+    //   isNegotiating = false;
+  });
+
+  peerConnection.ontrack = function({ streams: [stream] }) {
+    const remoteVideo = document.getElementById("remote-video");
+    if (remoteVideo) {
+      remoteVideo.srcObject = stream;
+    }
+  };
+
+  //Web chat functionality
+  function webcall() {
+    let receiver = document.getElementsByClassName(props.active);
+    
+    if(receiver[0] && receiver[0].getAttribute("data-socketid") !== "") {
+      if(!videoArea) {
+        document.getElementById("videoSpace").classList.remove("hide");
+        document.getElementById("messageSpace").className += "  hide";
+
+        navigator.getUserMedia = ( navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia ||
+          navigator.msGetUserMedia
+        );
+
+        navigator.getUserMedia(
+          { video: true, audio: true },
+          stream => {
+            const localVideo = document.getElementById("local-video");
+            if (localVideo) {
+              localVideo.srcObject = stream;
+            }
+
+            stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
+          },
+          error => {
+            console.warn(error.message);
+          }
+        );  
+
+        chat = false;
+        videoArea = true;
+      }
+      else {
+        document.getElementById("messageSpace").classList.remove("hide");
+        document.getElementById("videoSpace").className += " hide";
+
+        chat = true;
+        videoArea = false;
+      }
+
+      rec = receiver[0].getAttribute("data-socketid");
+      callUser(rec);
+    }
+    else {
+      console.log("Please select an active chatbox or online user");
+    }
+  };
+
+  function hangup() {
+    console.log("stop the current web call");
+  };
+
+  function chatarea() {
+    if(!chat) {
+      document.getElementById("messageSpace").classList.toggle("hide");
+    }
+  };
     
   return ( 
     <div>
-      <div id="messageScroll" className="displayArea">
-        <ul id="messages">
-          {/* Area to display messages */}
-        </ul> 
+      <div className="buttonArea text-center">
+        <button className="btn btn-success" onClick={webcall}>Call</button>
+        &emsp;
+        <button className="btn btn-danger" onClick={hangup}>Hang Up</button>
+        &emsp;
+        <button className="btn btn-light" onClick={chatarea}>Show Chat</button>  
+      </div>
+      <div id="messageScroll" className="displayArea row">
+        <div id="videoSpace" className="col-md hide">
+          <div className="video-chat-container">
+            <div className="video-container">
+              <video autoPlay className="remote-video" id="remote-video"></video>
+              <video autoPlay muted className="local-video" id="local-video"></video>
+            </div>
+          </div>
+        </div>
+        <div id="messageSpace" className="col-md">
+          <ul id="messages">
+          </ul> 
+        </div>
       </div>
       <div className="row send remove-padding">
         <form className="form-horizontal sendArea" id="form" action="">

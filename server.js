@@ -37,25 +37,90 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
+let activeSockets = [];
+
 // Socket.io configuration
 io.on('connection', function(socket){
+  // console.log(socket, "SOCKET");
+
+  const existingSocket = activeSockets.find(
+    existingSocket => existingSocket === socket.id
+  );
+
+  if (!existingSocket) {
+    activeSockets.push(socket.id);
+
+    socket.emit("update-user-list", {
+      users: activeSockets.filter(
+        existingSocket => existingSocket !== socket.id
+      )
+    });
+
+    socket.broadcast.emit("update-user-list", {
+      users: [socket.id]
+    });
+  }
+
+  // Updating the chat boxes with the socket of the newly logged on user
+  socket.on("socket-update", function(user) {
+    // console.log(user.name);
+    // console.log(user.socket);
+    io.emit('socket-update', user);
+  });
+
   socket.on("leave", function(last) {
     socket.leave(last);
     console.log('user left room ' + last);
   });
 
   socket.on("join", function(room) {
+    console.log(activeSockets);
     socket.join(room);
     console.log('user joined room ' + room);
   });
   
+  // Calling
+  socket.on("call-user", data => {
+    socket.to(data.to).emit("call-made", {
+      offer: data.offer,
+      socket: socket.id
+    });
+  });
+
+  socket.on("make-answer", data => {
+    socket.to(data.to).emit("answer-made", {
+      socket: socket.id,
+      answer: data.answer
+    });
+  });
+
+  socket.on("reject-call", data => {
+    socket.to(data.from).emit("call-rejected", {
+      socket: socket.id
+    });
+  });
+
+  // Figure out how to remove the socket id value on chatbox when user disconnects
   socket.on('disconnect', function() {
     socket.leaveAll()
+    activeSockets = activeSockets.filter(
+      existingSocket => existingSocket !== socket.id
+    );
+    socket.broadcast.emit("remove-user", {
+      socketId: socket.id
+    });
     console.log('user disconnected');
   });
 
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
+  });
+
+  socket.on("call-user", data => {
+    socket.to(data.to).emit("call-made", {
+      offer: data.offer,
+      socket: socket.id
+    });
   });
 });
 
