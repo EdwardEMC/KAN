@@ -13,14 +13,143 @@ let isAlreadyCalling = false;
 let getCalled = false;
 let rec;
 
-// let isNegotiating = false;
-// let isCalling = false;
+let isNegotiating = false;
+let isCalling = false;
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
 const peerConnection = new RTCPeerConnection();
 const socket = io();
 
+//===============================================================================================
+// Calling functionality
+//===============================================================================================
+async function callUser(receiver) {
+  // // Making sure chrone only triggers negotiation once
+  if(!isNegotiating) {
+    console.log(peerConnection, "call user");
+  
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
+    
+    console.log(offer, "OFFER");
+
+    socket.emit("call-user", {
+      offer,
+      to: receiver,
+      from: socket.id
+    });
+
+    isNegotiating = true;
+  }
+}
+
+socket.on("call-made", async data => {
+
+  if(!isCalling) {
+    console.log(peerConnection, "call made");
+    try {
+      if (!getCalled) {
+        const confirmed = window.confirm(
+          //later change to the username
+          `User "Socket: ${data.socket}" wants to call you. Do accept this call?`
+        );
+
+        if (!confirmed) {
+          socket.emit("reject-call", {
+            from: data.socket
+          });
+          return;
+        }
+
+        // Show the video area for the user who answered
+        document.getElementById("videoSpace").classList.remove("hide");
+        document.getElementById("messageSpace").className += "  hide";
+        
+        navigator.getUserMedia = ( navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia ||
+          navigator.msGetUserMedia
+        );
+
+        navigator.getUserMedia(
+          { video: true, audio: true },
+          stream => {
+            const localVideo = document.getElementById("local-video");
+            if (localVideo) {
+              localVideo.srcObject = stream;
+            }
+
+            stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
+          },
+          error => {
+            console.warn(error.message);
+          }
+        );  
+
+        getCalled = true;
+      }
+    }
+    //Error is happening here for some reason.....
+    finally { 
+      await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+
+      const answer = await peerConnection.createAnswer();
+      await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
+      
+      console.log(answer, "ANSWER");
+
+      socket.emit("make-answer", {
+        answer,
+        to: data.socket
+      });
+
+      isCalling = true;
+    }
+  }
+});
+
+socket.on("answer-made", async data => {
+  console.log(peerConnection, "call answer");
+  try {
+    await peerConnection.setRemoteDescription(
+      new RTCSessionDescription(data.answer)
+    );
+    
+    if (!isAlreadyCalling) {
+      callUser(data.socket);
+      isAlreadyCalling = true;
+    }
+  }
+  finally {
+    peerConnection.ontrack = function({ streams: [stream] }) {
+      console.log(stream, "STREAM");
+      const remoteVideo = document.getElementById("remote-video");
+      if (remoteVideo) {
+        remoteVideo.srcObject = stream;
+      }
+    };
+  }
+});
+
+socket.on("call-rejected", data => {
+  window.alert(`User: "Socket: ${data.socket}" rejected your call.`);
+  isNegotiating = false;
+});
+
+// not getting called?
+peerConnection.ontrack = function({ streams: [stream] }) {
+  console.log(stream, "STREAM");
+  const remoteVideo = document.getElementById("remote-video");
+  if (remoteVideo) {
+    remoteVideo.srcObject = stream;
+  }
+};
+
+
+//===============================================================================================
+// App
+//===============================================================================================
 function ChatMessage(props) {
   console.log(props);
 
@@ -223,81 +352,81 @@ function ChatMessage(props) {
   //===============================================================================================
   // Calling functionality
   //===============================================================================================
-  async function callUser(receiver) {
-    console.log(peerConnection, "call user");
-    // // Making sure chrone only triggers negotiating once
-    // if(!isNegotiating) {
-      const offer = await peerConnection.createOffer();
-      await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
-      
-      console.log(rec, "REC");
-
-      socket.emit("call-user", {
-        offer,
-        to: receiver,
-        from: socket.id
-      });
-
-      // isNegotiating = true;
-    // }
-  }
-
-  socket.on("call-made", async data => {
-    console.log(peerConnection, "call made");
-  //   isCalling = true;
-
-    if (getCalled) {
-      const confirmed = window.confirm(
-        //later change to the username
-        `User "Socket: ${data.socket}" wants to call you. Do accept this call?`
-      );
-
-      if (!confirmed) {
-        socket.emit("reject-call", {
-          from: data.socket
-        });
-        return;
-      }
-    }
-
-    await peerConnection.setRemoteDescription(
-      new RTCSessionDescription(data.offer)
-    );
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
-
-    socket.emit("make-answer", {
-      answer,
-      to: data.socket
-    });
-
-    getCalled = true;
-  });
-
-  socket.on("answer-made", async data => {
-    console.log(peerConnection, "call answer");
-
-    await peerConnection.setRemoteDescription(
-      new RTCSessionDescription(data.answer)
-    );
+  // async function callUser(receiver) {
+  //   // // Making sure chrone only triggers negotiating once
+  //   if(!isNegotiating) {
+  //   console.log(peerConnection, "call user");
     
-    if (!isAlreadyCalling) {
-      callUser(data.socket);
-      isAlreadyCalling = true;
-    }
-  });
+  //     const offer = await peerConnection.createOffer();
+  //     await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
+      
+  //     console.log(rec, "REC");
 
-  socket.on("call-rejected", data => {
-    window.alert(`User: "Socket: ${data.socket}" rejected your call.`);
-    //   isNegotiating = false;
-  });
+  //     socket.emit("call-user", {
+  //       offer,
+  //       to: receiver,
+  //       from: socket.id
+  //     });
 
-  peerConnection.ontrack = function({ streams: [stream] }) {
-    const remoteVideo = document.getElementById("remote-video");
-    if (remoteVideo) {
-      remoteVideo.srcObject = stream;
-    }
-  };
+  //     isNegotiating = true;
+  //   }
+  // }
+
+  // socket.on("call-made", async data => {
+  //   console.log(peerConnection, "call made");
+  // //   isCalling = true;
+
+  //   if (getCalled) {
+  //     const confirmed = window.confirm(
+  //       //later change to the username
+  //       `User "Socket: ${data.socket}" wants to call you. Do accept this call?`
+  //     );
+
+  //     if (!confirmed) {
+  //       socket.emit("reject-call", {
+  //         from: data.socket
+  //       });
+  //       return;
+  //     }
+  //   }
+
+  //   await peerConnection.setRemoteDescription(
+  //     new RTCSessionDescription(data.offer)
+  //   );
+  //   const answer = await peerConnection.createAnswer();
+  //   await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
+
+  //   socket.emit("make-answer", {
+  //     answer,
+  //     to: data.socket
+  //   });
+
+  //   getCalled = true;
+  // });
+
+  // socket.on("answer-made", async data => {
+  //   console.log(peerConnection, "call answer");
+  //   await peerConnection.setRemoteDescription(
+  //     new RTCSessionDescription(data.answer)
+  //   );
+    
+  //   if (!isAlreadyCalling) {
+  //     callUser(data.socket);
+  //     isAlreadyCalling = true;
+  //   }
+  // });
+
+  // socket.on("call-rejected", data => {
+  //   window.alert(`User: "Socket: ${data.socket}" rejected your call.`);
+  //   isNegotiating = false;
+  // });
+
+  // peerConnection.ontrack = function({ streams: [stream] }) {
+  //   const remoteVideo = document.getElementById("remote-video");
+  //   if (remoteVideo) {
+  //     remoteVideo.srcObject = stream;
+  //   }
+  // };
 
   //Web chat functionality
   function webcall() {
