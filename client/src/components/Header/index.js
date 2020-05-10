@@ -14,6 +14,7 @@ function Header() {
     .then(function() {
       // using href instead of history as href will refresh the page and disconnect any sockets automatically
       localStorage.removeItem("jwtToken");
+      localStorage.removeItem("User");
       localStorage.removeItem("user");
       window.location.href="/";
     })

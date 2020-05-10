@@ -62,6 +62,9 @@ socket.on("call-made", async data => {
           return;
         }
 
+        // Make the person calling the "focused" chat box
+
+
         // Show the video area for the user who answered
         document.getElementById("videoSpace").classList.remove("hide");
         document.getElementById("messageSpace").className += "  hide";
@@ -90,7 +93,7 @@ socket.on("call-made", async data => {
         getCalled = true;
       }
     }
-    //Error is happening here for some reason.....
+
     finally { 
       await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
 
@@ -122,13 +125,8 @@ socket.on("answer-made", async data => {
     }
   }
   finally {
-    peerConnection.ontrack = function({ streams: [stream] }) {
-      console.log(stream, "STREAM");
-      const remoteVideo = document.getElementById("remote-video");
-      if (remoteVideo) {
-        remoteVideo.srcObject = stream;
-      }
-    };
+    console.log("here"); //makes it here but doesn't activate the stream
+    connected();
   }
 });
 
@@ -137,15 +135,16 @@ socket.on("call-rejected", data => {
   isNegotiating = false;
 });
 
-// not getting called?
-peerConnection.ontrack = function({ streams: [stream] }) {
-  console.log(stream, "STREAM");
-  const remoteVideo = document.getElementById("remote-video");
-  if (remoteVideo) {
-    remoteVideo.srcObject = stream;
-  }
-};
-
+// not getting called????????????
+function connected() {
+  peerConnection.ontrack = function({ streams: [stream] }) {
+    console.log(stream, "STREAM");
+    const remoteVideo = document.getElementById("remote-video");
+    if (remoteVideo) {
+      remoteVideo.srcObject = stream;
+    }
+  };
+}
 
 //===============================================================================================
 // App
@@ -348,85 +347,6 @@ function ChatMessage(props) {
   socket.on("remove-user", function() {
     console.log("user left");
   });
-
-  //===============================================================================================
-  // Calling functionality
-  //===============================================================================================
-  // async function callUser(receiver) {
-  //   // // Making sure chrone only triggers negotiating once
-  //   if(!isNegotiating) {
-  //   console.log(peerConnection, "call user");
-    
-  //     const offer = await peerConnection.createOffer();
-  //     await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
-      
-  //     console.log(rec, "REC");
-
-  //     socket.emit("call-user", {
-  //       offer,
-  //       to: receiver,
-  //       from: socket.id
-  //     });
-
-  //     isNegotiating = true;
-  //   }
-  // }
-
-  // socket.on("call-made", async data => {
-  //   console.log(peerConnection, "call made");
-  // //   isCalling = true;
-
-  //   if (getCalled) {
-  //     const confirmed = window.confirm(
-  //       //later change to the username
-  //       `User "Socket: ${data.socket}" wants to call you. Do accept this call?`
-  //     );
-
-  //     if (!confirmed) {
-  //       socket.emit("reject-call", {
-  //         from: data.socket
-  //       });
-  //       return;
-  //     }
-  //   }
-
-  //   await peerConnection.setRemoteDescription(
-  //     new RTCSessionDescription(data.offer)
-  //   );
-  //   const answer = await peerConnection.createAnswer();
-  //   await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
-
-  //   socket.emit("make-answer", {
-  //     answer,
-  //     to: data.socket
-  //   });
-
-  //   getCalled = true;
-  // });
-
-  // socket.on("answer-made", async data => {
-  //   console.log(peerConnection, "call answer");
-  //   await peerConnection.setRemoteDescription(
-  //     new RTCSessionDescription(data.answer)
-  //   );
-    
-  //   if (!isAlreadyCalling) {
-  //     callUser(data.socket);
-  //     isAlreadyCalling = true;
-  //   }
-  // });
-
-  // socket.on("call-rejected", data => {
-  //   window.alert(`User: "Socket: ${data.socket}" rejected your call.`);
-  //   isNegotiating = false;
-  // });
-
-  // peerConnection.ontrack = function({ streams: [stream] }) {
-  //   const remoteVideo = document.getElementById("remote-video");
-  //   if (remoteVideo) {
-  //     remoteVideo.srcObject = stream;
-  //   }
-  // };
 
   //Web chat functionality
   function webcall() {

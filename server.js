@@ -39,48 +39,36 @@ if (process.env.NODE_ENV === "production") {
 
 let activeSockets = [];
 
-// Socket.io configuration
-io.on('connection', function(socket){
-  // console.log(socket, "SOCKET");
+// area to put name spaces
+// let nameSpaces = [];
+
+io.on("connection", socket => {
+  console.log(`User connected: ${socket.id}`);
 
   const existingSocket = activeSockets.find(
     existingSocket => existingSocket === socket.id
   );
 
   if (!existingSocket) {
-    activeSockets.push(socket.id);
-
+    activeSockets.push({name: socket.handshake.query.name, socket: socket.id});
     socket.emit("update-user-list", {
+      //crashes on none left
       users: activeSockets.filter(
-        existingSocket => existingSocket !== socket.id
+        existingSocket => existingSocket.socket !== socket.id
       )
     });
 
+    let data = {
+      name: socket.handshake.query.name,
+      socket: socket.id
+    }
+
     socket.broadcast.emit("update-user-list", {
-      users: [socket.id]
+      users: [data]
     });
   }
 
-  // Updating the chat boxes with the socket of the newly logged on user
-  socket.on("socket-update", function(user) {
-    // console.log(user.name);
-    // console.log(user.socket);
-    io.emit('socket-update', user);
-  });
-
-  socket.on("leave", function(last) {
-    socket.leave(last);
-    console.log('user left room ' + last);
-  });
-
-  socket.on("join", function(room) {
-    console.log(activeSockets);
-    socket.join(room);
-    console.log('user joined room ' + room);
-  });
-  
-  // Calling
-  socket.on("call-user", data => {
+  socket.on("call-user", (data) => {
     socket.to(data.to).emit("call-made", {
       offer: data.offer,
       socket: socket.id
@@ -100,29 +88,115 @@ io.on('connection', function(socket){
     });
   });
 
-  // Figure out how to remove the socket id value on chatbox when user disconnects
-  socket.on('disconnect', function() {
-    socket.leaveAll()
+  socket.on("hang-up", data => {
+    console.log(data);
+    socket.to(data).emit("hang-up");
+  });
+
+  socket.on("disconnect", () => {
     activeSockets = activeSockets.filter(
-      existingSocket => existingSocket !== socket.id
+      existingSocket => existingSocket.socket !== socket.id
     );
     socket.broadcast.emit("remove-user", {
       socketId: socket.id
     });
-    console.log('user disconnected');
   });
 
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-  });
-
-  socket.on("call-user", data => {
-    socket.to(data.to).emit("call-made", {
-      offer: data.offer,
+  socket.on("chat-message", data => {
+    console.log(data);
+    socket.to(data.to).emit("chat-sent", {
+      msg: data,
       socket: socket.id
     });
   });
 });
+
+// let activeSockets = [];
+
+// // Socket.io configuration
+// io.on('connection', function(socket){
+//   // console.log(socket, "SOCKET");
+
+//   const existingSocket = activeSockets.find(
+//     existingSocket => existingSocket === socket.id
+//   );
+
+//   if (!existingSocket) {
+//     activeSockets.push(socket.id);
+
+//     socket.emit("update-user-list", {
+//       users: activeSockets.filter(
+//         existingSocket => existingSocket !== socket.id
+//       )
+//     });
+
+//     socket.broadcast.emit("update-user-list", {
+//       users: [socket.id]
+//     });
+//   }
+
+//   // Updating the chat boxes with the socket of the newly logged on user
+//   socket.on("socket-update", function(user) {
+//     // console.log(user.name);
+//     // console.log(user.socket);
+//     io.emit('socket-update', user);
+//   });
+
+//   socket.on("leave", function(last) {
+//     socket.leave(last);
+//     console.log('user left room ' + last);
+//   });
+
+//   socket.on("join", function(room) {
+//     console.log(activeSockets);
+//     socket.join(room);
+//     console.log('user joined room ' + room);
+//   });
+  
+//   // Calling
+//   socket.on("call-user", data => {
+//     socket.to(data.to).emit("call-made", {
+//       offer: data.offer,
+//       socket: socket.id
+//     });
+//   });
+
+//   socket.on("make-answer", data => {
+//     socket.to(data.to).emit("answer-made", {
+//       socket: socket.id,
+//       answer: data.answer
+//     });
+//   });
+
+//   socket.on("reject-call", data => {
+//     socket.to(data.from).emit("call-rejected", {
+//       socket: socket.id
+//     });
+//   });
+
+//   // Figure out how to remove the socket id value on chatbox when user disconnects
+//   socket.on('disconnect', function() {
+//     socket.leaveAll()
+//     activeSockets = activeSockets.filter(
+//       existingSocket => existingSocket !== socket.id
+//     );
+//     socket.broadcast.emit("remove-user", {
+//       socketId: socket.id
+//     });
+//     console.log('user disconnected');
+//   });
+
+//   socket.on('chat message', function(msg){
+//     io.emit('chat message', msg);
+//   });
+
+//   socket.on("call-user", data => {
+//     socket.to(data.to).emit("call-made", {
+//       offer: data.offer,
+//       socket: socket.id
+//     });
+//   });
+// });
 
 // Define API routes here
 require("./routes/api-routes.js")(app);

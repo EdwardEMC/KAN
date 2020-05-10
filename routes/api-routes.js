@@ -123,17 +123,27 @@ module.exports = function(app) {
 
   //route to get messages from a certain chat
   app.get("/api/messages/:id", isAuthenticated, function(req, res) {
-    db.Messages.findAll({
+    db.Chats.findOne({
       where: {
-        ChatId: req.params.id
+        chatName: req.params.id
       }
     })
-    .then(function(dbMessages) {
-      const data = {
-        id: req.user.id,
-        messages: dbMessages
-      }
-      res.json(data);
+    .then(function(dbChat) {
+      db.Messages.findAll({
+        where: {
+          ChatId: dbChat.dataValues.id
+        }
+      })
+      .then(function(dbMessages) {
+        const data = {
+          id: req.user.id,
+          messages: dbMessages
+        }
+        res.json(data);
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
     })
   });
 
@@ -337,24 +347,29 @@ module.exports = function(app) {
 
   //route to update the message history of a chat
   app.post("/api/messages", isAuthenticated, function(req, res) {
-    const data = {
-      message: req.body.message,
-      ChatId: req.body.id,
-      UserId: req.user.id
-    }
-    // console.log(data, "SERVER API");
-    db.Messages.create({
-      message: req.body.message,
-      ChatId: req.body.id,
-      UserId: req.user.id
+    console.log(req.body, "MESSAGE BODY");
+    db.Chats.findOne({
+      where: {
+        chatName: req.body.chatname
+      }
     })
-    .then(function() {
-      res.status(200).end();
+    .then(function(dbChat) {
+      db.Messages.create({
+        message: req.body.message,
+        ChatId: dbChat.dataValues.id,
+        UserId: req.user.id
+      })
+      .then(function() {
+        res.status(200).end();
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.status(401).json(err);
+      });
     })
     .catch(function(err) {
       console.log(err);
-      res.status(401).json(err);
-    });
+    })
   });
 
   //===========================================================================

@@ -13,7 +13,11 @@ const reducer = (state, action) => {
       ...state,
       mode: action.mode
     }
-
+  // case "SET_USER":
+  //   return {
+  //     ...state,
+  //     user: action.user
+  //   }
   default:
     return state;
   }
@@ -21,7 +25,8 @@ const reducer = (state, action) => {
 
 const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
-    mode: "light"
+    mode: "light",
+    // user: ""
   });
 
   return <Provider value={[state, dispatch]} {...props} />;

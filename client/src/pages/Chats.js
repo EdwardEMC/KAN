@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Wrapper from "../components/Wrapper";
-import ChatArea from "../components/ChatArea";
+import Messaging from "../components/Messaging";
 
 class Chats extends Component {
   render() {
     return (
       <Wrapper>
-        <ChatArea />
+        <Messaging />
       </Wrapper>
     )
   }
