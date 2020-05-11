@@ -4,6 +4,8 @@ import io from "socket.io-client";
 import formatTime from "../utils/timeFormat";
 import "./style.css";
 
+//Helpful https://tsh.io/blog/how-to-write-video-chat-app-using-webrtc-and-nodejs/
+
 let isAlreadyCalling = false;
 let getCalled = false;
 let chatName;
@@ -227,6 +229,7 @@ function Messaging() {
   //===========================================================================
 
   async function callUser(socketId) {
+    //if not working in future look at adding .then(success callback, failed callback)
     const offer = await peerConnection.createOffer();
     await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
 
@@ -380,6 +383,7 @@ function Messaging() {
   socket.on("hang-up", () => {
     // not sending to both clients
     peerConnection.close(); //change this so signalState is permanently put on closed
+    peerConnection = null;
     document.getElementById("video-space").classList.add("hide");
     document.getElementById("call-buttons").classList.add("hide");
     document.getElementById("message-space").classList.remove("hide");
@@ -520,6 +524,7 @@ function Messaging() {
 
   function videoarea() {
     peerConnection.close(); //change this so signalState is permanently put on closed
+    peerConnection = null;
     
     let user = document.getElementById("talking-with-info").getAttribute("value");
     let receiverSocket = document.getElementById(user).getAttribute("value");
