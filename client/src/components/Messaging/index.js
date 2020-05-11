@@ -4,20 +4,16 @@ import io from "socket.io-client";
 import formatTime from "../utils/timeFormat";
 import "./style.css";
 
-//===========================================================================
-// Call Area
-//===========================================================================
 let isAlreadyCalling = false;
 let getCalled = false;
 let chatName;
 let friends = [];
 
+// Array to hold currently online friends (relates to the offline/online icons)
 let onlineFriends = [];
 
 let socket;
 let connected = false;
-
-// const existingCalls = [];
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
@@ -222,6 +218,10 @@ function Messaging() {
     let objDiv = document.getElementById("messageScroll");
     objDiv.scrollTop = objDiv.scrollHeight;
   };
+
+  //===========================================================================
+  // Calling Area
+  //===========================================================================
 
   async function callUser(socketId) {
     const offer = await peerConnection.createOffer();
