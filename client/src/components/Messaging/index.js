@@ -21,9 +21,11 @@ let connected = false;
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
-let peerConnection = new RTCPeerConnection();
+// let peerConnection = new RTCPeerConnection();
 
 function Messaging() {
+  let peerConnection = new RTCPeerConnection();
+
   // user.name for logged in username
   // user.id for logged in id
   const user = JSON.parse(localStorage.getItem("User"));
@@ -388,7 +390,8 @@ function Messaging() {
     document.getElementById("message-space").classList.remove("hide");
 
     // Still not working
-    peerConnection = null;
+    // peerConnection = null;
+    peerConnection = new RTCPeerConnection();
   });
 
   socket.on("call-rejected", data => {
@@ -539,7 +542,8 @@ function Messaging() {
     document.getElementById("message-space").classList.remove("hide");
 
     // Still not working
-    peerConnection = null;
+    // peerConnection = null;
+    peerConnection = new RTCPeerConnection();
   }
 
   return (
