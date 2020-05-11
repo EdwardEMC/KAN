@@ -7,6 +7,8 @@ import "./style.css";
 let isAlreadyCalling = false;
 let getCalled = false;
 let chatName;
+
+// Might not be needed
 let friends = [];
 
 // Array to hold currently online friends (relates to the offline/online icons)
@@ -20,12 +22,13 @@ const { RTCPeerConnection, RTCSessionDescription } = window;
 const peerConnection = new RTCPeerConnection();
 
 function Messaging() {
+  // user.name for logged in username
+  // user.id for logged in id
+  const user = JSON.parse(localStorage.getItem("User"));
+
   //===========================================================================
   // Friends Areas
   //===========================================================================
-
-  // Sometimes not called until after the update-user-list causing the newly connected socket to show in active users in stead of friends
-  
   API.getChats()
     .then(function(result) {
       // console.log(result, "CURRENT CHATS");
@@ -84,6 +87,8 @@ function Messaging() {
         callButtonEl.innerHTML = "Call";  
       }
 
+      // Add button to delete friend
+
       callButtonEl.addEventListener("click", () => {
         callUser(document.getElementById(name).getAttribute("value"));
         // callUser(data.socket);
@@ -122,10 +127,6 @@ function Messaging() {
 
   // console.log(onlineFriends, "ONLINE FRIEND ARRAY");
 
-  // user.name for logged in username
-  // user.id for logged in id
-  const user = JSON.parse(localStorage.getItem("User"));
-
   function unselectUsersFromList() {
     // clear the message area on active user change
     document.getElementById('messages').innerHTML = "";
@@ -152,6 +153,8 @@ function Messaging() {
     callButtonEl.innerHTML = "Call";
     usernameEl.setAttribute("class", "username");
     usernameEl.innerHTML = `Socket: ${data.name}`;
+
+    // Add a button to make user a friend
 
     callButtonEl.addEventListener("click", () => {
       callUser(data.socket);
@@ -312,7 +315,6 @@ function Messaging() {
       elToRemove.remove();
     }
     else if(frToRemove) {
-      // NEED TO FIX THIS AS TOGGLE WILL NOT WORK WHEN REFRESHING
       // If online show call button
       frToRemove.classList.remove(socketId);
       frToRemove.setAttribute("value", "");
@@ -515,7 +517,10 @@ function Messaging() {
   function videoarea() {
     peerConnection.close(); //change this so signalState is permanently put on closed
     
-    let receiverSocket = document.getElementById("talking-with-info").getAttribute("value");
+    let user = document.getElementById("talking-with-info").getAttribute("value");
+    let receiverSocket = document.getElementById(user).getAttribute("value");
+
+    console.log(receiverSocket, "HANG UP AREA");
 
     socket.emit("hang-up", receiverSocket);
 
