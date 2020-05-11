@@ -383,10 +383,10 @@ function Messaging() {
   socket.on("hang-up", () => {
     // not sending to both clients
     peerConnection.close(); //change this so signalState is permanently put on closed
-    peerConnection = null;
     document.getElementById("video-space").classList.add("hide");
     document.getElementById("call-buttons").classList.add("hide");
     document.getElementById("message-space").classList.remove("hide");
+    peerConnection = null;
   });
 
   socket.on("call-rejected", data => {
@@ -524,7 +524,6 @@ function Messaging() {
 
   function videoarea() {
     peerConnection.close(); //change this so signalState is permanently put on closed
-    peerConnection = null;
     
     let user = document.getElementById("talking-with-info").getAttribute("value");
     let receiverSocket = document.getElementById(user).getAttribute("value");
@@ -536,6 +535,7 @@ function Messaging() {
     document.getElementById("video-space").classList.toggle("hide");
     document.getElementById("call-buttons").classList.toggle("hide");
     document.getElementById("message-space").classList.remove("hide");
+    peerConnection = null;
   }
 
   return (
