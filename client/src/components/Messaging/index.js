@@ -21,7 +21,7 @@ let connected = false;
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
-const peerConnection = new RTCPeerConnection();
+let peerConnection = new RTCPeerConnection();
 
 function Messaging() {
   // user.name for logged in username
@@ -386,6 +386,8 @@ function Messaging() {
     document.getElementById("video-space").classList.add("hide");
     document.getElementById("call-buttons").classList.add("hide");
     document.getElementById("message-space").classList.remove("hide");
+
+    // Still not working
     peerConnection = null;
   });
 
@@ -535,6 +537,8 @@ function Messaging() {
     document.getElementById("video-space").classList.toggle("hide");
     document.getElementById("call-buttons").classList.toggle("hide");
     document.getElementById("message-space").classList.remove("hide");
+
+    // Still not working
     peerConnection = null;
   }
 
