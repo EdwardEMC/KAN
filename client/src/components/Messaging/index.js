@@ -264,8 +264,7 @@ function Messaging() {
           activeUserContainer.append(userContainerEl);
         }
         else if (alreadyExistingUser) {
-          // Problem with the toggle need to fix connections first the add on connect and remove on disconnect
-          // NEED TO FIX THIS AS TOGGLE WILL NOT WORK WHEN REFRESHING
+          // Push to onlineFriends array as when refreshing or changing component client side knows whose still online
           onlineFriends.push({name: data.name, socket: data.socket});
           document.getElementById(data.name).setAttribute("value", data.socket);
           document.getElementById(data.name).classList.add(data.socket);
@@ -326,7 +325,7 @@ function Messaging() {
       document.getElementById(friend.name + "offline").classList.remove("hide");
       document.getElementById(friend.name + "online").classList.add("hide");
 
-      //Filt
+      //Filter out friend from onlineFriends
       onlineFriends = onlineFriends.filter(element => {
         return element.socket !== socketId
       });
@@ -343,31 +342,32 @@ function Messaging() {
         socket.emit("reject-call", {
           from: data.socket
         });
-
         return;
       }
 
-      // console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
-      // const userCalling = document.getElementsByClassName(data.socket)
-      // const elToFocus = userCalling[0].getAttribute("id");
+      console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
+
+      const userCalling = document.getElementsByClassName(data.socket)
+      const elToFocus = userCalling[0].getAttribute("id");
 
       // Show video area and call buttons for the receiver
       document.getElementById("video-space").classList.remove("hide");
       document.getElementById("call-buttons").classList.remove("hide");
-      // unselectUsersFromList();
-      // document.getElementById(elToFocus).click();
-    }
+      unselectUsersFromList();
+      document.getElementById(elToFocus).click();
+    };
 
-    await peerConnection.setRemoteDescription(
-      new RTCSessionDescription(data.offer)
-    );
+    await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+
     const answer = await peerConnection.createAnswer();
+
     await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
 
     socket.emit("make-answer", {
       answer,
       to: data.socket
     });
+    
     getCalled = true;
   });
 
