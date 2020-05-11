@@ -9,8 +9,13 @@ import "./style.css";
 //===========================================================================
 let isAlreadyCalling = false;
 let getCalled = false;
-let receiver;
 let chatName;
+let friends = [];
+
+let onlineFriends = [];
+
+let socket;
+let connected = false;
 
 // const existingCalls = [];
 
@@ -19,6 +24,108 @@ const { RTCPeerConnection, RTCSessionDescription } = window;
 const peerConnection = new RTCPeerConnection();
 
 function Messaging() {
+  //===========================================================================
+  // Friends Areas
+  //===========================================================================
+
+  // Sometimes not called until after the update-user-list causing the newly connected socket to show in active users in stead of friends
+  
+  API.getChats()
+    .then(function(result) {
+      console.log(result, "CURRENT CHATS");
+      createFriendItemContainer(result.data.chats);
+      // Populate the friends array
+      result.data.chats.map(element => {
+        let username = user.name !== element.user1 ? element.user1 : element.user2;
+        return friends.push(username);
+      });  
+    }) // If there's an error, log the error
+    .catch(function(err) {
+      console.log(err);
+  });
+
+  function createFriendItemContainer(data) {
+    console.log(data, "FRIEND");
+    data.forEach(element => {
+      console.log(element);
+      const name = user.name !== element.user1 ? element.user1 : element.user2;
+
+      const userContainerEl = document.createElement("div");
+      const usernameEl = document.createElement("p");
+
+      userContainerEl.setAttribute("class", "active-user ");
+      userContainerEl.setAttribute("id", name);
+      usernameEl.setAttribute("class", "username");
+      usernameEl.innerHTML = `Socket: ${name}`;
+
+      const offlineEl = document.createElement("button");
+      const callButtonEl = document.createElement("button");
+
+      // If online show call button
+      let friend = onlineFriends.find(element => element.name === name);
+
+      // console.log(friend, "FRIEND ONLINE");
+
+      if(typeof friend !== "undefined" && friend.name === name) {
+        userContainerEl.setAttribute("value", friend.socket);
+        userContainerEl.classList.add(friend.socket);
+
+        offlineEl.setAttribute("id", name + "offline");
+        offlineEl.setAttribute("class", "call-button btn btn-danger hide");
+        offlineEl.innerHTML = "Offline";
+
+        callButtonEl.setAttribute("id", name + "online");
+        callButtonEl.setAttribute("class", "call-button btn btn-success");
+        callButtonEl.innerHTML = "Call";
+      } // If offline show offline icon
+      else {
+        offlineEl.setAttribute("id", name + "offline");
+        offlineEl.setAttribute("class", "call-button btn btn-danger");
+        offlineEl.innerHTML = "Offline";
+  
+        callButtonEl.setAttribute("id", name + "online");
+        callButtonEl.setAttribute("class", "call-button btn btn-success hide");
+        callButtonEl.innerHTML = "Call";  
+      }
+
+      callButtonEl.addEventListener("click", () => {
+        callUser(document.getElementById(name).getAttribute("value"));
+        // callUser(data.socket);
+        // Show video area and call buttons for the caller
+        document.getElementById("video-space").classList.toggle("hide");
+        document.getElementById("call-buttons").classList.toggle("hide");
+      });
+
+      userContainerEl.append(usernameEl, callButtonEl, offlineEl);
+
+      userContainerEl.addEventListener("click", () => {
+        unselectUsersFromList();
+        userContainerEl.setAttribute("class", "active-user active-user--selected");
+        const talkingWithInfo = document.getElementById("talking-with-info");
+        talkingWithInfo.setAttribute("value", name);
+        // Setting the receiver for chat/video
+        talkingWithInfo.innerHTML = `Talking with: "Socket: ${name}"`;
+        
+        // Alpha sort the usernames so they are always the same
+        const usernames = [name, user.name];
+        chatName = usernames.sort().join("-");
+
+        API.getMessages(chatName)
+        .then(function(result) {
+          console.log(result, "CHAT MESSAGES");
+          displayMessages(result.data);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+      });
+
+      return document.getElementById("friend-user-container").append(userContainerEl);
+    });
+  }
+
+  console.log(onlineFriends, "ONLINE FRIEND ARRAY");
+
   // user.name for logged in username
   // user.id for logged in id
   const user = JSON.parse(localStorage.getItem("User"));
@@ -36,8 +143,7 @@ function Messaging() {
     });
   }
 
-  function createUserItemContainer(data) {
-    console.log(data);
+  function createUserItemContainer(data) {  
     const userContainerEl = document.createElement("div");
 
     const callButtonEl = document.createElement("button");
@@ -66,7 +172,7 @@ function Messaging() {
       const talkingWithInfo = document.getElementById("talking-with-info");
       talkingWithInfo.setAttribute("value", data.socket);
       // Setting the receiver for chat/video
-      receiver = data.socket;
+      // receiver = data.socket;
       talkingWithInfo.innerHTML = `Talking with: "Socket: ${data.name}"`;
       
       // api call to load messages
@@ -132,17 +238,38 @@ function Messaging() {
     const activeUserContainer = document.getElementById("active-user-container");
 
     socketIds.forEach(data => {
-      const alreadyExistingUser = document.getElementById(data.socket);
-      if (!alreadyExistingUser) {
+      const alreadyExistingUser = document.getElementById(data.name);
+      if (!alreadyExistingUser && data.name !== user.name) {
+        console.log("HERE");
         const userContainerEl = createUserItemContainer(data);
 
         activeUserContainer.append(userContainerEl);
       }
+      else if (alreadyExistingUser) {
+        // Problem with the toggle need to fix connections first the add on connect and remove on disconnect
+        // NEED TO FIX THIS AS TOGGLE WILL NOT WORK WHEN REFRESHING
+        onlineFriends.push({name: data.name, socket: data.socket});
+        document.getElementById(data.name).setAttribute("value", data.socket);
+        document.getElementById(data.name).classList.add(data.socket);
+        document.getElementById(data.name + "offline").classList.add("hide");
+        document.getElementById(data.name + "online").classList.remove("hide");
+      }
     });
   }
 
-  // send data throught the connection (username)
-  const socket = io.connect({query: {name: user.name}});
+  //===========================================================================
+  // Socket Connection Area
+  //===========================================================================
+  // Send data throught the connection (username)
+  // Only make one connection when logging in, not on refresh
+  if(!connected) {
+    socket = io.connect({query: {name: user.name}});
+    connected = true;
+  }
+
+  // remove any excess chat listeners
+  socket.removeListener("chat-message");
+  socket.removeListener("chat-sent");
 
   socket.on("update-user-list", ({ users }) => {
     // if on friends list show on chat area
@@ -150,11 +277,38 @@ function Messaging() {
   });
 
   socket.on("remove-user", ({ socketId }) => {
-    const elToRemove = document.getElementById(socketId);
+    // need to find another way to search
+    let elToRemove;
+    let frToRemove;
+    // let username;
+    let friend = onlineFriends.find(element => element.socket === socketId);
+    
+    console.log(friend, "FRIEND LEAVING");
 
-    if (elToRemove) {
+    // Determine if a friend is
+    if(document.getElementById(socketId)) {
+      elToRemove = document.getElementById(socketId);
+    }
+    else {
+      frToRemove = document.getElementById(friend.name);
+    }
+
+    if(elToRemove) {
       elToRemove.remove();
     }
+    else if(frToRemove) {
+      // NEED TO FIX THIS AS TOGGLE WILL NOT WORK WHEN REFRESHING
+      // If online show call button
+      frToRemove.classList.remove(socketId);
+      frToRemove.setAttribute("value", "");
+      document.getElementById(friend.name + "offline").classList.remove("hide");
+      document.getElementById(friend.name + "online").classList.add("hide");
+
+      //Filt
+      onlineFriends = onlineFriends.filter(element => {
+        return element.socket !== socketId
+      });
+    };
   });
 
   socket.on("call-made", async data => {
@@ -171,9 +325,15 @@ function Messaging() {
         return;
       }
 
+      console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
+      // const userCalling = document.getElementsByClassName(data.socket)
+      // const elToFocus = userCalling[0].getAttribute("id");
+
       // Show video area and call buttons for the receiver
       document.getElementById("video-space").classList.toggle("hide");
       document.getElementById("call-buttons").classList.toggle("hide");
+      // unselectUsersFromList();
+      // document.getElementById(elToFocus).click();
     }
 
     await peerConnection.setRemoteDescription(
@@ -241,8 +401,6 @@ function Messaging() {
   // Messaging Area
   //===========================================================================
   function messageDisplay(data) {
-    console.log(data, "SENT MESSAGES");
-    // here
     const area = document.getElementById('messages');
 
     const li = document.createElement('li');
@@ -265,11 +423,18 @@ function Messaging() {
   }
 
   socket.on("chat-sent", data => {
-    //api to update chat history
-    console.log("Update chat history");
-    console.log(data);
+    console.log(data, "CHAT DATA");
+    let active;
+    let name;
 
-    if(receiver === data.socket) {
+    if(document.getElementById("talking-with-info")) {
+      name = document.getElementById("talking-with-info").getAttribute("value");
+    }
+    if(name) {
+      active = document.getElementById(name).getAttribute("value");
+    }
+
+    if(active === data.socket) {
       messageDisplay(data.msg);
       let objDiv = document.getElementById("messageScroll");
       objDiv.scrollTop = objDiv.scrollHeight;
@@ -279,11 +444,13 @@ function Messaging() {
   function sendMessage(event) {
     event.preventDefault();
 
-    // Put API route to save message to the current chat
     const data = {
       message: document.getElementById('m').value,
       chatname: chatName
     }
+
+    let name = document.getElementById("talking-with-info").getAttribute("value");
+    let receiver = document.getElementById(name).getAttribute("value");
 
     API.sendMessage(data)
     .then(function(result) {
@@ -316,11 +483,6 @@ function Messaging() {
   }
 
   //===========================================================================
-  // Offline messaging
-  //===========================================================================
-
-
-  //===========================================================================
   // Screen manupulation Area
   //===========================================================================
   function chatarea() {
@@ -330,9 +492,9 @@ function Messaging() {
   function videoarea() {
     peerConnection.close(); //change this so signalState is permanently put on closed
     
-    let receiver = document.getElementById("talking-with-info").getAttribute("value");
+    let receiverSocket = document.getElementById("talking-with-info").getAttribute("value");
 
-    socket.emit("hang-up", receiver);
+    socket.emit("hang-up", receiverSocket);
 
     document.getElementById("video-space").classList.toggle("hide");
     document.getElementById("call-buttons").classList.toggle("hide");
@@ -357,9 +519,15 @@ function Messaging() {
         </h2>
       </header>
       <div className="content-container">
-        <div className="active-users-panel" id="active-user-container">
-          <h3 className="panel-title">Active Users:</h3>
-          {/* area for friends/past chats */}
+        <div>
+          <div className="active-users-panel" id="active-user-container">
+            <h3 className="panel-title">Active Users:</h3>
+            {/* area for active chats */}
+          </div>
+          <div className="friend-users-panel" id="friend-user-container">
+            <h3 className="panel-title">Friends:</h3>
+            {/* area for friends chats */}
+          </div>
         </div>
         <div className="row interaction-area">
           <div id="video-space" className="col-md hide">

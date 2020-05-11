@@ -50,7 +50,7 @@ body {
 
 .content-container {
   width: 100%;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 232px);
   display: flex;
   justify-content: space-between;
   overflow: hidden;
@@ -58,8 +58,14 @@ body {
 
 .active-users-panel {
   width: 300px;
-  height: 100%;
-  border-right: 1px solid #cddfe7;
+  height: 50%;
+  border: 1px solid #cddfe7;
+}
+
+.friend-users-panel {
+  width: 300px;
+  height: 50%;
+  border: 1px solid #cddfe7;
 }
 
 .chat-panet {

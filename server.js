@@ -100,6 +100,10 @@ io.on("connection", socket => {
     socket.broadcast.emit("remove-user", {
       socketId: socket.id
     });
+
+    socket.leaveAll();
+
+    console.log(`User disconnected: ${socket.id}`);
   });
 
   socket.on("chat-message", data => {
