@@ -28,7 +28,7 @@ function Messaging() {
   
   API.getChats()
     .then(function(result) {
-      console.log(result, "CURRENT CHATS");
+      // console.log(result, "CURRENT CHATS");
       createFriendItemContainer(result.data.chats);
       // Populate the friends array
       result.data.chats.map(element => {
@@ -41,9 +41,9 @@ function Messaging() {
   });
 
   function createFriendItemContainer(data) {
-    console.log(data, "FRIEND");
+    // console.log(data, "FRIEND");
     data.forEach(element => {
-      console.log(element);
+      // console.log(element);
       const name = user.name !== element.user1 ? element.user1 : element.user2;
 
       const userContainerEl = document.createElement("div");
@@ -108,7 +108,7 @@ function Messaging() {
 
         API.getMessages(chatName)
         .then(function(result) {
-          console.log(result, "CHAT MESSAGES");
+          // console.log(result, "CHAT MESSAGES");
           displayMessages(result.data);
         })
         .catch(function(err) {
@@ -120,7 +120,7 @@ function Messaging() {
     });
   }
 
-  console.log(onlineFriends, "ONLINE FRIEND ARRAY");
+  // console.log(onlineFriends, "ONLINE FRIEND ARRAY");
 
   // user.name for logged in username
   // user.id for logged in id
@@ -234,26 +234,40 @@ function Messaging() {
   }
 
   function updateUserList(socketIds) {
-    console.log(socketIds, "ONLINE USERS");
+    // console.log(socketIds, "ONLINE USERS");
     const activeUserContainer = document.getElementById("active-user-container");
 
-    socketIds.forEach(data => {
-      const alreadyExistingUser = document.getElementById(data.name);
-      if (!alreadyExistingUser && data.name !== user.name) {
-        console.log("HERE");
-        const userContainerEl = createUserItemContainer(data);
+    let friendList = [];
 
-        activeUserContainer.append(userContainerEl);
-      }
-      else if (alreadyExistingUser) {
-        // Problem with the toggle need to fix connections first the add on connect and remove on disconnect
-        // NEED TO FIX THIS AS TOGGLE WILL NOT WORK WHEN REFRESHING
-        onlineFriends.push({name: data.name, socket: data.socket});
-        document.getElementById(data.name).setAttribute("value", data.socket);
-        document.getElementById(data.name).classList.add(data.socket);
-        document.getElementById(data.name + "offline").classList.add("hide");
-        document.getElementById(data.name + "online").classList.remove("hide");
-      }
+    //Making sure the socket doesn't populate the active list if it is a friend
+    API.getChats()
+    .then(function(result) {
+      result.data.chats.map(element => {
+        let username = user.name !== element.user1 ? element.user1 : element.user2;
+        return friendList.push(username);
+      });  
+    })
+    .then(function() {
+      socketIds.forEach(data => {
+        const alreadyExistingUser = document.getElementById(data.name);
+        if (!alreadyExistingUser && data.name !== user.name && !friendList.includes(data.name)) {
+          const userContainerEl = createUserItemContainer(data);
+
+          activeUserContainer.append(userContainerEl);
+        }
+        else if (alreadyExistingUser) {
+          // Problem with the toggle need to fix connections first the add on connect and remove on disconnect
+          // NEED TO FIX THIS AS TOGGLE WILL NOT WORK WHEN REFRESHING
+          onlineFriends.push({name: data.name, socket: data.socket});
+          document.getElementById(data.name).setAttribute("value", data.socket);
+          document.getElementById(data.name).classList.add(data.socket);
+          document.getElementById(data.name + "offline").classList.add("hide");
+          document.getElementById(data.name + "online").classList.remove("hide");
+        }
+      });
+    }) // If there's an error, log the error
+    .catch(function(err) {
+      console.log(err);
     });
   }
 
@@ -289,7 +303,8 @@ function Messaging() {
     if(document.getElementById(socketId)) {
       elToRemove = document.getElementById(socketId);
     }
-    else {
+    else if(typeof friend !== "undefined"){
+      //undefind friend
       frToRemove = document.getElementById(friend.name);
     }
 
@@ -326,14 +341,14 @@ function Messaging() {
       }
 
       console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
-      // const userCalling = document.getElementsByClassName(data.socket)
-      // const elToFocus = userCalling[0].getAttribute("id");
+      const userCalling = document.getElementsByClassName(data.socket)
+      const elToFocus = userCalling[0].getAttribute("id");
 
       // Show video area and call buttons for the receiver
-      document.getElementById("video-space").classList.toggle("hide");
-      document.getElementById("call-buttons").classList.toggle("hide");
-      // unselectUsersFromList();
-      // document.getElementById(elToFocus).click();
+      document.getElementById("video-space").classList.remove("hide");
+      document.getElementById("call-buttons").classList.remove("hide");
+      unselectUsersFromList();
+      document.getElementById(elToFocus).click();
     }
 
     await peerConnection.setRemoteDescription(
@@ -361,9 +376,10 @@ function Messaging() {
   });
 
   socket.on("hang-up", () => {
+    // not sending to both clients
     peerConnection.close(); //change this so signalState is permanently put on closed
-    document.getElementById("video-space").classList.toggle("hide");
-    document.getElementById("call-buttons").classList.toggle("hide");
+    document.getElementById("video-space").classList.add("hide");
+    document.getElementById("call-buttons").classList.add("hide");
     document.getElementById("message-space").classList.remove("hide");
   });
 
@@ -371,8 +387,8 @@ function Messaging() {
     alert(`User: "Socket: ${data.socket}" rejected your call.`);
     unselectUsersFromList();
     // Hide video area and call buttons for the caller
-    document.getElementById("video-space").classList.toggle("hide");
-    document.getElementById("call-buttons").classList.toggle("hide");
+    document.getElementById("video-space").classList.add("hide");
+    document.getElementById("call-buttons").classList.add("hide");
   });
 
   peerConnection.ontrack = function({ streams: [stream] }) {
@@ -423,7 +439,7 @@ function Messaging() {
   }
 
   socket.on("chat-sent", data => {
-    console.log(data, "CHAT DATA");
+    // console.log(data, "CHAT DATA");
     let active;
     let name;
 
@@ -449,6 +465,13 @@ function Messaging() {
       chatname: chatName
     }
 
+    //Detect if user has clicked on a chat box and if not return
+    if(document.getElementById("talking-with-info").innerHTML === "Select active user on the left menu.") {
+      console.log("No chatboxes selected");
+      document.getElementById('m').value='';
+      return;
+    }
+
     let name = document.getElementById("talking-with-info").getAttribute("value");
     let receiver = document.getElementById(name).getAttribute("value");
 
@@ -469,7 +492,7 @@ function Messaging() {
       to: receiver
     }
 
-    console.log(msg);
+    // console.log(msg);
 
     // socket emit
     socket.emit("chat-message", msg);
