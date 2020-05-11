@@ -154,13 +154,17 @@ body {
 }
 
 .display-area {
-  height: calc(100vh - 240px);
+  height: calc(100vh - 268px);
   overflow: auto;
+}
+
+ul {
+  padding-inline-start: 5px;
 }
 
 li {
   list-style-type: none;
-  margin: 10px 0 15px 0;
+  margin: 5px 0 5px 0;
   width: 100%;
 }
 

@@ -172,7 +172,7 @@ function Messaging() {
       talkingWithInfo.setAttribute("value", data.socket);
       // Setting the receiver for chat/video
       // receiver = data.socket;
-      talkingWithInfo.innerHTML = `Talking with: "Socket: ${data.name}"`;
+      talkingWithInfo.innerHTML = `Talking with: ${data.name}`;
       
       // api call to load messages
       const usernames = [data.name, user.name];
@@ -181,7 +181,7 @@ function Messaging() {
 
       API.getMessages(chatName)
       .then(function(result) {
-        console.log(result, "CHAT MESSAGES");
+        // console.log(result, "CHAT MESSAGES");
         displayMessages(result.data);
       })
       .catch(function(err) {
@@ -510,6 +510,10 @@ function Messaging() {
   //===========================================================================
   // Screen manupulation Area
   //===========================================================================
+  function userarea() {
+    document.getElementById("user-list-panel").classList.toggle("hide");
+  }
+
   function chatarea() {
     document.getElementById("message-space").classList.toggle("hide");
   };
@@ -536,18 +540,19 @@ function Messaging() {
           <h1 className="logo-text">
             Kan<span className="logo-highlight">- Messenger</span>
           </h1>
+          <button onClick={userarea} className="button-container btn btn-dark">User List</button>
           <div id="call-buttons" className="button-container hide">
             <button onClick={videoarea} className="btn btn-danger">Hang Up</button>
             &emsp;
             <button onClick={chatarea} className="btn btn-info">Show Chat</button>
-        </div>
+          </div>
         </div>
         <h2 className="talk-info" id="talking-with-info">
           Select active user on the left menu.
         </h2>
       </header>
       <div className="content-container">
-        <div>
+        <div id="user-list-panel">
           <div className="active-users-panel" id="active-user-container">
             <h3 className="panel-title">Active Users:</h3>
             {/* area for active chats */}
