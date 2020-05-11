@@ -21,10 +21,10 @@ let connected = false;
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
-// let peerConnection = new RTCPeerConnection();
+let peerConnection = new RTCPeerConnection();
 
 function Messaging() {
-  let peerConnection = new RTCPeerConnection();
+  // let peerConnection = new RTCPeerConnection();
 
   // user.name for logged in username
   // user.id for logged in id
@@ -347,15 +347,15 @@ function Messaging() {
         return;
       }
 
-      console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
-      const userCalling = document.getElementsByClassName(data.socket)
-      const elToFocus = userCalling[0].getAttribute("id");
+      // console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
+      // const userCalling = document.getElementsByClassName(data.socket)
+      // const elToFocus = userCalling[0].getAttribute("id");
 
       // Show video area and call buttons for the receiver
       document.getElementById("video-space").classList.remove("hide");
       document.getElementById("call-buttons").classList.remove("hide");
-      unselectUsersFromList();
-      document.getElementById(elToFocus).click();
+      // unselectUsersFromList();
+      // document.getElementById(elToFocus).click();
     }
 
     await peerConnection.setRemoteDescription(
