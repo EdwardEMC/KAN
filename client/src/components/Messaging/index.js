@@ -107,7 +107,7 @@ function Messaging() {
         unselectUsersFromList();
         // userContainerEl.setAttribute("class", "active-user active-user--selected");
         userContainerEl.classList.add("active-user--selected");
-        
+
         const talkingWithInfo = document.getElementById("talking-with-info");
         talkingWithInfo.setAttribute("value", name);
         // Setting the receiver for chat/video
@@ -399,6 +399,7 @@ function Messaging() {
     // Still not working
     // peerConnection = null;
     peerConnection = new RTCPeerConnection();
+    window.location.reload();
   });
 
   socket.on("call-rejected", data => {
@@ -551,6 +552,7 @@ function Messaging() {
     // Still not working
     // peerConnection = null;
     peerConnection = new RTCPeerConnection();
+    window.location.reload();
   }
 
   return (
