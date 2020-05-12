@@ -5,6 +5,7 @@ import formatTime from "../utils/timeFormat";
 import "./style.css";
 
 //Helpful https://tsh.io/blog/how-to-write-video-chat-app-using-webrtc-and-nodejs/
+const iconPath = process.env.PUBLIC_URL + '/assets/ChatIcons/';
 
 let isAlreadyCalling = false;
 let getCalled = false;
@@ -61,8 +62,11 @@ function Messaging() {
       usernameEl.setAttribute("class", "username");
       usernameEl.innerHTML = `Socket: ${name}`;
 
-      const offlineEl = document.createElement("button");
-      const callButtonEl = document.createElement("button");
+      // Change offline to an icon
+      const offlineEl = document.createElement("img");
+      
+      // Change online to an icon
+      const callButtonEl = document.createElement("img");
 
       // If online show call button
       let friend = onlineFriends.find(element => element.name === name);
@@ -74,21 +78,27 @@ function Messaging() {
         userContainerEl.classList.add(friend.socket);
 
         offlineEl.setAttribute("id", name + "offline");
-        offlineEl.setAttribute("class", "call-button btn btn-danger hide");
-        offlineEl.innerHTML = "Offline";
+        // offlineEl.setAttribute("class", "call-button btn btn-danger hide");
+        offlineEl.setAttribute("class", "call-button hide");
+        offlineEl.setAttribute("src", iconPath + "offline.png");
+        // offlineEl.innerHTML = "Offline";
 
         callButtonEl.setAttribute("id", name + "online");
-        callButtonEl.setAttribute("class", "call-button btn btn-success");
-        callButtonEl.innerHTML = "Call";
+        callButtonEl.setAttribute("class", "call-button");
+        callButtonEl.setAttribute("src", iconPath + "online.png");
+        callButtonEl.setAttribute("title", "Call");
       } // If offline show offline icon
       else {
         offlineEl.setAttribute("id", name + "offline");
-        offlineEl.setAttribute("class", "call-button btn btn-danger");
-        offlineEl.innerHTML = "Offline";
+        // offlineEl.setAttribute("class", "call-button btn btn-danger");
+        offlineEl.setAttribute("class", "call-button");
+        offlineEl.setAttribute("src", iconPath + "offline.png");
+        // offlineEl.innerHTML = "Offline";
   
         callButtonEl.setAttribute("id", name + "online");
-        callButtonEl.setAttribute("class", "call-button btn btn-success hide");
-        callButtonEl.innerHTML = "Call";  
+        callButtonEl.setAttribute("class", "call-button hide");
+        callButtonEl.setAttribute("src", iconPath + "online.png");
+        callButtonEl.setAttribute("title", "Call"); 
       }
 
       // Add button to delete friend

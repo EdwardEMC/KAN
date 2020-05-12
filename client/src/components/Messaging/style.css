@@ -130,6 +130,17 @@ body {
   width: 300px;
 }
 
+/*User list boxes*/
+.call-button {
+  float: right;
+  height: 30px;
+}
+
+.username {
+  display: inline;
+}
+
+/*Message sending/receiving area*/
 .send {
   max-height: 100px;
   position: absolute;
