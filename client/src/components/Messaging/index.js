@@ -606,7 +606,8 @@ function Messaging() {
           </div>
         </div>
         <div className="row interaction-area">
-          <div id="video-space" className="col-md hide">
+          <div id="video-space" className="col-md">
+          {/* <div id="video-space" className="col-md hide"> */}
             <div className="video-chat-container">
               <div className="video-container">
                 <video autoPlay className="remote-video" id="remote-video"></video>
