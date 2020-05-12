@@ -545,7 +545,10 @@ function Messaging() {
   // Screen manupulation Area
   //===========================================================================
   function userarea() {
-    document.getElementById("user-list-panel").classList.toggle("hide");
+    document.getElementById("user-panel").classList.toggle("hide");
+    //get message scroll id
+    document.getElementById("messageScroll").classList.toggle("display-area");
+    document.getElementById("messageScroll").classList.toggle("edited-display-area");
   }
 
   function chatarea() {
@@ -579,53 +582,57 @@ function Messaging() {
     <div className="background">
       <header className="header">
         <div className="logo-container justify-content-between">
-          <h1 className="logo-text">
+          {/* <h1 className="logo-text">
             Kan<span className="logo-highlight">- Messenger</span>
-          </h1>
+          </h1> */}
+          <h2 className="talk-info" id="talking-with-info">
+            Select active user on the left menu.
+          </h2>
           <button onClick={userarea} className="button-container btn btn-dark">User List</button>
-          <div id="call-buttons" className="button-container hide">
-            <button onClick={videoarea} className="btn btn-danger">Hang Up</button>
-            &emsp;
-            <button onClick={chatarea} className="btn btn-info">Show Chat</button>
-          </div>
         </div>
-        <h2 className="talk-info" id="talking-with-info">
-          Select active user on the left menu.
-        </h2>
       </header>
-      <div className="content-container">
-        <div id="user-list-panel">
-          {/* collapsible panels */}
-          <button onClick={collapse} value="active-user-container" className="panel-title collapsible">Active Users:</button>
-          <div className="active-users-panel content" id="active-user-container">
-            {/* area for active chats */}
-          </div>
-          <button onClick={collapse} value="friend-user-container" className="panel-title collapsible">Friends:</button>
-          <div className="friend-users-panel content" id="friend-user-container">
-            {/* area for friends chats */}
+      <div className="row content-container interaction-area">
+        <div id="user-panel" className="col-lg-3">
+          <div id="user-list-panel">
+            {/* collapsible panels */}
+            <button onClick={collapse} value="active-user-container" className="panel-title collapsible">Active Users:</button>
+            <div className="active-users-panel content" id="active-user-container">
+              {/* area for active chats */}
+            </div>
+            <button onClick={collapse} value="friend-user-container" className="panel-title collapsible">Friends:</button>
+            <div className="friend-users-panel content" id="friend-user-container">
+              {/* area for friends chats */}
+            </div>
           </div>
         </div>
-        <div className="row interaction-area">
-          <div id="video-space" className="col-md hide">
-            <div className="video-chat-container">
-              <div className="video-container">
-                <video autoPlay className="remote-video" id="remote-video"></video>
-                <video autoPlay muted className="local-video" id="local-video"></video>
+        {/* <div id="video-space" className="col-lg hide"> */}
+        <div id="video-space" className="col-lg">
+          <div className="video-chat-container">
+            <div className="video-container">
+              <video autoPlay className="remote-video" id="remote-video"></video>
+              <video autoPlay muted className="local-video" id="local-video"></video>
+              <div id="options">
+                {/* <div id="call-buttons" className="button-container hide"> */}
+                <div id="call-buttons" className="button-container">
+                  <button onClick={videoarea} className="btn btn-danger">Hang Up</button>
+                  &emsp;
+                  <button onClick={chatarea} className="btn btn-info">Show Chat</button>
+                </div>
               </div>
             </div>
           </div>
-          <div id="message-space" className="col-md">
-            <div className="chat-panel">
-              <div id="messageScroll" className="display-area">
-                <ul id="messages">
-                </ul> 
-              </div>
-              <div className="row send">
-                <form className="form-horizontal sendArea" id="form" action="" onSubmit={sendMessage}>
-                  <input id="m" autoComplete="off" className="inputColor"/>
-                  <button id="sendButton" className="btn btn-primary" type="submit">Send</button>
-                </form>
-              </div>
+        </div>
+        <div id="message-space" className="col-lg">
+          <div className="chat-panel">
+            <div id="messageScroll" className="display-area">
+              <ul id="messages">
+              </ul> 
+            </div>
+            <div className="row send">
+              <form className="form-horizontal sendArea" id="form" action="" onSubmit={sendMessage}>
+                <input id="m" autoComplete="off" className="inputColor"/>
+                <button id="sendButton" className="btn btn-primary" type="submit">Send</button>
+              </form>
             </div>
           </div>
         </div>

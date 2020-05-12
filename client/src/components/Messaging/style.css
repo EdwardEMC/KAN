@@ -12,6 +12,10 @@ body {
   background-color: white;
 }
 
+/* .no-padding {
+  padding: none;
+} */
+
 /*Header (with user info)*/
 .header {
   background-color: #ffffff;
@@ -50,20 +54,20 @@ body {
 
 .content-container {
   width: 100%;
-  height: calc(100vh - 232px);
+  height: calc(100vh - 198px);
   display: flex;
   justify-content: space-between;
   overflow: hidden;
 }
 
 .active-users-panel {
-  width: 300px;
+  /* width: 300px; */
   min-height: 50px;
   border: 1px solid #cddfe7;
 }
 
 .friend-users-panel {
-  width: 300px;
+  /* width: 300px; */
   min-height: 50px;
   border: 1px solid #cddfe7;
   overflow: auto;
@@ -142,6 +146,21 @@ body {
   max-width: 150px;
 }
 
+#video-space:hover #options {
+  visibility: visible;
+}
+
+#options {
+  visibility: hidden;
+}
+
+#call-buttons {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: space-around;
+}
+
 /*User list boxes*/
 .call-button, .addFriend-button {
   float: right;
@@ -213,8 +232,14 @@ li > span {
   display: none;
 }
 
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 991px) {
   .display-area {
-    height: 50%;
+    height: 400px;
+    overflow: auto;
+  }
+
+  .edited-display-area {
+    height: calc(100vh - 268px);
+    overflow: auto;
   }
 }
