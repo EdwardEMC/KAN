@@ -60,7 +60,7 @@ function Messaging() {
       userContainerEl.setAttribute("class", "active-user ");
       userContainerEl.setAttribute("id", name);
       usernameEl.setAttribute("class", "username");
-      usernameEl.innerHTML = `Socket: ${name}`;
+      usernameEl.innerHTML = `User: ${name}`;
 
       // Change offline to an icon
       const offlineEl = document.createElement("img");
@@ -78,10 +78,9 @@ function Messaging() {
         userContainerEl.classList.add(friend.socket);
 
         offlineEl.setAttribute("id", name + "offline");
-        // offlineEl.setAttribute("class", "call-button btn btn-danger hide");
         offlineEl.setAttribute("class", "call-button hide");
         offlineEl.setAttribute("src", iconPath + "offline.png");
-        // offlineEl.innerHTML = "Offline";
+        offlineEl.setAttribute("title", "Offline");
 
         callButtonEl.setAttribute("id", name + "online");
         callButtonEl.setAttribute("class", "call-button");
@@ -90,10 +89,9 @@ function Messaging() {
       } // If offline show offline icon
       else {
         offlineEl.setAttribute("id", name + "offline");
-        // offlineEl.setAttribute("class", "call-button btn btn-danger");
         offlineEl.setAttribute("class", "call-button");
         offlineEl.setAttribute("src", iconPath + "offline.png");
-        // offlineEl.innerHTML = "Offline";
+        offlineEl.setAttribute("title", "Offline");
   
         callButtonEl.setAttribute("id", name + "online");
         callButtonEl.setAttribute("class", "call-button hide");
@@ -160,16 +158,24 @@ function Messaging() {
   function createUserItemContainer(data) {  
     const userContainerEl = document.createElement("div");
 
-    const callButtonEl = document.createElement("button");
+    const callButtonEl = document.createElement("img");
+    const addFriendEl = document.createElement("img");
 
     const usernameEl = document.createElement("p");
 
     userContainerEl.setAttribute("class", "active-user");
     userContainerEl.setAttribute("id", data.socket);
-    callButtonEl.setAttribute("class", "call-button btn btn-success");
-    callButtonEl.innerHTML = "Call";
+
+    addFriendEl.setAttribute("class", "addFriend-button");
+    addFriendEl.setAttribute("src", iconPath + "addFriend.png");
+    addFriendEl.setAttribute("title", "Add Friend");
+
+    callButtonEl.setAttribute("class", "call-button");
+    callButtonEl.setAttribute("src", iconPath + "online.png");
+    callButtonEl.setAttribute("title", "Call");
+
     usernameEl.setAttribute("class", "username");
-    usernameEl.innerHTML = `Socket: ${data.name}`;
+    usernameEl.innerHTML = `User: ${data.name}`;
 
     // Add a button to make user a friend
 
@@ -180,7 +186,12 @@ function Messaging() {
       document.getElementById("call-buttons").classList.toggle("hide");
     });
 
-    userContainerEl.append(usernameEl, callButtonEl);
+    addFriendEl.addEventListener("click", () => {
+      // create a new chat in mysql using data.name (username)
+      console.log("Added user to friends list - not implemented yet");
+    });
+
+    userContainerEl.append(usernameEl, callButtonEl, addFriendEl);
 
     userContainerEl.addEventListener("click", () => {
       unselectUsersFromList();
@@ -189,15 +200,13 @@ function Messaging() {
 
       const talkingWithInfo = document.getElementById("talking-with-info");
       talkingWithInfo.setAttribute("value", data.socket);
-      // Setting the receiver for chat/video
-      // receiver = data.socket;
       talkingWithInfo.innerHTML = `Talking with: ${data.name}`;
       
-      // api call to load messages
-      const usernames = [data.name, user.name];
       // alpha sort the usernames so they are always the same
+      const usernames = [data.name, user.name];
       chatName = usernames.sort().join("-");
-
+      
+      // api call to load messages
       API.getMessages(chatName)
       .then(function(result) {
         // console.log(result, "CHAT MESSAGES");
@@ -214,7 +223,6 @@ function Messaging() {
   // function to display results in message area
   function displayMessages(data) {
     // change to display past x messsages and then add a button to view more
-
     const area = document.getElementById('messages');
 
     data.messages.map(element => {
@@ -406,9 +414,8 @@ function Messaging() {
     document.getElementById("call-buttons").classList.add("hide");
     document.getElementById("message-space").classList.remove("hide");
 
-    // Still not working
-    // peerConnection = null;
     peerConnection = new RTCPeerConnection();
+    // Needed to fully reset connection
     window.location.reload();
   });
 
@@ -559,10 +566,13 @@ function Messaging() {
     document.getElementById("call-buttons").classList.toggle("hide");
     document.getElementById("message-space").classList.remove("hide");
 
-    // Still not working
-    // peerConnection = null;
     peerConnection = new RTCPeerConnection();
+    // Needed to fully reset connection
     window.location.reload();
+  }
+
+  function collapse(event) {
+    document.getElementById(event.target.value).classList.toggle("hide");
   }
 
   return (
@@ -585,12 +595,13 @@ function Messaging() {
       </header>
       <div className="content-container">
         <div id="user-list-panel">
-          <div className="active-users-panel" id="active-user-container">
-            <h3 className="panel-title">Active Users:</h3>
+          {/* collapsible panels */}
+          <button onClick={collapse} value="active-user-container" className="panel-title collapsible">Active Users:</button>
+          <div className="active-users-panel content" id="active-user-container">
             {/* area for active chats */}
           </div>
-          <div className="friend-users-panel" id="friend-user-container">
-            <h3 className="panel-title">Friends:</h3>
+          <button onClick={collapse} value="friend-user-container" className="panel-title collapsible">Friends:</button>
+          <div className="friend-users-panel content" id="friend-user-container">
             {/* area for friends chats */}
           </div>
         </div>

@@ -73,8 +73,15 @@ body {
   height: 100%;
 }
 
+.collapsible {
+  width: 100%;
+  text-align: left;
+  background-color: lightgrey;
+  border: none;
+}
+
 .panel-title {
-  margin: 10px 0 0 0;
+  /* margin: 10px 0 0 0; */
   padding-left: 30px;
   font-weight: 500;
   font-size: 18px;
@@ -131,9 +138,13 @@ body {
 }
 
 /*User list boxes*/
-.call-button {
+.call-button, .addFriend-button {
   float: right;
   height: 30px;
+}
+
+.addFriend-button {
+  margin-right: 10px;
 }
 
 .username {
