@@ -105,7 +105,9 @@ function Messaging() {
 
       userContainerEl.addEventListener("click", () => {
         unselectUsersFromList();
-        userContainerEl.setAttribute("class", "active-user active-user--selected");
+        // userContainerEl.setAttribute("class", "active-user active-user--selected");
+        userContainerEl.classList.add("active-user--selected");
+        
         const talkingWithInfo = document.getElementById("talking-with-info");
         talkingWithInfo.setAttribute("value", name);
         // Setting the receiver for chat/video
@@ -140,7 +142,8 @@ function Messaging() {
     );
 
     alreadySelectedUser.forEach(el => {
-      el.setAttribute("class", "active-user");
+      // el.setAttribute("class", "active-user");
+      el.classList.remove("active-user--selected");
     });
   }
 
@@ -171,7 +174,9 @@ function Messaging() {
 
     userContainerEl.addEventListener("click", () => {
       unselectUsersFromList();
-      userContainerEl.setAttribute("class", "active-user active-user--selected");
+      // userContainerEl.setAttribute("class", "active-user active-user--selected");
+      userContainerEl.classList.add("active-user--selected");
+
       const talkingWithInfo = document.getElementById("talking-with-info");
       talkingWithInfo.setAttribute("value", data.socket);
       // Setting the receiver for chat/video
@@ -348,6 +353,8 @@ function Messaging() {
       console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
 
       const userCalling = document.getElementsByClassName(data.socket)
+      
+      // Problem here after hang up
       const elToFocus = userCalling[0].getAttribute("id");
 
       // Show video area and call buttons for the receiver
@@ -367,7 +374,7 @@ function Messaging() {
       answer,
       to: data.socket
     });
-    
+
     getCalled = true;
   });
 
