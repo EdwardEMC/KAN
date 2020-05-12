@@ -582,9 +582,6 @@ function Messaging() {
     <div className="background">
       <header className="header">
         <div className="logo-container justify-content-between">
-          {/* <h1 className="logo-text">
-            Kan<span className="logo-highlight">- Messenger</span>
-          </h1> */}
           <h2 className="talk-info" id="talking-with-info">
             Select active user on the left menu.
           </h2>
@@ -605,15 +602,13 @@ function Messaging() {
             </div>
           </div>
         </div>
-        {/* <div id="video-space" className="col-lg hide"> */}
-        <div id="video-space" className="col-lg">
+        <div id="video-space" className="col-lg hide">
           <div className="video-chat-container">
             <div className="video-container">
               <video autoPlay className="remote-video" id="remote-video"></video>
               <video autoPlay muted className="local-video" id="local-video"></video>
               <div id="options">
-                {/* <div id="call-buttons" className="button-container hide"> */}
-                <div id="call-buttons" className="button-container">
+                <div id="call-buttons" className="button-container hide">
                   <button onClick={videoarea} className="btn btn-danger">Hang Up</button>
                   &emsp;
                   <button onClick={chatarea} className="btn btn-info">Show Chat</button>

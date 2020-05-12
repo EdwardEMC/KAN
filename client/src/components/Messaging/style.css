@@ -34,15 +34,6 @@ body {
   margin-right: 15px;
 }
 
-.header > .logo-container > .logo-text {
-  font-size: 26px;
-  font-weight: 700;
-}
-
-.header > .logo-container > .logo-text > .logo-highlight {
-  color: #65a9e5;
-}
-
 /*Main display area*/
 .button-container {
   float: right;
