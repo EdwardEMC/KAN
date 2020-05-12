@@ -39,7 +39,7 @@ function UserInsert(props) {
               <br></br>
             </div>
             <div className="col-sm-6">
-              <button className="btn btn-success" onClick={chatting}>Start Chatting</button>
+              <button className="btn btn-success" onClick={chatting}>Add Friend</button>
               <br></br>
               <br></br>
               <div className="mainInfo">

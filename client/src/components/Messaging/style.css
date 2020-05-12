@@ -58,13 +58,13 @@ body {
 
 .active-users-panel {
   width: 300px;
-  height: 50%;
+  min-height: 50px;
   border: 1px solid #cddfe7;
 }
 
 .friend-users-panel {
   width: 300px;
-  height: 50%;
+  min-height: 50px;
   border: 1px solid #cddfe7;
   overflow: auto;
 }
