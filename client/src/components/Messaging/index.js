@@ -546,7 +546,7 @@ function Messaging() {
   //===========================================================================
   function userarea() {
     document.getElementById("user-panel").classList.toggle("hide");
-    //get message scroll id
+    // Problem when toggling in fullscreen as edited display is only available under 991px
     document.getElementById("messageScroll").classList.toggle("display-area");
     document.getElementById("messageScroll").classList.toggle("edited-display-area");
   }

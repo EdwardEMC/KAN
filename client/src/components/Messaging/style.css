@@ -12,10 +12,6 @@ body {
   background-color: white;
 }
 
-/* .no-padding {
-  padding: none;
-} */
-
 /*Header (with user info)*/
 .header {
   background-color: #ffffff;
@@ -52,13 +48,11 @@ body {
 }
 
 .active-users-panel {
-  /* width: 300px; */
   min-height: 50px;
   border: 1px solid #cddfe7;
 }
 
 .friend-users-panel {
-  /* width: 300px; */
   min-height: 50px;
   border: 1px solid #cddfe7;
   overflow: auto;
@@ -110,7 +104,6 @@ body {
 /*Video display area*/
 .video-chat-container {
   height: 100%;
-  /* padding: 0 20px; */
   flex: 1;
   position: relative;
 }
@@ -139,10 +132,18 @@ body {
 
 #video-space:hover #options {
   visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 500ms;
 }
 
 #options {
-  visibility: hidden;
+  display: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 500ms, opacity 500ms;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
 }
 
 #call-buttons {
@@ -224,13 +225,26 @@ li > span {
 }
 
 @media only screen and (max-width: 991px) {
-  .display-area {
+  #video-space {
     height: 400px;
+  }
+
+  #message-space {
+    height: 400px;
+  }
+  
+  .content-container {
+    height: 100%;
+  }
+
+  /* need to fix this area */
+  .display-area {
+    height: 362px;
     overflow: auto;
   }
 
   .edited-display-area {
-    height: calc(100vh - 268px);
+    height: calc(100vh - 572px);
     overflow: auto;
   }
 }
