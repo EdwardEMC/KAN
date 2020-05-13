@@ -545,9 +545,6 @@ function Messaging() {
   //===========================================================================
   function userarea() {
     document.getElementById("user-panel").classList.toggle("user-panel-call");
-    // Problem when toggling in fullscreen as edited display is only available under 991px
-    document.getElementById("messageScroll").classList.toggle("display-area");
-    document.getElementById("messageScroll").classList.toggle("edited-display-area");
   }
 
   function chatarea() {
@@ -580,7 +577,11 @@ function Messaging() {
 
   // Changes screen when called to the right layout and ratio changes back on hang up
   function callAccept() {
+    document.getElementById("header").classList.toggle("hide");
+    document.getElementById("main-area").classList.toggle("content-container");
+    document.getElementById("main-area").classList.toggle("content-container-call");
     document.getElementById("messageScroll").classList.toggle("display-area");
+    document.getElementById("messageScroll").classList.toggle("display-area-call");
     document.getElementById("message-space").classList.toggle("message-space-call");
     document.getElementById("user-panel").classList.toggle("user-panel-call");
     document.getElementById("video-streams").classList.toggle("video-container-call");
@@ -593,10 +594,10 @@ function Messaging() {
           <h2 className="talk-info" id="talking-with-info">
             Select active user on the left menu.
           </h2>
-          <button onClick={callAccept}>Call incoming</button>
+          {/* <button onClick={callAccept}>Call incoming</button> */}
         </div>
       </header>
-      <div className="row no-gutters content-container interaction-area">
+      <div id="main-area" className="row no-gutters content-container interaction-area">
         <div id="user-panel" className="col-lg-3">
           <div id="user-list-panel">
             {/* collapsible panels */}

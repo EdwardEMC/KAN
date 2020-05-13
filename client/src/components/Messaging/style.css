@@ -58,7 +58,7 @@ body {
   overflow: auto;
 }
 
-.chat-panet {
+.chat-panel {
   height: 100%;
 }
 
@@ -224,19 +224,31 @@ li > span {
   display: none;
 }
 
+/*Accept call classes*/
 .user-panel-call {
   display: none;
 }
 
+.message-space-call {
+  position: absolute;
+  bottom: 38px;
+  width: 100%;
+}
+
+.content-container-call {
+  width: 100%;
+  height: calc(100vh - 93px);
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
 
 @media only screen and (max-width: 991px) {
   /*Accept call classes*/
   .message-space-call {
-    height: 150px;
     position: absolute;
     bottom: 38px;
     background-color: rgba(63, 63, 63, 0.6);
-    overflow: auto;
     width: 100%;
   }
 
@@ -245,29 +257,16 @@ li > span {
   }
 
   .video-container-call {
-    height: calc(100vh - 193px);
+    height: calc(100vh - 194px);
   }
-
-  /* #video-space {
-    height: 400px;
-  } */
-
-  /* #message-space {
-    height: 400px;
-  } */
   
   .content-container {
     height: 100%;
   }
 
   /* need to fix this area */
-  /* .display-area {
-    height: 362px;
+  .display-area-call {
+    height: 150px;
     overflow: auto;
-  } */
-
-  /* .edited-display-area {
-    height: calc(100vh - 572px);
-    overflow: auto;
-  } */
+  }
 }
