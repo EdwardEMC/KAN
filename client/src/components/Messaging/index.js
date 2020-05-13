@@ -105,6 +105,7 @@ function Messaging() {
         callUser(document.getElementById(name).getAttribute("value"));
         // callUser(data.socket);
         // Show video area and call buttons for the caller
+        callAccept();
         document.getElementById("video-space").classList.toggle("hide");
         document.getElementById("call-buttons").classList.toggle("hide");
       });
@@ -182,6 +183,7 @@ function Messaging() {
     callButtonEl.addEventListener("click", () => {
       callUser(data.socket);
       // Show video area and call buttons for the caller
+      callAccept();
       document.getElementById("video-space").classList.toggle("hide");
       document.getElementById("call-buttons").classList.toggle("hide");
     });
@@ -367,15 +369,12 @@ function Messaging() {
         });
         return;
       }
-
-      console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
-
+      // console.log(document.getElementsByClassName(data.socket), "BOX TO FOCUS ON");
       const userCalling = document.getElementsByClassName(data.socket)
-      
-      // Problem here after hang up
       const elToFocus = userCalling[0].getAttribute("id");
 
       // Show video area and call buttons for the receiver
+      callAccept();
       document.getElementById("video-space").classList.remove("hide");
       document.getElementById("call-buttons").classList.remove("hide");
       unselectUsersFromList();
@@ -383,7 +382,6 @@ function Messaging() {
     };
 
     await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
-
     const answer = await peerConnection.createAnswer();
 
     await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
@@ -408,8 +406,8 @@ function Messaging() {
   });
 
   socket.on("hang-up", () => {
-    // not sending to both clients
-    peerConnection.close(); //change this so signalState is permanently put on closed
+    peerConnection.close();
+    callAccept();
     document.getElementById("video-space").classList.add("hide");
     document.getElementById("call-buttons").classList.add("hide");
     document.getElementById("message-space").classList.remove("hide");
@@ -423,6 +421,7 @@ function Messaging() {
     alert(`User: "Socket: ${data.socket}" rejected your call.`);
     unselectUsersFromList();
     // Hide video area and call buttons for the caller
+    callAccept();
     document.getElementById("video-space").classList.add("hide");
     document.getElementById("call-buttons").classList.add("hide");
   });
@@ -545,7 +544,7 @@ function Messaging() {
   // Screen manupulation Area
   //===========================================================================
   function userarea() {
-    document.getElementById("user-panel").classList.toggle("hide");
+    document.getElementById("user-panel").classList.toggle("user-panel-call");
     // Problem when toggling in fullscreen as edited display is only available under 991px
     document.getElementById("messageScroll").classList.toggle("display-area");
     document.getElementById("messageScroll").classList.toggle("edited-display-area");
@@ -565,6 +564,7 @@ function Messaging() {
 
     socket.emit("hang-up", receiverSocket);
 
+    callAccept();
     document.getElementById("video-space").classList.toggle("hide");
     document.getElementById("call-buttons").classList.toggle("hide");
     document.getElementById("message-space").classList.remove("hide");
@@ -578,6 +578,14 @@ function Messaging() {
     document.getElementById(event.target.value).classList.toggle("hide");
   }
 
+  // Changes screen when called to the right layout and ratio changes back on hang up
+  function callAccept() {
+    document.getElementById("messageScroll").classList.toggle("display-area");
+    document.getElementById("message-space").classList.toggle("message-space-call");
+    document.getElementById("user-panel").classList.toggle("user-panel-call");
+    document.getElementById("video-streams").classList.toggle("video-container-call");
+  }
+
   return (
     <div className="background">
       <header className="header">
@@ -585,10 +593,10 @@ function Messaging() {
           <h2 className="talk-info" id="talking-with-info">
             Select active user on the left menu.
           </h2>
-          <button onClick={userarea} className="button-container btn btn-dark">User List</button>
+          {/* <button onClick={callAccept}>Call incoming</button> */}
         </div>
       </header>
-      <div className="row content-container interaction-area">
+      <div className="row no-gutters content-container interaction-area">
         <div id="user-panel" className="col-lg-3">
           <div id="user-list-panel">
             {/* collapsible panels */}
@@ -604,13 +612,13 @@ function Messaging() {
         </div>
         <div id="video-space" className="col-lg hide">
           <div className="video-chat-container">
-            <div className="video-container">
+            <div id="video-streams" className="video-container">
               <video autoPlay className="remote-video" id="remote-video"></video>
               <video autoPlay muted className="local-video" id="local-video"></video>
               <div id="options">
-                <div id="call-buttons" className="button-container hide">
+                <div id="call-buttons" className="button-container hide">  
                   <button onClick={videoarea} className="btn btn-danger">Hang Up</button>
-                  &emsp;
+                  <button onClick={userarea} className="button-container btn btn-dark">User List</button>
                   <button onClick={chatarea} className="btn btn-info">Show Chat</button>
                 </div>
               </div>
