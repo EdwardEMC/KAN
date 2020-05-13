@@ -407,10 +407,10 @@ function Messaging() {
 
   socket.on("hang-up", () => {
     peerConnection.close();
-    callAccept();
     document.getElementById("video-space").classList.add("hide");
     document.getElementById("call-buttons").classList.add("hide");
     document.getElementById("message-space").classList.remove("hide");
+    callAccept();
 
     peerConnection = new RTCPeerConnection();
     // Needed to fully reset connection
@@ -551,7 +551,7 @@ function Messaging() {
   }
 
   function chatarea() {
-    document.getElementById("message-space").classList.toggle("hide");
+    document.getElementById("main-chat-area").classList.toggle("hide");
   };
 
   function videoarea() {
@@ -593,7 +593,7 @@ function Messaging() {
           <h2 className="talk-info" id="talking-with-info">
             Select active user on the left menu.
           </h2>
-          {/* <button onClick={callAccept}>Call incoming</button> */}
+          <button onClick={callAccept}>Call incoming</button>
         </div>
       </header>
       <div className="row no-gutters content-container interaction-area">
@@ -625,18 +625,20 @@ function Messaging() {
             </div>
           </div>
         </div>
-        <div id="message-space" className="col-lg">
-          <div className="chat-panel">
-            <div id="messageScroll" className="display-area">
-              <ul id="messages">
-              </ul> 
+        <div id="main-chat-area" className="col-lg">
+          <div id="message-space">
+            <div className="chat-panel">
+              <div id="messageScroll" className="display-area">
+                <ul id="messages">
+                </ul> 
+              </div>
             </div>
-            <div className="row send">
-              <form className="form-horizontal sendArea" id="form" action="" onSubmit={sendMessage}>
-                <input id="m" autoComplete="off" className="inputColor"/>
-                <button id="sendButton" className="btn btn-primary" type="submit">Send</button>
-              </form>
-            </div>
+          </div>
+          <div className="row send">
+            <form className="form-horizontal sendArea" id="form" action="" onSubmit={sendMessage}>
+              <input id="m" autoComplete="off" className="inputColor"/>
+              <button id="sendButton" className="btn btn-primary" type="submit">Send</button>
+            </form>
           </div>
         </div>
       </div>

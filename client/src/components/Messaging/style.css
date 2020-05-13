@@ -224,23 +224,30 @@ li > span {
   display: none;
 }
 
-/*Accept call classes*/
-.message-space-call {
-  height: 150px;
-  position: absolute;
-  bottom: 38px;
-  background-color: rgba(63, 63, 63, 0.6);
-}
-
 .user-panel-call {
   display: none;
 }
 
-.video-container-call {
-  height: calc(100vh - 193px);
-}
 
 @media only screen and (max-width: 991px) {
+  /*Accept call classes*/
+  .message-space-call {
+    height: 150px;
+    position: absolute;
+    bottom: 38px;
+    background-color: rgba(63, 63, 63, 0.6);
+    overflow: auto;
+    width: 100%;
+  }
+
+  .user-panel-call {
+    display: none;
+  }
+
+  .video-container-call {
+    height: calc(100vh - 193px);
+  }
+
   /* #video-space {
     height: 400px;
   } */
