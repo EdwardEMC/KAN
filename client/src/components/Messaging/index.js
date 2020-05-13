@@ -120,7 +120,7 @@ function Messaging() {
         const talkingWithInfo = document.getElementById("talking-with-info");
         talkingWithInfo.setAttribute("value", name);
         // Setting the receiver for chat/video
-        talkingWithInfo.innerHTML = `Talking with: "Socket: ${name}"`;
+        talkingWithInfo.innerHTML = `Talking with: "${name}"`;
         
         // Alpha sort the usernames so they are always the same
         const usernames = [name, user.name];
@@ -578,6 +578,7 @@ function Messaging() {
   // Changes screen when called to the right layout and ratio changes back on hang up
   function callAccept() {
     document.getElementById("header").classList.toggle("hide");
+    document.getElementById("send-area").classList.toggle("send-call");
     document.getElementById("main-area").classList.toggle("content-container");
     document.getElementById("main-area").classList.toggle("content-container-call");
     document.getElementById("messageScroll").classList.toggle("display-area");
@@ -635,7 +636,7 @@ function Messaging() {
               </div>
             </div>
           </div>
-          <div className="row send">
+          <div id="send-area" className="send">
             <form className="form-horizontal sendArea" id="form" action="" onSubmit={sendMessage}>
               <input id="m" autoComplete="off" className="inputColor"/>
               <button id="sendButton" className="btn btn-primary" type="submit">Send</button>
