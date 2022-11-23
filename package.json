@@ -35,6 +35,6 @@
     "react-router-dom": "^5.1.2",
     "sequelize": "^5.21.4",
     "sequelize-cli": "^5.5.1",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.5.0"
   }
 }
