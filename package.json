@@ -26,7 +26,7 @@
     "express-session": "^1.17.0",
     "heroku-cli": "^7.0.9",
     "if-env": "^1.0.4",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",
